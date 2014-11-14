@@ -1,4 +1,4 @@
 
 public class Main {
-//hej
+Communication m = new Communication();
 }
