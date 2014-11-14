@@ -1,4 +1,4 @@
 
-public class Regul {
+public class Regul extends Thread {
 
 }
