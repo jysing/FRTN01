@@ -17,6 +17,7 @@ public class Communication extends Thread {
 		Boolean isrunning=true;
 		while (true)
 		{
+			LCD.clear();
 			LCD.drawString("Waiting",0,0);
 			LCD.refresh();
 			//Listen for incoming connection
