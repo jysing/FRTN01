@@ -9,7 +9,7 @@ import lejos.remote.nxt.NXTConnection;
 public class Communication extends Thread {
 
 	public Communication() {
-
+		this.start();
 	}
 
 	public void run(){
