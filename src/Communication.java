@@ -13,6 +13,7 @@ public class Communication extends Thread {
 	}
 
 	public void run(){
+		
 		Boolean isrunning=true;
 		while (true)
 		{
@@ -22,7 +23,7 @@ public class Communication extends Thread {
 			NXTCommConnector btc = Bluetooth.getNXTCommConnector();
 			NXTConnection connection = btc.waitForConnection(1000000,NXTConnection.RAW);
 			LCD.clear();
-			LCD.drawString("Connected",0,0);
+			LCD.drawString("Connected",1,1);
 			LCD.refresh();  
 			//The InputStream for read data 
 			DataInputStream dis = connection.openDataInputStream();
