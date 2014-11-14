@@ -1,4 +1,4 @@
-//kommentar
+
 public class Communication {
 	
 	
