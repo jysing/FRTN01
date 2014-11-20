@@ -21,8 +21,11 @@ public class Communication extends Thread {
 		while (true)
 		{
 			try {
+			LCD.drawString("take a port", 1, 1);
 			ServerSocket serv = new ServerSocket(1111);
-			Socket s = serv.accept(); //Wait for Laptop to connect
+			LCD.drawString("took a port",1,1);
+			Socket s = serv.accept(); //Wait for android to connect
+			LCD.drawString("android connected", 1, 1);
 			DataInputStream in = new DataInputStream(s.getInputStream());
 			DataOutputStream out = new DataOutputStream(s.getOutputStream());
 			
