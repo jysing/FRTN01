@@ -15,5 +15,8 @@ public class Main {
 		LCD.refresh(); */
 	Communication m = new Communication();
 	
+	Gyro g = new Gyro();
+	g.getAngleVelocity();
+	
 }
 }
