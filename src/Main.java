@@ -16,7 +16,13 @@ public class Main {
 	Communication m = new Communication();
 	
 	Gyro g = new Gyro();
-	g.getAngleVelocity();
+	float[] data = g.getAngleVelocity();
+	LCD.drawString("AngleVelocity : "+data[0],2,0);
+	Delay.msDelay(3000);
+	LCD.clear();
+	LCD.drawString("AngleVelocity2 : "+data[0],2,0);
+	Delay.msDelay(3000);
+	
 	
 }
 }
