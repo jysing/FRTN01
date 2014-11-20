@@ -25,9 +25,9 @@ public class Communication extends Thread {
 			Socket s = serv.accept(); //Wait for Laptop to connect
 			DataInputStream in = new DataInputStream(s.getInputStream());
 			DataOutputStream out = new DataOutputStream(s.getOutputStream());
-
+			
 			//Test msg from android
-			System.out.println(in.readUTF());
+			LCD.drawString(in.readUTF(),2,2);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
