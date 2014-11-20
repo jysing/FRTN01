@@ -43,7 +43,7 @@ public class Communication extends Thread {
 			//Listen for incoming connection
 			NXTCommConnector btc = Bluetooth.getNXTCommConnector();
 			LCD.clear();
-			LCD.drawString("Got connector",0,0);
+			LCD.drawString("Got connector",1,1);
 			LCD.refresh();
 			NXTConnection connection = btc.waitForConnection(10000,NXTConnection.RAW);
 			LCD.clear();
