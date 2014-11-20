@@ -40,9 +40,9 @@ public class Gyro {
 		sensor = new HiTechnicGyro(port);
 		
 		sample = new float[sensor.sampleSize()];
-		calculateOffset();
+		int offset  = calculateOffset();
 		while (!Button.ESCAPE.isDown()) {
-	         sensor.fetchSample(sample, 0);
+	         sensor.fetchSample(sample, offset);
 	         LCD.drawString(String.format("%3.2f", sample[0]) + " m        ", 0, 3);
 	      }
 		sensor.close();
@@ -56,7 +56,7 @@ public class Gyro {
 		
 	}
 	//Beräkna offset i gyrosensor
-	public float calculateOffset(){
+	public int calculateOffset(){
 		int count = 10;
 		float offset=0;
 		for(int i = 0; i<count; i++){
@@ -65,7 +65,9 @@ public class Gyro {
 			wait(10);
 		}
 		offset = offset/count;
-		return offset;
+		offset = Math.round(offset);
+		
+		return (int)offset;
 	}
 }
 
