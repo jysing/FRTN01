@@ -16,10 +16,10 @@ public class Communication extends Thread {
 	}
 
 	public void run(){
-		
 		Boolean isrunning=true;
 		while (true)
 		{
+			/*
 			try {
 			LCD.drawString("take a port", 1, 1);
 			ServerSocket serv = new ServerSocket(1111);
@@ -35,14 +35,16 @@ public class Communication extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			*/
 			
-			
-			/*
 			LCD.clear();
 			LCD.drawString("Waiting",0,0);
 			LCD.refresh();
 			//Listen for incoming connection
 			NXTCommConnector btc = Bluetooth.getNXTCommConnector();
+			LCD.clear();
+			LCD.drawString("Got connector",0,0);
+			LCD.refresh();
 			NXTConnection connection = btc.waitForConnection(10000,NXTConnection.RAW);
 			LCD.clear();
 			LCD.drawString("Connected",1,1);
@@ -81,7 +83,6 @@ public class Communication extends Thread {
 				e.printStackTrace();
 			}
 			LCD.clear();
-			*/
 		}
 	}
 }
