@@ -16,25 +16,6 @@ public class Gyro {
 	
 	
 	public Gyro(){
-		/*// get a port instance
-		port = LocalEV3.get().getPort("S1");
-
-		// Get an instance of the Ultrasonic EV3 sensor
-		sensor = new HiTechnicGyro(port);
-
-		// get an instance of this sensor in measurement mode
-		rate= sensor.getMode("");
-		
-		// initialize an array of floats for fetching samples. 
-					// Ask the SampleProvider how long the array should be
-		sample = new float[rate.sampleSize()];
-
-
-					// fetch a sample
-		while(true){
-				rate.fetchSample(sample, 0);
-					}
-					*/
 		
 		port = LocalEV3.get().getPort("S1");
 		sensor = new HiTechnicGyro(port);
@@ -56,13 +37,18 @@ public class Gyro {
 		
 	}
 	//Beräkna offset i gyrosensor
-	public int calculateOffset(){
+	public int calculateOffset() {
 		int count = 10;
 		float offset=0;
 		for(int i = 0; i<count; i++){
 			sensor.fetchSample(sample,0);
 			offset = offset + sample[0];
-			wait(10);
+			try {
+				wait(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		offset = offset/count;
 		offset = Math.round(offset);
