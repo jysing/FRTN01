@@ -1,5 +1,8 @@
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 import lejos.hardware.Bluetooth;
 import lejos.hardware.lcd.LCD;
@@ -17,6 +20,21 @@ public class Communication extends Thread {
 		Boolean isrunning=true;
 		while (true)
 		{
+			try {
+			ServerSocket serv = new ServerSocket(1111);
+			Socket s = serv.accept(); //Wait for Laptop to connect
+			DataInputStream in = new DataInputStream(s.getInputStream());
+			DataOutputStream out = new DataOutputStream(s.getOutputStream());
+
+			//Test msg from android
+			System.out.println(in.readUTF());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			/*
 			LCD.clear();
 			LCD.drawString("Waiting",0,0);
 			LCD.refresh();
@@ -60,6 +78,7 @@ public class Communication extends Thread {
 				e.printStackTrace();
 			}
 			LCD.clear();
+			*/
 		}
 	}
 }
