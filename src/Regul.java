@@ -45,6 +45,7 @@ public class Regul extends Thread {
 					System.out.println(e);
 				}
 			}
+			break;
     	}
     	mutex.release();
     }
