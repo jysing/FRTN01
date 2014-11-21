@@ -1,7 +1,9 @@
 import lejos.hardware.sensor.*;
+import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.*;
 import lejos.hardware.Device.*;
 import lejos.hardware.ev3.*;
+import lejos.robotics.RegulatedMotor;
 import lejos.robotics.SampleProvider;
 
 import java.util.concurrent.Semaphore;
@@ -11,13 +13,19 @@ public class Regul extends Thread {
 	public final static int precicion = 10;
 	private PID pid;
 	private Semaphore mutex;
+	private Gyro g;
+	RegulatedMotor motorA;
+	RegulatedMotor motorB;
 
     /** Constructor. */
     public Regul (int priority) {
     	setPriority(priority);
     	pid = new PID();
-		Gyro g = new Gyro(precicion);
+    	motorA = new EV3LargeRegulatedMotor(MotorPort.A);
+    	motorA = new EV3LargeRegulatedMotor(MotorPort.B);
+		g = new Gyro(precicion);
 		g.getAngleVelocity();
+		motorA.rotate(360);
     }
     
     /** Sets the parameters of the PID controller */

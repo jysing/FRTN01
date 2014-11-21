@@ -5,8 +5,6 @@ public class Main {
 	
 	public static void main(String [] args){
 		Communication m = new Communication();
-		Regul regul = new Regul(6); //Priority 6
-		
-
+		Regul regul = new Regul(1); //Highest priority
 	}
 }
