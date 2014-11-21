@@ -37,18 +37,12 @@ public class Communication extends Thread {
 			}
 			*/
 			
-			LCD.clear();
 			LCD.drawString("Waiting",0,0);
-			LCD.refresh();
 			//Listen for incoming connection
 			NXTCommConnector btc = Bluetooth.getNXTCommConnector();
-			LCD.clear();
-			LCD.drawString("Got connector",1,1);
-			LCD.refresh();
+			LCD.drawString("Got connector",0,1);
 			NXTConnection connection = btc.waitForConnection(10000,NXTConnection.RAW);
-			LCD.clear();
-			LCD.drawString("Connected",1,1);
-			LCD.refresh();  
+			LCD.drawString("Connected",0,1);
 			//The InputStream for read data 
 			DataInputStream dis = connection.openDataInputStream();
 			//loop for read data    
