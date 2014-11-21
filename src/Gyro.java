@@ -15,8 +15,8 @@ public class Gyro extends Thread{
 	public float sample[];
 	public float offset=0;	
 	
-	//Gyro can deliver 300 measurements per sample
-	public Gyro(){		
+	//Gyro can deliver 300 measurements per second
+	public Gyro(Regul regul, int priority){		
 		port = LocalEV3.get().getPort("S1");
 		sensor = new HiTechnicGyro(port);
 		sample = new float[sensor.sampleSize()];

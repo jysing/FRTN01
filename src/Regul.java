@@ -22,15 +22,9 @@ public class Regul extends Thread {
     	setPriority(priority);
     	pid = new PID();
     	motorA = new EV3LargeRegulatedMotor(MotorPort.A);
-
-
     	motorB = new EV3LargeRegulatedMotor(MotorPort.B);
-		//g = new Gyro();
-
-		//g.getAngleVelocity();
-		motorA.setSpeed(1300);
-
-
+		
+    	motorA.setSpeed(1300);
 		motorA.forward();
 		motorB.setSpeed(1300);
 		motorB.forward();
