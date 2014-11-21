@@ -48,17 +48,10 @@ public class Regul extends Thread {
     		e.printStackTrace();
     	}
     	while (true) {
-   		
-       		t = t + pid.getHMillis();
-			duration = t - System.currentTimeMillis();
-			if (duration > 0) {
-				try {
-					sleep(duration);
-				} catch (InterruptedException e) {
-					System.out.println(e);
-				}
-			}
-			break;
+    		
+    		pid.calculateOutput(g.getAngleVelocity(), 0);
+    		pid.updateState(u);
+
     	}
     	mutex.release();
     }
