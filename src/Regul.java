@@ -22,10 +22,12 @@ public class Regul extends Thread {
     	setPriority(priority);
     	pid = new PID();
     	motorA = new EV3LargeRegulatedMotor(MotorPort.A);
-    	motorA = new EV3LargeRegulatedMotor(MotorPort.B);
+    	motorB = new EV3LargeRegulatedMotor(MotorPort.B);
 		g = new Gyro(precicion);
 		g.getAngleVelocity();
-		motorA.rotate(360);
+		motorA.setSpeed(3);
+		motorA.forward();
+		motorB.rotate(360);
     }
     
     /** Sets the parameters of the PID controller */
