@@ -22,12 +22,10 @@ public class Gyro extends Thread{
 		sample = new float[sensor.sampleSize()];
 		calculateOffset();		
 	}
-	public void getAngleVelocity(){
-		while(true){
+	public float getAngleVelocity(){
 		sensor.fetchSample(sample, 0);
 		LCD.drawString(String.format("%3.2f", sample[0]-offset) + " m        "+ sensor.sampleSize(), 0, 3);
-		}
-		//return sample[0]-offset;
+		return sample[0]-offset;
 	}
 	//Beräkna offset i gyrosensor
 	private void calculateOffset() {
