@@ -6,10 +6,10 @@ import lejos.robotics.SampleProvider;
 import java.util.concurrent.Semaphore;
 
 public class Regul extends Thread {		
+	
 	private PID pid;
 	private Semaphore mutex;
 
-    
     /** Constructor. */
     public Regul (int priority) {
     	setPriority(priority);
@@ -93,14 +93,12 @@ public class Regul extends Thread {
     	long duration;
     	long t = System.currentTimeMillis();
     	startTime = t;
-
     	try {
     		mutex.acquire();
     	} catch (InterruptedException e) {
     		System.out.println(e);
     		e.printStackTrace();
-    	}
-    	
+    	}    	
     	
     	double yp = 0;
     	double ya = 0;
@@ -114,43 +112,38 @@ public class Regul extends Thread {
     		} catch (IOChannelException e) {
     			System.out.println("ERROR: IOChannelException");
     		}
-    		ref = refGen.getRef();
-    		
-    		switch (modeMon.getMode()) {
-    		
-    		case BALL:
+    		ref = refGen.getRef();    		
+    		switch (modeMon.getMode()) {    		
+    			case BALL:
     			synchronized (controllerOuter) {
     				ua = controllerOuter.calculateOutput(yp, ref);
     				ua = saturate(ua, U_MIN, U_MAX);
     				controllerOuter.updateState(ua);
-    				
     				synchronized (controllerInner) {
     					uv = controllerInner.calculateOutput(ya, ua);
     					uv = saturate(uv, U_MIN, U_MAX);
     					try {
     						analogOut.set(uv);
     					} catch (IOChannelException e) {
-    						
+    						//Catch exception
     					}
     					sendDataToOpCom(ref, yp, uv);
     					controllerInner.updateState(uv);
 					}
 				}
-    			break;
-    			
+    			break;    			
     		case BEAM:
     			uv = controllerInner.calculateOutput(ya, ref);
     			try {
 					analogOut.set(uv);
 				} catch (IOChannelException e) {
-					
+					//Catch exception
 				}
     			sendDataToOpCom(ref, ya, uv);
     			controllerInner.updateState(uv);
     			break;
     			
     		case OFF:
-    			
     			try {
 					analogOut.set(0);
 				} catch (IOChannelException e) {
@@ -164,7 +157,6 @@ public class Regul extends Thread {
     		default:
     			System.out.println("ERROR: Illegal mode.");// Should not happen
     		}
-    		
     		t = t + controllerInner.getHMillis();
 			duration = t - System.currentTimeMillis();
 			if (duration > 0) {

@@ -19,7 +19,6 @@ public class Gyro {
 		
 		port = LocalEV3.get().getPort("S1");
 		sensor = new HiTechnicGyro(port);
-		
 		sample = new float[sensor.sampleSize()];
 		int offset  = calculateOffset();
 		while (!Button.ESCAPE.isDown()) {
@@ -27,9 +26,7 @@ public class Gyro {
 	         LCD.drawString(String.format("%3.2f", sample[0]) + " m        ", 0, 3);
 	      }
 		sensor.close();
-		
-		
-		
+				
 	}
 	public float[] getAngleVelocity(){
 			rate.fetchSample(sample, 0);
@@ -51,8 +48,7 @@ public class Gyro {
 			}
 		}
 		offset = offset/count;
-		offset = Math.round(offset);
-		
+		offset = Math.round(offset);		
 		return (int)offset;
 	}
 }
