@@ -6,10 +6,10 @@ import lejos.robotics.SampleProvider;
 import java.util.concurrent.Semaphore;
 
 public class Regul extends Thread {		
+	
 	private PID pid;
 	private Semaphore mutex;
 
-    
     /** Constructor. */
     public Regul (int priority) {
     	setPriority(priority);
@@ -29,17 +29,13 @@ public class Regul extends Thread {
     	long duration;
     	long t = System.currentTimeMillis();
     	long startTime = t;
-
     	try {
     		mutex.acquire();
     	} catch (InterruptedException e) {
     		e.printStackTrace();
     	}
-    	
     	while (true) {
-    		
-    		
-    		
+   		
        		t = t + pid.getHMillis();
 			duration = t - System.currentTimeMillis();
 			if (duration > 0) {
@@ -49,6 +45,7 @@ public class Regul extends Thread {
 					System.out.println(e);
 				}
 			}
+			break;
     	}
     	mutex.release();
     }
