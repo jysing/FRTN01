@@ -13,7 +13,7 @@ public class Main {
 		LCD.clear();
 		LCD.drawString("Dead",2,0);
 		LCD.refresh(); */
-	Communication m = new Communication();
+	//Communication m = new Communication();
 	
 	Gyro g = new Gyro();
 	/*float[] data = g.getAngleVelocity();
