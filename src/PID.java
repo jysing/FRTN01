@@ -11,7 +11,7 @@ public class PID {
 	  private double y = 0;
 	
 	// Constructor
-	public PID(String name){
+	public PID(){
 		PIDParameters p = new PIDParameters();
 		  p.Beta = 1.0;
 		  p.H = 0.02;

@@ -13,6 +13,7 @@ public class Regul extends Thread {
     /** Constructor. */
     public Regul (int priority) {
     	setPriority(priority);
+    	pid = new PID();
     }
     
     /** Sets the parameters of the PID controller */

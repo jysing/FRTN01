@@ -6,9 +6,8 @@ public class Main {
 	
 	public static void main(String [] args){
 	//Communication m = new Communication();
-	
-	Gyro g = new Gyro(precicion);
-	g.getAngleVelocity();
-	
+		Regul regul = new Regul(6); //Priority 6
+		Gyro g = new Gyro(precicion);
+		g.getAngleVelocity();
 	}
 }
