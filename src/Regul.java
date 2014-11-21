@@ -3,10 +3,12 @@ import lejos.hardware.port.*;
 import lejos.hardware.Device.*;
 import lejos.hardware.ev3.*;
 import lejos.robotics.SampleProvider;
+
 import java.util.concurrent.Semaphore;
 
 public class Regul extends Thread {		
 	
+	public final static int precicion = 10;
 	private PID pid;
 	private Semaphore mutex;
 
@@ -14,6 +16,8 @@ public class Regul extends Thread {
     public Regul (int priority) {
     	setPriority(priority);
     	pid = new PID();
+		Gyro g = new Gyro(precicion);
+		g.getAngleVelocity();
     }
     
     /** Sets the parameters of the PID controller */
