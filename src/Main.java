@@ -1,9 +1,6 @@
 import lejos.hardware.lcd.LCD;
 import lejos.utility.Delay;
 
-
-
-
 public class Main {
 	public static void main(String [] args){
 	
@@ -13,7 +10,7 @@ public class Main {
 		LCD.clear();
 		LCD.drawString("Dead",2,0);
 		LCD.refresh(); */
-	Communication m = new Communication();
+	//Communication m = new Communication();
 	
 	Gyro g = new Gyro();
 	/*float[] data = g.getAngleVelocity();
@@ -23,9 +20,5 @@ public class Main {
 	LCD.drawString("AngleVelocity2 : "+data[0],2,0);
 	Delay.msDelay(3000);
 	*/
-	
-	
-	
-	
-}
+	}
 }

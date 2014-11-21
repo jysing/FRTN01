@@ -8,20 +8,7 @@ import java.util.concurrent.Semaphore;
 public class Regul extends Thread {		
 	private PID pid;
 	private Semaphore mutex;
-	
-	/** Inner monitor class for controller mode **/
-	class ModeMonitor {
-		// Synchronized access methods
-		public synchronized void setMode(int newMode) {
-			mode = newMode;
-			controllerInner.reset();
-			controllerOuter.reset();
-		}
 
-		public synchronized int getMode() {
-			return mode;
-		}
-	}
     
     /** Constructor. */
     public Regul (int priority) {
