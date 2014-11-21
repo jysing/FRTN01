@@ -16,6 +16,7 @@ public class Regul extends Thread {
 	RegulatedMotor motorA;
 	RegulatedMotor motorB;
 	double u; // Control signal from PID
+	double angVel; // angluarVelocity
 
     /** Constructor. */
     public Regul (int priority) {
@@ -26,11 +27,8 @@ public class Regul extends Thread {
 
     	motorB = new EV3LargeRegulatedMotor(MotorPort.B);
 		//g = new Gyro();
-
 		//g.getAngleVelocity();
 		motorA.setSpeed(1300);
-
-
 		motorA.forward();
 		motorB.setSpeed(1300);
 		motorB.forward();
@@ -57,19 +55,27 @@ public class Regul extends Thread {
     		e.printStackTrace();
     	}*/
     	while (true) {
-    		u = pid.calculateOutput((double)g.getAngleVelocity(), 0);
+    		angVel = (double)g.getAngleVelocity();
+    		u = pid.calculateOutput(angVel, 0);
     		pid.updateState(u);
-    		setMotor(u,360);
-    		motorA.forward();
+    		setMotor(u);
     		//Lägg in en sleep funktion
     	}
     	//mutex.release();
     }
     
-    public void setMotor(double speed, int angle){
-    	motorA.setSpeed((int)speed);
-		motorB.rotate(angle);
+    public void setMotor(double speed){
+    	if (speed < 0){
+    		motorA.backward();
+    		motorB.backward();
+    	} else {
+    		motorA.forward();
+			motorB.forward();
+    	}
+		motorA.setSpeed((int)speed);
+    	motorB.setSpeed((int)speed);
     }
+
 }
 
 
