@@ -25,7 +25,8 @@ public class Gyro extends Thread{
 		sensor = new HiTechnicGyro(port);
 		calculateOffset();		
 	}
-	public float getAngleVelocity(){
+	public void getAngleVelocity(){
+		while(true){
 		float temp = 0;
 		for(int i = 0; i < precicion; i++) {
 			sensor.fetchSample(sample, 0);
@@ -33,7 +34,8 @@ public class Gyro extends Thread{
 			temp = sample[0];
 		}
 		LCD.drawString(String.format("%3.2f", sample[0]-offset) + " m        "+ sensor.sampleSize(), 0, 3);
-		return sample[0]-offset;
+		}
+		//return sample[0]-offset;
 	}
 	//Beräkna offset i gyrosensor
 	private void calculateOffset() {
