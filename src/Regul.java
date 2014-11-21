@@ -48,7 +48,6 @@ public class Regul extends Thread {
     		e.printStackTrace();
     	}
     	while (true) {
-    		
     		pid.calculateOutput(g.getAngleVelocity(), 0);
     		pid.updateState(u);
 
