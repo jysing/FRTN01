@@ -15,14 +15,14 @@ public class Regul extends Thread {
     	setPriority(priority);
     }
     
-    /** Sets the parameters of the outer PID controller (outer controller). */
-    public void setOuterParameters(PIDParameters p) {
-    	controllerOuter.setParameters(p);
+    /** Sets the parameters of the PID controller */
+    public void setPIDParameters(PIDParameters p) {
+    	pid.setParameters(p);
     }
     
-    /** Returns the parameters of the outer PID controller (outer controller). */
-    public PIDParameters getOuterParameters() {
-    	return controllerOuter.getParameters();
+    /** Returns the parameters of the PID controller */
+    public PIDParameters getPIDParameters() {
+    	return pid.getParameters();
     }
     
     public void run() {
@@ -40,7 +40,7 @@ public class Regul extends Thread {
     		
     		
     		
-       		t = t + controllerInner.getHMillis();
+       		t = t + pid.getHMillis();
 			duration = t - System.currentTimeMillis();
 			if (duration > 0) {
 				try {
