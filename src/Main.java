@@ -5,6 +5,7 @@ public class Main {
 	
 	public static void main(String [] args){
 		Communication m = new Communication();
-		Regul regul = new Regul(1); //Highest priority
+		Regul regul = new Regul(2); //Next highest priority
+		Gyro g = new Gyro(regul, 1);
 	}
 }
