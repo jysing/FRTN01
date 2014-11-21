@@ -14,41 +14,22 @@ public class Gyro extends Thread{
 	public SampleProvider rate;
 	public float sample[];
 	public float offset=0;
-	private int precicion, current;
-	private String[] sampleBuffer;
+	private int precicion;
 	
 	
 	//Gyro can deliver 300 measurements per sample
 	public Gyro(int precicion){
 		this.precicion = precicion;
-		sampleBuffer = new String[precicion];
-		
-		for(int i = 0; i < precicion; i++) {
-			sampleBuffer[i] = "0";
-		}
+		sample = new float[sensor.sampleSize()];
 		
 		port = LocalEV3.get().getPort("S1");
 		sensor = new HiTechnicGyro(port);
-		sample = new float[sensor.sampleSize()];
 		calculateOffset();		
 	}
 	public void getAngleVelocity(){
 		while(true){
-		long averageSample = 0;
-		for(int i = 0; i < precicion; i++) {
-			sensor.fetchSample(sample, 0);
-			String s = String.format("%.2f", sample[0]);
-			if(!sampleBuffer[current].equals(s)){
-				current++;
-				current = current%10;
-				sampleBuffer[current] = s;
-			}
-		}
-		for(String nbr: sampleBuffer) {
-			averageSample += Long.parseLong(nbr);
-		}
-		averageSample = averageSample/10;
-		LCD.drawString(String.format("%3.2f", averageSample-offset) + " m        "+ sensor.sampleSize(), 0, 3);
+		sensor.fetchSample(sample, 0);
+		LCD.drawString(String.format("%3.2f", sample[0]-offset) + " m        "+ sensor.sampleSize(), 0, 3);
 		}
 		//return sample[0]-offset;
 	}
