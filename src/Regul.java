@@ -23,7 +23,7 @@ public class Regul extends Thread {
     	pid = new PID();
     	motorA = new EV3LargeRegulatedMotor(MotorPort.A);
     	motorA = new EV3LargeRegulatedMotor(MotorPort.B);
-		g = new Gyro(precicion);
+		g = new Gyro();
 		g.getAngleVelocity();
 		motorA.rotate(360);
     }
