@@ -18,25 +18,7 @@ public class Communication extends Thread {
 	public void run(){
 		Boolean isrunning=true;
 		while (true)
-		{
-			/*
-			try {
-			LCD.drawString("take a port", 1, 1);
-			ServerSocket serv = new ServerSocket(1111);
-			LCD.drawString("took a port",1,1);
-			Socket s = serv.accept(); //Wait for android to connect
-			LCD.drawString("android connected", 1, 1);
-			DataInputStream in = new DataInputStream(s.getInputStream());
-			DataOutputStream out = new DataOutputStream(s.getOutputStream());
-			
-			//Test msg from android
-			LCD.drawString(in.readUTF(),2,2);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			*/
-			
+		{			
 			LCD.drawString("Waiting",0,0);
 			//Listen for incoming connection
 			NXTCommConnector btc = Bluetooth.getNXTCommConnector();

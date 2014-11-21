@@ -5,29 +5,9 @@ import lejos.hardware.ev3.*;
 import lejos.robotics.SampleProvider;
 import java.util.concurrent.Semaphore;
 
-import se.lth.control.DoublePoint;
-import se.lth.control.realtime.AnalogIn;
-import se.lth.control.realtime.AnalogOut;
-import se.lth.control.realtime.IOChannelException;
-
-public class Regul extends Thread {
-	public static final int OFF=0, BEAM=1, BALL=2;
-	private int mode;
-	
-	private AnalogIn analogInAngle; 
-	private AnalogIn analogInPosition; 
-	private AnalogOut analogOut;
-	
-	private OpCom opCom;
-	private ReferenceGenerator refGen;
-	private PI controllerInner;
-	private PID controllerOuter;
-	private ModeMonitor modeMon;
+public class Regul extends Thread {		
+	private PID pid;
 	private Semaphore mutex;
-	private long startTime;
-	private boolean doRun;
-	private final double U_MIN = -10;
-	private final double U_MAX = 10;
 	
 	/** Inner monitor class for controller mode **/
 	class ModeMonitor {
