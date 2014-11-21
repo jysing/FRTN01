@@ -22,8 +22,6 @@ public class PID {
 		  p.Td = 1;
 		  p.N = 10;
 		  
-		  
-		  new PIDGUI(this, p, name);
 		  setParameters(p);
 		  
 		  this.I = 0.0;
