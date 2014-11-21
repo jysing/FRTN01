@@ -16,6 +16,7 @@ public class Regul extends Thread {
 	private Gyro g;
 	RegulatedMotor motorA;
 	RegulatedMotor motorB;
+	double u; // Control signal from PID
 
     /** Constructor. */
     public Regul (int priority) {
@@ -23,11 +24,14 @@ public class Regul extends Thread {
     	pid = new PID();
     	motorA = new EV3LargeRegulatedMotor(MotorPort.A);
 
+
     	motorB = new EV3LargeRegulatedMotor(MotorPort.B);
 		//g = new Gyro();
 
 		//g.getAngleVelocity();
 		motorA.setSpeed(1300);
+
+
 		motorA.forward();
 		motorB.setSpeed(1300);
 		motorB.forward();
@@ -48,25 +52,17 @@ public class Regul extends Thread {
     	long duration;
     	long t = System.currentTimeMillis();
     	long startTime = t;
-    	try {
+    	/*try {
     		mutex.acquire();
     	} catch (InterruptedException e) {
     		e.printStackTrace();
-    	}
+    	}*/
     	while (true) {
-   		
-       		t = t + pid.getHMillis();
-			duration = t - System.currentTimeMillis();
-			if (duration > 0) {
-				try {
-					sleep(duration);
-				} catch (InterruptedException e) {
-					System.out.println(e);
-				}
-			}
-			break;
+    		u = pid.calculateOutput((double)g.getAngleVelocity(), 0);
+    		pid.updateState(u);
+    				//L�gg in en sleep funktion
     	}
-    	mutex.release();
+    	//mutex.release();
     }
 }
 
