@@ -23,6 +23,7 @@ public class Gyro extends Thread{
 		
 		port = LocalEV3.get().getPort("S1");
 		sensor = new HiTechnicGyro(port);
+		sample = new float[sensor.sampleSize()];
 		calculateOffset();		
 	}
 	public void getAngleVelocity(){
@@ -46,12 +47,10 @@ public class Gyro extends Thread{
 			try {
 				sleep(10);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		offset = offset/count;
-		//offset = Math.round(offset);
 	}
 }
 
