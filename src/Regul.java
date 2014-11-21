@@ -53,9 +53,16 @@ public class Regul extends Thread {
     	while (true) {
     		u = pid.calculateOutput((double)g.getAngleVelocity(), 0);
     		pid.updateState(u);
-    				//Lägg in en sleep funktion
+    		setMotor(u,360);
+    		motorA.forward();
+    		//Lägg in en sleep funktion
     	}
     	//mutex.release();
+    }
+    
+    public void setMotor(double speed, int angle){
+    	motorA.setSpeed((int)speed);
+		motorB.rotate(angle);
     }
 }
 
