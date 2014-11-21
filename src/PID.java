@@ -24,10 +24,10 @@ public class PID {
 		  
 		  setParameters(p);
 		  
-		  this.I = 0.0;
-		  this.v = 0.0;
-		  this.e = 0.0;
-		  this.D = 0.0;
+		  this.I = 0;
+		  this.v = 0;
+		  this.e = 0;
+		  this.D = 0;
 	}
 	
 	// Calculates the control signal v.
