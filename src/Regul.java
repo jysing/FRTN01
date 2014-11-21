@@ -10,7 +10,6 @@ import java.util.concurrent.Semaphore;
 
 public class Regul extends Thread {		
 	
-	public final static int precicion = 10;
 	private PID pid;
 	private Semaphore mutex;
 	private Gyro g;
