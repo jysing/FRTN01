@@ -36,17 +36,12 @@ public class Gyro {// extends Thread{
 	}
 	
 	public double getAngle() {
-<<<<<<< HEAD
-		//LCD.drawString(String.format("%3.2f", angle) + " m        "+ sensor.sampleSize(), 0, 3);
-		return angle;
-=======
 		difference = System.currentTimeMillis() - time;
 		time = time + difference;
 		return angle += (double)getAngleVelocity()*difference;
 		
 		//LCD.drawString(String.format("%3.2f", angle) + " m        "+ sensor.sampleSize(), 0, 3);
 		//return angle;
->>>>>>> 92cc75729130bf36908f1f93711a36ee5d5d9192
 	}
 	
 	/*
