@@ -31,7 +31,7 @@ public class PID {
 	}
 	
 	// Calculates the control signal v.
-	// Called from BallAndBeamRegul.
+	// Called from BallAndBeamRegul.	
 	public synchronized double calculateOutput(double y, double yref){
 		this.y = y;
 		this.e = yref - y;
