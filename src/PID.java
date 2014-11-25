@@ -3,12 +3,12 @@ public class PID {
 	// Current PID parameters
 	private PIDParameters p;
 
-	  private double I; // Integrator state
-	  private double v; // Desired control signal
-	  private double e; // Current control error
-	  private double D; // Derivative state
-	  private double yOld=0;
-	  private double y = 0;
+	private double I; // Integrator state
+	private double v; // Desired control signal
+	private double e; // Current control error
+	private double D; // Derivative state
+	private double yOld=0;
+	private double y = 0;
 	
 	// Constructor
 	public PID(){
@@ -18,8 +18,8 @@ public class PID {
 		  p.integratorOn = false;
 		  p.K = -0.2;
 		  p.Ti = 0.0;
-		  p.Tr = 10.0;
-		  p.Td = 0;
+		  p.Tr = 0.0;
+		  p.Td = 0.0;
 		  p.N = 10;
 		  
 		  setParameters(p);
@@ -31,7 +31,7 @@ public class PID {
 	}
 	
 	// Calculates the control signal v.
-	// Called from BallAndBeamRegul.
+	// Called from BallAndBeamRegul.	
 	public synchronized double calculateOutput(double y, double yref){
 		this.y = y;
 		this.e = yref - y;
@@ -68,6 +68,7 @@ public class PID {
 			I = 0.0;
 		}
 	}
+	
 	 public synchronized void reset() {
 		 I = 0;
 		 D = 0;
