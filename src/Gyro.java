@@ -28,12 +28,12 @@ public class Gyro extends Thread{
 	
 	public float getAngleVelocity(){
 		sensor.fetchSample(sample, 0);
-		LCD.drawString(String.format("%3.2f", sample[0]-offset) + " m        "+ sensor.sampleSize(), 0, 4);
+		//LCD.drawString(String.format("%3.2f", sample[0]-offset) + " m        "+ sensor.sampleSize(), 0, 4);
 		return sample[0]-offset;
 	}
 	
 	public double getAngle() {
-		LCD.drawString(String.format("%3.2f", angle) + " m        "+ sensor.sampleSize(), 0, 3);
+		//LCD.drawString(String.format("%3.2f", angle) + " m        "+ sensor.sampleSize(), 0, 3);
 		return angle;
 	}
 	
