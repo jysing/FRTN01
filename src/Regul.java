@@ -12,20 +12,19 @@ public class Regul extends Thread {
 	
 	private PID pid;
 	private Semaphore mutex;
-	private Gyro g;
+	private Gyro gyro;
 	RegulatedMotor motorA;
 	RegulatedMotor motorB;
 	double u; // Control signal from PID
 	double angVel; // angluarVelocity
 
     /** Constructor. */
-    public Regul (int priority) {
+    public Regul (Gyro gyro, int priority) {
     	setPriority(priority);
+    	this.gyro = gyro;
     	pid = new PID();
     	motorA = new EV3LargeRegulatedMotor(MotorPort.A);
     	motorB = new EV3LargeRegulatedMotor(MotorPort.B);
-		//g = new Gyro();
-		//g.getAngleVelocity();
     }
     
     /** Sets the parameters of the PID controller */
@@ -48,7 +47,7 @@ public class Regul extends Thread {
     		e.printStackTrace();
     	}*/
     	while (true) {
-    		angVel = (double)g.getAngleVelocity();
+    		angVel = (double)gyro.getAngleVelocity();
     		u = pid.calculateOutput(angVel, 0);
     		pid.updateState(u);
     		setMotor(u);
