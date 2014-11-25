@@ -11,7 +11,7 @@ public class Regul extends Thread {
 	RegulatedMotor motorB;
 	double u; // Control signal from PID
 	double angVel, ang; // angluarVelocity and current angle
-	private static final double weightAng = 0.1, weightAngVel = 1;
+	private static final double weightAng = 1, weightAngVel = 2;
 
     /** Constructor. */
     public Regul (Gyro gyro, int priority) {
