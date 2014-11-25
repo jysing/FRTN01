@@ -53,12 +53,14 @@ public class Gyro extends Thread{
 	}
 	
 	public void run() {
-		angle = angle + getAngleVelocity()*period;
+		while(true) {
+			angle = angle + getAngleVelocity()*period;
 		
-		try {
-			Thread.sleep(period);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+			try {
+				Thread.sleep(period);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
