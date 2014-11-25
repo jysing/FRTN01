@@ -14,7 +14,7 @@ public class Gyro extends Thread{
 	public SampleProvider rate;
 	public float sample[];
 	public float offset=0;
-	private float angle;
+	private double angle;
 	
 	//Gyro can deliver 300 measurements per second
 	public Gyro(int priority){	
@@ -28,11 +28,11 @@ public class Gyro extends Thread{
 	
 	public float getAngleVelocity(){
 		sensor.fetchSample(sample, 0);
-		LCD.drawString(String.format("%3.2f", sample[0]-offset) + " m        "+ sensor.sampleSize(), 0, 3);
+		//LCD.drawString(String.format("%3.2f", sample[0]-offset) + " m        "+ sensor.sampleSize(), 0, 3);
 		return sample[0]-offset;
 	}
 	
-	public float getAngle() {
+	public double getAngle() {
 		return angle;
 	}
 	
@@ -52,7 +52,7 @@ public class Gyro extends Thread{
 	
 	public void run() {
 		while(true) {
-			angle = angle + getAngleVelocity()*period;
+			angle = (double)(angle + getAngleVelocity()*period);
 		
 			try {
 				Thread.sleep(period);
