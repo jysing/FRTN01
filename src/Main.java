@@ -5,7 +5,9 @@ public class Main {
 	
 	public static void main(String [] args){
 		Communication m = new Communication();
-		Regul regul = new Regul(2); //Next highest priority
-		Gyro g = new Gyro(regul, 1);
+		Gyro gyro = new Gyro(1);
+		Regul regul = new Regul(gyro,2); //Next highest priority.
+									//Reason is to get more accurate samples.
+									//Might need to be changed to highest later on.
 	}
 }
