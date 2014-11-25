@@ -26,10 +26,7 @@ public class Regul extends Thread {
     	this.gyro = gyro;
     	pid = new PID();
     	motorA = new EV3LargeRegulatedMotor(MotorPort.A);
-
-
     	motorB = new EV3LargeRegulatedMotor(MotorPort.B);
-
     }
     
     /** Sets the parameters of the PID controller */
@@ -42,40 +39,27 @@ public class Regul extends Thread {
     	return pid.getParameters();
     }
     
-    public void run() {
-    	//long duration;
-    	//long t = System.currentTimeMillis();
-    	//long startTime = t;
-    	/*try {
-    		mutex.acquire();
-    	} catch (InterruptedException e) {
-    		e.printStackTrace();
-    	}*/
-    	while (true) {
-    		angVel = (double)gyro.getAngleVelocity();
-    		ang = (double)gyro.getAngle();
-    		u = pid.calculateOutput(weightAngVel*angVel+weightAng*ang, 0);
-    		pid.updateState(u);
-
-    		setMotor(u);
-    		//L�gg in en sleep funktion
-    	}
-    	//mutex.release();
-    }
-    
     public void setMotor(double speed){
     	if (speed < 0){
     		motorA.backward();
     		motorB.backward();
     	} else {
     		motorA.forward();
-			motorB.forward();
+    		motorB.forward();
     	}
-		motorA.setSpeed((int)speed);
+    	motorA.setSpeed((int)speed);
     	motorB.setSpeed((int)speed);
     }
-
-
+    
+    public void run() {
+    	while (true) {
+    		angVel = (double)gyro.getAngleVelocity();
+    		ang = (double)gyro.getAngle();
+    		u = pid.calculateOutput(weightAngVel*angVel+weightAng*ang, 0);
+    		pid.updateState(u);
+    		setMotor(u);
+    	}
+    }
 }
 
 

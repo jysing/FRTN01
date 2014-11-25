@@ -3,12 +3,12 @@ public class PID {
 	// Current PID parameters
 	private PIDParameters p;
 
-	  private double I; // Integrator state
-	  private double v; // Desired control signal
-	  private double e; // Current control error
-	  private double D; // Derivative state
-	  private double yOld=0;
-	  private double y = 0;
+	private double I; // Integrator state
+	private double v; // Desired control signal
+	private double e; // Current control error
+	private double D; // Derivative state
+	private double yOld=0;
+	private double y = 0;
 	
 	// Constructor
 	public PID(){
@@ -68,6 +68,7 @@ public class PID {
 			I = 0.0;
 		}
 	}
+	
 	 public synchronized void reset() {
 		 I = 0;
 		 D = 0;

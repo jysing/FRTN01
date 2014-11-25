@@ -7,7 +7,6 @@ import lejos.hardware.sensor.HiTechnicGyro;
 import lejos.hardware.sensor.SensorModes;
 import lejos.robotics.SampleProvider;
 
-
 public class Gyro extends Thread{
 	private static final long period = 10;
 	private Port port;
@@ -37,7 +36,6 @@ public class Gyro extends Thread{
 		return angle;
 	}
 	
-	//Beräkna offset i gyrosensor
 	private void calculateOffset() {
 		int count = 10;
 		for(int i = 0; i<count; i++){
@@ -64,5 +62,3 @@ public class Gyro extends Thread{
 		}
 	}
 }
-
-
