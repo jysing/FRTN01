@@ -7,7 +7,7 @@ import lejos.hardware.sensor.HiTechnicGyro;
 import lejos.hardware.sensor.SensorModes;
 import lejos.robotics.SampleProvider;
 
-public class Gyro extends Thread{
+public class Gyro {// extends Thread{
 	private static final long period = 5;
 	private Port port;
 	private HiTechnicGyro sensor;
@@ -16,14 +16,17 @@ public class Gyro extends Thread{
 	public float offset=0;
 	private double angle;
 	
+	private long time, difference;
+	
 	//Gyro can deliver 300 measurements per second
-	public Gyro(int priority){	
-		setPriority(priority);
+	public Gyro(){	
+		//setPriority(priority);
 		
 		port = LocalEV3.get().getPort("S1");
 		sensor = new HiTechnicGyro(port);
 		sample = new float[sensor.sampleSize()];
-		calculateOffset();
+		//calculateOffset();
+		time = System.currentTimeMillis();
 	}
 	
 	public float getAngleVelocity(){
@@ -33,11 +36,21 @@ public class Gyro extends Thread{
 	}
 	
 	public double getAngle() {
+<<<<<<< HEAD
 		//LCD.drawString(String.format("%3.2f", angle) + " m        "+ sensor.sampleSize(), 0, 3);
 		return angle;
+=======
+		difference = System.currentTimeMillis() - time;
+		time = time + difference;
+		return angle += (double)getAngleVelocity()*difference;
+		
+		//LCD.drawString(String.format("%3.2f", angle) + " m        "+ sensor.sampleSize(), 0, 3);
+		//return angle;
+>>>>>>> 92cc75729130bf36908f1f93711a36ee5d5d9192
 	}
 	
-	private void calculateOffset() {
+	/*
+	public void calculateOffset() {
 		int count = 100;
 		for(int i = 0; i<count; i++){
 			sensor.fetchSample(sample,0);
@@ -50,7 +63,13 @@ public class Gyro extends Thread{
 		}
 		offset = offset/count;
 	}
+	*/
+
+	public void setOffset(float offset) {
+		this.offset = offset;
+	}
 	
+	/*
 	public void run() {
 		while(true) {
 			angle = (double)(angle + getAngleVelocity()*period/1000);
@@ -62,4 +81,5 @@ public class Gyro extends Thread{
 			}
 		}
 	}
+	*/
 }
