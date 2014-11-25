@@ -10,6 +10,7 @@ import java.util.concurrent.Semaphore;
 
 public class Regul extends Thread {		
 	
+	public final static int precicion = 10;
 	private PID pid;
 	private Semaphore mutex;
 	private Gyro g;
@@ -22,9 +23,13 @@ public class Regul extends Thread {
     	setPriority(priority);
     	pid = new PID();
     	motorA = new EV3LargeRegulatedMotor(MotorPort.A);
+
+
     	motorB = new EV3LargeRegulatedMotor(MotorPort.B);
-		
-    	motorA.setSpeed(1300);
+		//g = new Gyro();
+
+		//g.getAngleVelocity();
+		motorA.setSpeed(1300);
 		motorA.forward();
 		motorB.setSpeed(1300);
 		motorB.forward();
@@ -53,16 +58,9 @@ public class Regul extends Thread {
     	while (true) {
     		u = pid.calculateOutput((double)g.getAngleVelocity(), 0);
     		pid.updateState(u);
-    		setMotor(u,360);
-    		motorA.forward();
-    		//Lägg in en sleep funktion
+    				//Lï¿½gg in en sleep funktion
     	}
     	//mutex.release();
-    }
-    
-    public void setMotor(double speed, int angle){
-    	motorA.setSpeed((int)speed);
-		motorB.rotate(angle);
     }
 }
 
