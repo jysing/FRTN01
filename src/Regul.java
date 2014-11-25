@@ -17,7 +17,8 @@ public class Regul extends Thread {
 	RegulatedMotor motorA;
 	RegulatedMotor motorB;
 	double u; // Control signal from PID
-	double angVel; // angluarVelocity
+	double angVel, ang; // angluarVelocity and current angle
+	private static final double weightAng = 1, weightAngVel = 1;
 
     /** Constructor. */
     public Regul (Gyro gyro, int priority) {
@@ -52,7 +53,8 @@ public class Regul extends Thread {
     	}*/
     	while (true) {
     		angVel = (double)gyro.getAngleVelocity();
-    		u = pid.calculateOutput(angVel, 0);
+    		ang = (double)gyro.getAngle();
+    		u = pid.calculateOutput(weightAngVel*angVel+weightAng*ang, 0);
     		pid.updateState(u);
 
     		setMotor(u);
