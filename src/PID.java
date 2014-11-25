@@ -19,8 +19,8 @@ public class PID {
 		  p.K = -0.2;
 		  p.Ti = 0.0;
 		  p.Tr = 0.0;
-		  p.Td = 1;
-		  p.N = 10;
+		  p.Td = 0.0;
+		  p.N = 10;//micke suger
 		  
 		  setParameters(p);
 		  
