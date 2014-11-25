@@ -39,9 +39,9 @@ public class Regul extends Thread {
     }
     
     public void run() {
-    	long duration;
-    	long t = System.currentTimeMillis();
-    	long startTime = t;
+    	//long duration;
+    	//long t = System.currentTimeMillis();
+    	//long startTime = t;
     	/*try {
     		mutex.acquire();
     	} catch (InterruptedException e) {
