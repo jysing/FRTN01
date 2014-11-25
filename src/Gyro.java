@@ -48,9 +48,8 @@ public class Gyro extends Thread{
 	}
 	
 	public void run() {
-		
-		
 		try {
+			regul.setAngle(sample[0]*period);
 			Thread.sleep(period);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
