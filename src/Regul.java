@@ -1,18 +1,11 @@
-import lejos.hardware.sensor.*;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.*;
-import lejos.hardware.Device.*;
-import lejos.hardware.ev3.*;
 import lejos.robotics.RegulatedMotor;
-import lejos.robotics.SampleProvider;
-
-import java.util.concurrent.Semaphore;
 
 public class Regul extends Thread {		
 	
 	public final static int precicion = 10;
 	private PID pid;
-	private Semaphore mutex;
 	private Gyro gyro;
 	RegulatedMotor motorA;
 	RegulatedMotor motorB;

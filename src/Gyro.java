@@ -1,10 +1,6 @@
-import lejos.hardware.Button;
 import lejos.hardware.ev3.LocalEV3;
-import lejos.hardware.lcd.LCD;
 import lejos.hardware.port.Port;
-import lejos.hardware.sensor.EV3GyroSensor;
 import lejos.hardware.sensor.HiTechnicGyro;
-import lejos.hardware.sensor.SensorModes;
 import lejos.robotics.SampleProvider;
 
 public class Gyro extends Thread{
