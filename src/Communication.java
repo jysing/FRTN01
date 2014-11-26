@@ -6,6 +6,7 @@ import java.net.Socket;
 
 import lejos.hardware.Bluetooth;
 import lejos.hardware.lcd.LCD;
+import lejos.remote.ev3.RemoteEV3;
 import lejos.remote.nxt.NXTCommConnector;
 import lejos.remote.nxt.NXTConnection;
 
@@ -24,25 +25,18 @@ public class Communication extends Thread {
 		Boolean isrunning=true;
 		while (true)
 		{			
+			try{
+			//RemoteEV3 ev3 = new RemoteEV3("130.235.32.50");
+			
+			} catch (Exception e){
+				
+			}
 			LCD.drawString("Waiting",0,0);
 			//Listen for incoming connection
-			//[...]
-			try{
-			serv = new ServerSocket(1111);
-			s = serv.accept(); //Wait for Laptop to connect
-			in = new DataInputStream(s.getInputStream());
-			out = new DataOutputStream(s.getOutputStream());
-			} catch (IOException e){
-				
-			}
+	
+			LCD.drawString("phone is connected", 0, 1);
 			//Test msg from laptop
-			try{
-			System.out.println(in.readUTF());
-			} catch (IOException e){
-				
-			}
-			//[...]
-			
+			//System.out.println(in.readUTF());
 			//NXTCommConnector btc = Bluetooth.getNXTCommConnector();
 			LCD.drawString("Got connector",0,1);
 			//NXTConnection connection = btc.waitForConnection(10000,NXTConnection.RAW);
