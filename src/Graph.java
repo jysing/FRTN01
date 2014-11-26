@@ -1,3 +1,6 @@
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -6,25 +9,20 @@ import lejos.remote.ev3.RMISampleProvider;
 import lejos.remote.ev3.RemoteEV3;
 import lejos.robotics.SampleProvider;
 
-public class Graph implements RMISampleProvider {
-	float[] info;
+public class Graph {
+	PrintWriter writer;
 	
-	public Graph() throws Exception {
-		info = new float[10000];
-	}
-
-	@Override
-	public void close() throws RemoteException {
-		
-	}
-
-	@Override
-	public float[] fetchSample() throws RemoteException {
-		for(int i = 0; i < 10000; i++) {
-			info[i] = i;
+	public Graph() {
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter("graphInfo.txt", "UTF-8");
+			writer.println("The first line");
+			writer.println("The second line");
+			writer.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
 		}
-		return info;
 	}
-
-	
 }
