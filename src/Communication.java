@@ -12,10 +12,7 @@ import lejos.remote.nxt.NXTConnection;
 
 public class Communication extends Thread {
 	
-	ServerSocket serv;
-	Socket s;
-	DataInputStream in;
-	DataOutputStream out;
+	RemoteEV3 ev3;
 
 	public Communication() {
 		this.start();
@@ -23,32 +20,26 @@ public class Communication extends Thread {
 
 	public void run(){
 		Boolean isrunning=true;
+		try{
+		ev3 = new RemoteEV3("130.235.126.71");
+		} catch (Exception e){
+			
+		}
 		while (true)
 		{			
-			try{
-			//RemoteEV3 ev3 = new RemoteEV3("130.235.32.50");
-			
-			} catch (Exception e){
-				
-			}
 			LCD.drawString("Waiting",0,0);
 			//Listen for incoming connection
-	
-			LCD.drawString("phone is connected", 0, 1);
-			//Test msg from laptop
-			//System.out.println(in.readUTF());
-			//NXTCommConnector btc = Bluetooth.getNXTCommConnector();
+			NXTCommConnector btc = Bluetooth.getNXTCommConnector();
 			LCD.drawString("Got connector",0,1);
-			//NXTConnection connection = btc.waitForConnection(10000,NXTConnection.RAW);
+			NXTConnection connection = btc.waitForConnection(10000,NXTConnection.RAW);
 			LCD.drawString("Connected",0,1);
 			//The InputStream for read data 
-			//DataInputStream dis = connection.openDataInputStream();
+			DataInputStream dis = connection.openDataInputStream();
 			//loop for read data    
 			while(isrunning){
 				Byte n=-1;
 				try {
-					//n=dis.readByte();
-					n=in.readByte();
+					n=dis.readByte();
 				} catch (IOException e) {
 					LCD.drawString("Reading from input aborted", 0, 0);
 				}
@@ -56,8 +47,7 @@ public class Communication extends Thread {
 				LCD.drawInt(n, 4, 4);
 			}
 			try {
-				//dis.close();
-				in.close();
+				dis.close();
 			} catch (IOException e1) {
 				LCD.drawString("Failed to close DataInputStream", 0, 0);
 			}
@@ -71,8 +61,7 @@ public class Communication extends Thread {
 			LCD.drawString("Closing",0,0);
 			LCD.refresh();
 			try {
-				//connection.close();
-				serv.close();
+				connection.close();
 			} catch (IOException e) {
 				LCD.drawString("Failed to close connection", 0, 0);
 				e.printStackTrace();
