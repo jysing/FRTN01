@@ -20,15 +20,20 @@ public class Communication extends Thread {
 
 	public void run(){
 		Boolean isrunning=true;
-		try{
-		ev3 = new RemoteEV3("130.235.126.71");
-		} catch (Exception e){
-			
-		}
+		
 		while (true)
 		{			
 			LCD.drawString("Waiting",0,0);
 			//Listen for incoming connection
+			try{
+				ev3 = new RemoteEV3("130.235.126.71");
+				ev3.getBluetoothDevice().authenticate("130.235.126.71", "123456");
+				LCD.drawString("Success.", 0, 0);
+				break;
+				} catch (Exception e){
+					
+			}
+			/*
 			NXTCommConnector btc = Bluetooth.getNXTCommConnector();
 			LCD.drawString("Got connector",0,1);
 			NXTConnection connection = btc.waitForConnection(10000,NXTConnection.RAW);
@@ -66,7 +71,7 @@ public class Communication extends Thread {
 				LCD.drawString("Failed to close connection", 0, 0);
 				e.printStackTrace();
 			}
-			LCD.clear();
+			LCD.clear();*/
 		}
 	}
 }
