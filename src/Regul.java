@@ -11,7 +11,7 @@ public class Regul extends Thread {
 	RegulatedMotor motorB;
 	double u; // Control signal from PID
 	double angVel, ang; // angluarVelocity and current angle
-	private static final double weightAng = 1, weightAngVel = 2;
+	private static final double weightAng = 1, weightAngVel = 1;
 
     /** Constructor. */
     public Regul (Gyro gyro, int priority) {
@@ -45,6 +45,7 @@ public class Regul extends Thread {
     }
     
     public void run() {
+    	calculateOffset();
     	while (true) {
     		angVel = (double)gyro.getAngleVelocity();
     		ang = (double)gyro.getAngle();
@@ -53,6 +54,23 @@ public class Regul extends Thread {
     		setMotor(u);
     	}
     }
+    
+    public void calculateOffset() {
+    	float offset = 0;
+    	float sample = 0;
+		int count = 100;
+		for(int i = 0; i<count; i++){
+			sample = gyro.getAngleVelocity();
+			//sensor.fetchSample(sample,0);
+			offset = offset + sample;
+			try {
+				sleep(5);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		gyro.setOffset(offset/count);
+	}
 }
 
 

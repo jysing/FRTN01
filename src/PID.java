@@ -17,10 +17,14 @@ public class PID {
 		  p.H = 0.02;
 		  p.integratorOn = false;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		  p.K = 0.75;
 =======
 		  p.K = 17;
 >>>>>>> 1001edc34768f246c34c31e976fca7ca3221669d
+=======
+		  p.K = 8;
+>>>>>>> 76da1294468b02fa0b5c3d29eb3aae2928f3522d
 		  p.Ti = 0.0;
 		  p.Tr = 0.0;
 		  p.Td = 0.0;
