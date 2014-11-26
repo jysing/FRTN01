@@ -1,4 +1,6 @@
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -16,8 +18,14 @@ public class Graph {
 		PrintWriter writer;
 		try {
 			writer = new PrintWriter("graphInfo.txt", "UTF-8");
-			writer.println("The first line");
-			writer.println("The second line");
+			BufferedWriter bw = new BufferedWriter(writer);
+			try {
+				bw.write("The first line");
+				bw.write("The second line");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			writer.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
