@@ -5,6 +5,7 @@ public class Main {
 	
 	public static void main(String [] args){
 		Gyro gyro = new Gyro();
+		Communication m = new Communication();
 		//gyro.start();
 		Regul regul = new Regul(gyro,2); //Next highest priority.
 									//Reason is to get more accurate samples.
