@@ -3,7 +3,7 @@ import java.io.IOException;
 public class Main {
 	
 	public static void main(String [] args){
-		int timeout = 10000;
+		int timeout = 1000000;
 		Communication ms;
 		try {
 			ms = new Communication(6666, timeout);
