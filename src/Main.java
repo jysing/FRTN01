@@ -14,11 +14,7 @@ public class Main {
 			LCD.drawString("massive connection error", 0, 2);
 			e.printStackTrace();
 		}
-		try {
-		Graph graph = new Graph(comm);
-		} catch (Exception e){
-			System.out.println("Cannot create graph()");
-		}
+		
 		Gyro gyro = new Gyro();
 		Regul regul = new Regul(gyro,comm,2);
 		regul.start();
