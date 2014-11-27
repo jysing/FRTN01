@@ -63,6 +63,7 @@ public class Communication {
 		return response;
 	}
 
+	/*
 	public void theMain() {
 		int port = 6666;
 		int timeout = 30000;
@@ -106,4 +107,5 @@ public class Communication {
 			}
 		}
 	}
+	*/
 }
