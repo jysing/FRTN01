@@ -10,9 +10,6 @@ public class Main {
 		try {
 			comm = new Communication(port, timeout);
 			comm.connect();
-			if (comm.isConnected()) {
-				comm.send("oj oj oj vad detta fungerade bra");
-			} 
 		} catch (IOException e) {
 			LCD.drawString("massive connection error", 0, 2);
 			e.printStackTrace();

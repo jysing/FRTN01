@@ -63,7 +63,7 @@ public class Graph {
             		System.out.println("soc.receive() doesn't work.");
             	}
             	if (!message.equals("Fel")){
-            		int num = Integer.parseInt(message); //Mätdata
+            		double num = Double.parseDouble(message); //Mï¿½tdata
             		System.out.println(num);
             		ts.addOrUpdate(new Millisecond(), num);
             		try {
