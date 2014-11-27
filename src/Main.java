@@ -2,21 +2,20 @@ import java.io.IOException;
 import lejos.hardware.lcd.LCD;
 
 public class Main {
-
+	private static final int port = 6666, timeout = 30000;
+	private static final int regulPrio = 2, graphPrio = 1;
 	public static void main(String [] args){
-		int port = 6666;
-		int timeout = 30000;
+		Gyro gyro = new Gyro();
+		Regul regul = new Regul(gyro, regulPrio);
 		Communication comm = null;
 		try {
-			comm = new Communication(port, timeout);
+			comm = new Communication(regul, port, timeout, graphPrio);
 			comm.connect();
 		} catch (IOException e) {
 			LCD.drawString("massive connection error", 0, 2);
 			e.printStackTrace();
 		}
 		
-		Gyro gyro = new Gyro();
-		Regul regul = new Regul(gyro,comm, 2);
 		regul.start();
 		
 	}

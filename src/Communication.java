@@ -6,16 +6,33 @@ import java.net.Socket;
 
 import lejos.hardware.lcd.LCD;
 
-public class Communication {
+public class Communication extends Thread {
 
+	private static final long period = 10;
 	private final ServerSocket serverSocket;
 	private Socket server;
 	private DataOutputStream out;
 	private DataInputStream in;
+	private Regul regul;
 
-	public Communication(int port, int timeout) throws IOException {
+	public Communication(Regul regul, int port, int timeout, int priority)
+			throws IOException {
+		setPriority(priority);
+		this.regul = regul;
 		serverSocket = new ServerSocket(port);
 		serverSocket.setSoTimeout(timeout);
+	}
+
+	public void run() {
+		while (true) {
+			send(String.valueOf(regul.getU()));
+			try {
+				sleep(period);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void connect() throws IOException {
@@ -49,7 +66,7 @@ public class Communication {
 	public void connectionLost() {
 		server = null;
 	}
-	
+
 	public void send(String message) {
 		try {
 			out.writeUTF(message);
@@ -57,7 +74,7 @@ public class Communication {
 			LCD.drawString("Can't send message", 0, 3);
 		}
 	}
-	
+
 	public String receive() throws IOException {
 		String response = in.readUTF();
 		return response;
