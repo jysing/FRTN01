@@ -7,7 +7,7 @@ public class SocketClient extends Thread{
 
     private final String server;
     private final int port;
-    private static final long period = 50;
+    private static final long period = 100;
     private Socket client;
     private DataInputStream in;
     private DataOutputStream out;
