@@ -12,8 +12,7 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
 public class Graph {
-	@SuppressWarnings("deprecation")
-	static TimeSeries ts = new TimeSeries("Data", Millisecond.class);
+	
 	//static TimeSeries ts2 = new TimeSeries("Measurement 2", Millisecond.class);
 	JFrame frame;
 	
@@ -21,14 +20,14 @@ public class Graph {
 		setup(sc);
 	}
 	private void setup(SocketClient sc){
-		gen myGen = new gen(sc);
- 		new Thread(myGen).start();
  		frame = new JFrame("Plot deluxe");
  		frame.setLayout(new GridLayout(1,0));
  		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	public void createWindow(SocketClient sc, String graphName, String xValue, String yValue) throws InterruptedException {
+	public void createWindow(SocketClient sc, String graphName, String xValue, String yValue, String data) throws InterruptedException {
+		@SuppressWarnings("deprecation")
+		final TimeSeries ts = new TimeSeries(data, Millisecond.class); //static?
 		TimeSeriesCollection dataset = new TimeSeriesCollection(ts);
  		JFreeChart chart = ChartFactory.createTimeSeriesChart(graphName,
  				xValue, yValue, dataset, true, true, false);
@@ -40,13 +39,18 @@ public class Graph {
  		frame.getContentPane().add(label);
  		frame.pack();
  		frame.setVisible(true);
+ 		
+ 		gen myGen = new gen(sc, ts);
+ 		new Thread(myGen).start();
 	}
 
 	static class gen implements Runnable {
 		private String message;
 		private SocketClient soc;
-
-		public gen(SocketClient sc) {
+		private TimeSeries ts;
+		
+		public gen(SocketClient sc, TimeSeries timeseries) {
+			ts = timeseries;
 			soc = sc;
 		}
 
