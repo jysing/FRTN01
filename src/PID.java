@@ -16,10 +16,10 @@ public class PID {
 		  p.Beta = 1.0;
 		  p.H = 0.02;
 		  p.integratorOn = false;
-		  p.K = 7;
+		  p.K = 7; //K =7
 		  p.Ti = 0.0;
 		  p.Tr = 0.0;
-		  p.Td = 0.0;
+		  p.Td = 1.0;
 		  p.N = 5;
 		  
 		  setParameters(p);

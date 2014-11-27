@@ -26,8 +26,8 @@ public class Communication extends Thread {
 			LCD.drawString("Waiting",0,0);
 			//Listen for incoming connection
 			try{
-				ev3 = new RemoteEV3("130.235.126.71");
-				ev3.getBluetoothDevice().authenticate("130.235.126.71", "123456");
+				ev3 = new RemoteEV3("10.0.1.1");
+				ev3.getBluetoothDevice().authenticate("10.0.1.1", "1234");
 				LCD.drawString("Success.", 0, 0);
 				break;
 				} catch (Exception e){
