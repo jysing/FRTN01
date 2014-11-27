@@ -1,4 +1,3 @@
-import java.util.Random;
 import javax.swing.JFrame;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -11,9 +10,11 @@ import org.jfree.data.time.TimeSeriesCollection;
 
 public class Graph {
     static TimeSeries ts = new TimeSeries("data", Millisecond.class);
-
-    public static void main(String[] args) throws InterruptedException {
-        gen myGen = new gen();
+    Communication comm;
+    //public static void main(String[] args) throws InterruptedException {
+    	public Graph (Communication com) throws InterruptedException {
+    	comm = com;
+    	gen myGen = new gen(comm);
         new Thread(myGen).start();
 
         TimeSeriesCollection dataset = new TimeSeriesCollection(ts);
@@ -39,23 +40,37 @@ public class Graph {
 
         frame.pack();
         frame.setVisible(true);
-    }
+    //}
+    	}
 
     static class gen implements Runnable {
-        private Random randGen = new Random();
+    	Communication comm;
+    	String message;
+    	public gen (Communication com){
+    		comm = com;
+    	}
 
         public void run() {
             while(true) {
-                int num = randGen.nextInt(1000);
-                System.out.println(num);
-                ts.addOrUpdate(new Millisecond(), num);
-                try {
-                    Thread.sleep(20);
-                } catch (InterruptedException ex) {
-                    System.out.println(ex);
-                }
+            	try{
+            	message = comm.receive();
+            	} catch (Exception e){
+            		System.out.println("comm.receive() doesn't work. (Typsikt MAC)");
+            	}
+            	if (message != "Fel"){
+            		int num = Integer.parseInt(message); //Mätdata
+            		System.out.println(num);
+            		ts.addOrUpdate(new Millisecond(), num);
+            		try {
+            			Thread.sleep(20);
+            		} catch (InterruptedException ex) {
+            			System.out.println(ex);
+            		}
+            	}
             }
         }
     }
-
 }
+// Reference:
+//
+// http://stackoverflow.com/questions/1389285/real-time-graphing-in-java
