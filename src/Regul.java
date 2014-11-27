@@ -1,5 +1,8 @@
+import lejos.hardware.motor.BasicMotor;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.hardware.motor.NXTMotor;
 import lejos.hardware.port.*;
+import lejos.robotics.EncoderMotor;
 import lejos.robotics.RegulatedMotor;
 
 public class Regul extends Thread {		
@@ -7,8 +10,11 @@ public class Regul extends Thread {
 	public final static int precicion = 10;
 	private PID pid;
 	private Gyro gyro;
-	RegulatedMotor motorA;
-	RegulatedMotor motorB;
+	//RegulatedMotor motorA;
+	//RegulatedMotor motorB;
+	EncoderMotor motorA;
+	EncoderMotor motorB;
+	
 	double u; // Control signal from PID
 	double angVel, ang; // angluarVelocity and current angle
 	private static final double weightAng = 1, weightAngVel = 1;
@@ -18,8 +24,10 @@ public class Regul extends Thread {
     	setPriority(priority);
     	this.gyro = gyro;
     	pid = new PID();
-    	motorA = new EV3LargeRegulatedMotor(MotorPort.A);
-    	motorB = new EV3LargeRegulatedMotor(MotorPort.B);
+    	motorA = new NXTMotor(MotorPort.A);
+    	motorB = new NXTMotor(MotorPort.B);
+    	//motorA = new EV3LargeRegulatedMotor(MotorPort.A);
+    	//motorB = new EV3LargeRegulatedMotor(MotorPort.B);
     }
     
     /** Sets the parameters of the PID controller */
@@ -40,8 +48,10 @@ public class Regul extends Thread {
     		motorA.forward();
     		motorB.forward();
     	}
-    	motorA.setSpeed((int)speed);
-    	motorB.setSpeed((int)speed);
+    	//motorA.setSpeed((int)speed);
+    	//motorB.setSpeed((int)speed);
+    	motorA.setPower((int)speed);
+    	motorB.setPower((int)speed);
     }
     
     public void run() {
