@@ -58,7 +58,7 @@ public class Graph {
 					System.out.println(num);
 					ts.addOrUpdate(new Millisecond(), num);
 					try {
-						Thread.sleep(20);
+						Thread.sleep(10);
 					} catch (InterruptedException ex) {
 						System.out.println(ex);
 					}
