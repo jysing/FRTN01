@@ -13,7 +13,7 @@ public class MainGUI {
 	    try {
 		Graph graph = new Graph(sc);
 		graph.createWindow(sc, "Control signal", "Time", "Value 1", "Control signal");
-		graph.createWindow(sc, "Measurement 2", "Time", "Value 2", "Measurement 2");
+		//graph.createWindow(sc, "Measurement 2", "Time", "Value 2", "Measurement 2");
 		System.out.println("Graph is operating...");
 		} catch (Exception e){
 			System.out.println("Cannot create graph()");
