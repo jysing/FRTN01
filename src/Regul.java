@@ -80,7 +80,7 @@ public class Regul extends Thread {
     public void calculateOffset() {
     	float offset = 0;
     	float sample = 0;
-		int count = 100;
+		int count = 1000;
 		for(int i = 0; i<count; i++){
 			sample = gyro.getAngleVelocity();
 			//sensor.fetchSample(sample,0);

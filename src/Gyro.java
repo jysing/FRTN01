@@ -26,7 +26,7 @@ public class Gyro {
 		sensor.fetchSample(sample, 0);
 		LCD.drawString(String.format("%3.2f", sample[0] - offset)
 				+ " m        " + sensor.sampleSize(), 0, 4);
-		return sample[0] - offset;
+		return sample[0] - offset; //-0.05
 	}
 
 	public double getAngle() {
