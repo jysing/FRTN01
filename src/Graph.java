@@ -1,3 +1,5 @@
+import java.awt.GridLayout;
+
 import javax.swing.JFrame;
 
 import org.jfree.chart.ChartFactory;
@@ -11,57 +13,77 @@ import org.jfree.data.time.TimeSeriesCollection;
 
 public class Graph {
 	@SuppressWarnings("deprecation")
-	static TimeSeries ts = new TimeSeries("data", Millisecond.class);
-
-	public Graph(SocketClient sc) throws InterruptedException {
+	static TimeSeries ts = new TimeSeries("Data", Millisecond.class);
+	//static TimeSeries ts2 = new TimeSeries("Measurement 2", Millisecond.class);
+	JFrame frame;
+	
+	public Graph(SocketClient sc) {
+		setup(sc);
+	}
+	private void setup(SocketClient sc){
 		gen myGen = new gen(sc);
-		new Thread(myGen).start();
+ 		new Thread(myGen).start();
+ 		frame = new JFrame("Plot deluxe");
+ 		frame.setLayout(new GridLayout(1,0));
+ 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
 
+	public void createWindow(SocketClient sc, String graphName, String xValue, String yValue) throws InterruptedException {
 		TimeSeriesCollection dataset = new TimeSeriesCollection(ts);
-		JFreeChart chart = ChartFactory.createTimeSeriesChart("GraphTest",
-				"Time", "Value", dataset, true, true, false);
-		final XYPlot plot = chart.getXYPlot();
-		ValueAxis axis = plot.getDomainAxis();
-		axis.setAutoRange(true);
-		axis.setFixedAutoRange(60000.0);
-
-		JFrame frame = new JFrame("GraphTest");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		ChartPanel label = new ChartPanel(chart);
-		frame.getContentPane().add(label);
-
-		frame.pack();
-		frame.setVisible(true);
+ 		JFreeChart chart = ChartFactory.createTimeSeriesChart(graphName,
+ 				xValue, yValue, dataset, true, true, false);
+ 		final XYPlot plot = chart.getXYPlot();
+ 		ValueAxis axis = plot.getDomainAxis();
+ 		axis.setAutoRange(true);
+ 		axis.setFixedAutoRange(60000.0);
+ 		ChartPanel label = new ChartPanel(chart);
+ 		frame.getContentPane().add(label);
+ 		frame.pack();
+ 		frame.setVisible(true);
 	}
 
 	static class gen implements Runnable {
 		private String message;
-		private SocketClient sc;
+		private SocketClient soc;
 
 		public gen(SocketClient sc) {
-			this.sc = sc;
+			soc = sc;
 		}
 
 		public void run() {
 			while (true) {
 				try {
-					if (sc.isConnected()) {
-						message = sc.receive();
+					if (soc.isConnected()) {
+						message = soc.receive();
 					} else {
 						System.out.println("Socket not connected");
 					}
 				} catch (Exception e) {
 					System.out.println("soc.receive() doesn't work.");
 				}
+				//////////////////////////////////////////
+				//		Flags for different data		//
+				//////////////////////////////////////////
 				if (!message.equals("Fel")) {
-					double num = Double.parseDouble(message); // M�tdata
-					System.out.println(num);
-					ts.addOrUpdate(new Millisecond(), num);
-					try {
-						Thread.sleep(10);
-					} catch (InterruptedException ex) {
-						System.out.println(ex);
-					}
+					//if (message.charAt(0) == '#'){ 				// # - Flag for control signal
+						double num = Double.parseDouble(message);
+						System.out.println(num);
+						ts.addOrUpdate(new Millisecond(), num);
+						try {
+							Thread.sleep(10);
+						} catch (InterruptedException ex) {
+							System.out.println(ex);
+						}
+					/*} else if (message.charAt(0) == '#'){ 		// % - Flag for Measurement 2
+						double num = Double.parseDouble(message);
+						System.out.println(num);
+						ts.addOrUpdate(new Millisecond(), num); // Ska vara ts2!
+						try {
+							Thread.sleep(10);
+						} catch (InterruptedException ex) {
+							System.out.println(ex);
+						}
+					}*/					
 				}
 			}
 		}
