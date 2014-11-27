@@ -15,17 +15,16 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-<<<<<<< HEAD
+
 		//Graph graph = new Graph();
 		/*Gyro gyro = new Gyro();
-=======
+
 		try {
 		Graph graph = new Graph(comm);
 		} catch (Exception e){
 			System.out.println("Cannot create graph()");
 		}
 		Gyro gyro = new Gyro();
->>>>>>> afcf4028db7fc0a379105b148490f12cd7430359
 		Regul regul = new Regul(gyro,2);
 		regul.start();
 		*/
