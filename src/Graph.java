@@ -58,6 +58,9 @@ public class Graph {
             	} catch (Exception e){
             		System.out.println("soc.receive() doesn't work.");
             	}
+            	
+            	
+            	
             	if (message != "Fel"){
             		int num = Integer.parseInt(message); //Mätdata
             		System.out.println(num);
