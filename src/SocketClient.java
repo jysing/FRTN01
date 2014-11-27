@@ -62,7 +62,7 @@ public class SocketClient extends Thread{
     public void close() throws IOException {
         client.close();
     }
-
+/*
     public static void main(String[] args) {
         String serverName = "10.0.1.1";
         int port = 6666;
@@ -75,4 +75,5 @@ public class SocketClient extends Thread{
         }
         sc.start();
     }
+    */
 }
