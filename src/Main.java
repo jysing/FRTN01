@@ -10,15 +10,16 @@ public class Main {
 		try {
 			comm = new Communication(port, timeout);
 			comm.connect();
-			if (comm.isConnected()) {
-				comm.send("oj oj oj vad detta fungerade bra");
-			} 
 		} catch (IOException e) {
 			LCD.drawString("massive connection error", 0, 2);
 			e.printStackTrace();
 		}
 		
-		//Graph graph = new Graph();
+		try {
+		Graph graph = new Graph(comm);
+		} catch (Exception e){
+			System.out.println("Cannot create graph()");
+		}
 		Gyro gyro = new Gyro();
 		Regul regul = new Regul(gyro,comm,2);
 		regul.start();
