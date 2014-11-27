@@ -3,24 +3,20 @@ import lejos.hardware.port.*;
 import lejos.robotics.EncoderMotor;
 
 public class Regul extends Thread {		
-	
-	public final static int precicion = 10;
 	private PID pid;
 	private Gyro gyro;
-	private Communication comm;
 	//RegulatedMotor motorA;
 	//RegulatedMotor motorB;
 	EncoderMotor motorA;
 	EncoderMotor motorB;
 	
-	double u; // Control signal from PID
-	double angVel, ang; // angluarVelocity and current angle
+	private double u; // Control signal from PID
+	private double angVel, ang; // angluarVelocity and current angle
 	private static final double weightAng = 1, weightAngVel = 2;
 
     /** Constructor. */
-    public Regul (Gyro gyro, Communication comm,int priority) {
+    public Regul (Gyro gyro, int priority) {
     	setPriority(priority);
-    	this.comm = comm;
     	this.gyro = gyro;
     	pid = new PID();
     	motorA = new NXTMotor(MotorPort.A);
@@ -43,9 +39,6 @@ public class Regul extends Thread {
     
     public void setMotor(double speed){
     	speed = limitSpeed(speed);
-    	if(comm.isConnected()) {
-    		comm.send(String.valueOf(speed));
-    	}
     	if (speed < 0){
     		motorA.backward();
     		motorB.backward();
@@ -83,7 +76,6 @@ public class Regul extends Thread {
 		int count = 1000;
 		for(int i = 0; i<count; i++){
 			sample = gyro.getAngleVelocity();
-			//sensor.fetchSample(sample,0);
 			offset = offset + sample;
 			try {
 				sleep(5);
@@ -93,6 +85,10 @@ public class Regul extends Thread {
 		}
 		gyro.setOffset(offset/count);
 	}
+    
+    public double getU() {
+    	return u;
+    }
 }
 
 
