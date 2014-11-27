@@ -11,6 +11,7 @@ public class Gyro {
 	public float sample[];
 	public float offset = 0;
 	private double angle;
+	public SimpsonIteration Integrator;
 
 	private long time, difference;
 
@@ -20,6 +21,7 @@ public class Gyro {
 		sensor = new HiTechnicGyro(port);
 		sample = new float[sensor.sampleSize()];
 		time = System.currentTimeMillis();
+		Integrator = new SimpsonIteration();
 	}
 
 	public float getAngleVelocity() {
