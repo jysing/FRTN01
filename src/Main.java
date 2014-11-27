@@ -17,12 +17,12 @@ public class Main {
 			LCD.drawString("massive connection error", 0, 2);
 			e.printStackTrace();
 		}
-		/*
-		Graph graph = new Graph();
+		
+		//Graph graph = new Graph();
 		Gyro gyro = new Gyro();
 		Regul regul = new Regul(gyro,2);
 		regul.start();
-		*/
+		
 	}
 
 }
