@@ -7,7 +7,7 @@ public class SocketClient{
 
     private final String server;
     private final int port;
-    private static final long period = 100;
+    private static final long period = 1;
     private Socket client;
     private DataInputStream in;
     private DataOutputStream out;
