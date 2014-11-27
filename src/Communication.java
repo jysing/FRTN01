@@ -25,7 +25,12 @@ public class Communication extends Thread {
 
 	public void run() {
 		while (true) {
-			send(String.valueOf(regul.getU()));
+			if(this.isConnected()) {
+				String message = String.valueOf(regul.getU());
+				send(message);				
+			} else {
+				System.out.println("It is not connected");
+			}
 			try {
 				sleep(period);
 			} catch (InterruptedException e) {
