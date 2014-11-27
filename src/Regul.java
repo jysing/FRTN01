@@ -10,6 +10,7 @@ public class Regul extends Thread {
 	public final static int precicion = 10;
 	private PID pid;
 	private Gyro gyro;
+	private Communication comm;
 	//RegulatedMotor motorA;
 	//RegulatedMotor motorB;
 	EncoderMotor motorA;
@@ -20,8 +21,9 @@ public class Regul extends Thread {
 	private static final double weightAng = 1, weightAngVel = 1;
 
     /** Constructor. */
-    public Regul (Gyro gyro, int priority) {
+    public Regul (Gyro gyro, Communication comm,int priority) {
     	setPriority(priority);
+    	this.comm = comm;
     	this.gyro = gyro;
     	pid = new PID();
     	motorA = new NXTMotor(MotorPort.A);
@@ -41,6 +43,7 @@ public class Regul extends Thread {
     }
     
     public void setMotor(double speed){
+    	comm.send(String.valueOf(speed));
     	if (speed < 0){
     		motorA.backward();
     		motorB.backward();

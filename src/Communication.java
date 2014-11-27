@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import lejos.hardware.lcd.LCD;
+
 public class Communication {
 
 	private final ServerSocket serverSocket;
@@ -52,8 +54,12 @@ public class Communication {
 		server = null;
 	}
 	
-	public void send(String message) throws IOException {
-		out.writeUTF(message);
+	public void send(String message) {
+		try {
+			out.writeUTF(message);
+		} catch (IOException e) {
+			LCD.drawString("Can't send message", 0, 3);
+		}
 	}
 	
 	public String receive() throws IOException {
