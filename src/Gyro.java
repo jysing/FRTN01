@@ -20,13 +20,14 @@ public class Gyro {
 		sensor = new HiTechnicGyro(port);
 		sample = new float[sensor.sampleSize()];
 		time = System.currentTimeMillis();
+		angle=0;
 	}
 
 	public float getAngleVelocity() {
 		sensor.fetchSample(sample, 0);
 		LCD.drawString(String.format("%3.2f", sample[0] - offset)
 				+ " m        " + sensor.sampleSize(), 0, 4);
-		return sample[0] - offset; //-0.05
+		return (float) (sample[0] - offset-0.05); //-0.05
 	}
 
 	public double getAngle() {
