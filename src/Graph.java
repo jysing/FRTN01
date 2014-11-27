@@ -10,11 +10,11 @@ import org.jfree.data.time.TimeSeriesCollection;
 
 public class Graph {
     static TimeSeries ts = new TimeSeries("data", Millisecond.class);
-    SocketClient soc;
+    private SocketClient sc;
     //public static void main(String[] args) throws InterruptedException {
     	public Graph (SocketClient sc) throws InterruptedException {
-    	soc = sc;
-    	gen myGen = new gen(soc);
+    	this.sc = sc;
+    	gen myGen = new gen(sc);
         new Thread(myGen).start();
 
         TimeSeriesCollection dataset = new TimeSeriesCollection(ts);
@@ -44,21 +44,25 @@ public class Graph {
     	}
 
     static class gen implements Runnable {
-    	Communication comm;
-    	String message;
-    	SocketClient soc;
+    	private Communication comm;
+    	private String message;
+    	private SocketClient sc;
     	public gen (SocketClient sc){
-    		soc = sc;
+    		this.sc = sc;
     	}
 
         public void run() {
             while(true) {
             	try{
-            	message = soc.receive();
+            	if (sc.isConnected()) {
+            		message = sc.receive();            		
+            	} else {
+            		System.out.println("Socket not connected");
+            	}
             	} catch (Exception e){
             		System.out.println("soc.receive() doesn't work.");
             	}
-            	if (message != "Fel"){
+            	if (!message.equals("Fel")){
             		int num = Integer.parseInt(message); //Mätdata
             		System.out.println(num);
             		ts.addOrUpdate(new Millisecond(), num);
