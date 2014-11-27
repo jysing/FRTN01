@@ -46,7 +46,12 @@ public class Regul extends Thread {
     }
     
     public void setMotor(double speed){
-    	comm.send(String.valueOf(speed));
+    	speed = limitSpeed(speed);
+    	
+    	if(comm.isConnected()) {
+    		comm.send(String.valueOf(speed));
+    	}
+    	
     	if (speed < 0){
     		motorA.backward();
     		motorB.backward();
@@ -56,11 +61,20 @@ public class Regul extends Thread {
     	}
     	//motorA.setSpeed((int)speed);
     	//motorB.setSpeed((int)speed);
-    	motorA.setPower((int)speed);
-    	motorB.setPower((int)speed);
+    	motorA.setPower(Math.abs((int)speed));
+    	motorB.setPower(Math.abs((int)speed));
     }
     
-    public void run() {
+    private double limitSpeed(double speed) {
+    	if(speed > 100) {
+    		speed = 100;
+    	} else if (speed < -100) {
+    		speed = -100;
+    	}
+    	return speed;
+	}
+
+	public void run() {
     	calculateOffset();
     	while (true) {
     		angVel = (double)gyro.getAngleVelocity();

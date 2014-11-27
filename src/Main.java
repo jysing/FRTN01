@@ -17,7 +17,7 @@ public class Main {
 			LCD.drawString("massive connection error", 0, 2);
 			e.printStackTrace();
 		}
-
+		
 		Gyro gyro = new Gyro();
 		Regul regul = new Regul(gyro,comm, 2);
 		regul.start();

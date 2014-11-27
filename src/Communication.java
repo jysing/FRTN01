@@ -25,10 +25,6 @@ public class Communication {
 		System.out.println("Connected to " + server.getRemoteSocketAddress());
 		out = new DataOutputStream(server.getOutputStream());
 		in = new DataInputStream(server.getInputStream());
-		
-		if (this.isConnected()) {
-			send("oj oj oj vad detta fungerade bra");
-		} 
 	}
 
 	public int getPort() {
@@ -57,6 +53,7 @@ public class Communication {
 	public void send(String message) {
 		try {
 			out.writeUTF(message);
+			out.flush();
 		} catch (IOException e) {
 			LCD.drawString("Can't send message", 0, 3);
 		}
