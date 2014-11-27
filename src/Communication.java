@@ -53,6 +53,7 @@ public class Communication {
 	public void send(String message) {
 		try {
 			out.writeUTF(message);
+			out.flush();
 		} catch (IOException e) {
 			LCD.drawString("Can't send message", 0, 3);
 		}
