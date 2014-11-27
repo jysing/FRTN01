@@ -7,7 +7,6 @@ public class SocketClient{
 
     private final String server;
     private final int port;
-    private static final long period = 1;
     private Socket client;
     private DataInputStream in;
     private DataOutputStream out;
@@ -49,18 +48,4 @@ public class SocketClient{
     public void close() throws IOException {
         client.close();
     }
-/*
-    public static void main(String[] args) {
-        String serverName = "10.0.1.1";
-        int port = 6666;
-  
-        SocketClient sc = new SocketClient(serverName, port);
-        try {
-            sc.connect();
-        } catch (IOException e) {
-            System.out.println("Failed to connect");
-        }
-        sc.start();
-    }
-    */
 }
