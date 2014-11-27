@@ -71,6 +71,3 @@ public class Graph {
         }
     }
 }
-// Reference:
-//
-// http://stackoverflow.com/questions/1389285/real-time-graphing-in-java
