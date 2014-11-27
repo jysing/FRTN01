@@ -23,11 +23,10 @@ public class Main {
 		} catch (Exception e){
 			System.out.println("Cannot create graph()");
 		}
-		
-		/*Gyro gyro = new Gyro();
+		Gyro gyro = new Gyro();
 		Regul regul = new Regul(gyro,2);
 		regul.start();
-		*/
+		
 	}
 
 }

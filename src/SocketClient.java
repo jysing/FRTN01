@@ -1,17 +1,13 @@
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.EOFException;
 import java.io.IOException;
 import java.net.Socket;
 
-/**
- *
- * @author Rupert Young
- */
-public class SocketClient {
+public class SocketClient extends Thread{
 
     private final String server;
     private final int port;
+    private static final long period = 50;
     private Socket client;
     private DataInputStream in;
     private DataOutputStream out;
@@ -21,6 +17,19 @@ public class SocketClient {
         this.port = port;
     }
  
+    public void run() {
+    	while(true) {
+    		String message = receive();
+    		System.out.println(message);
+    		
+    		try {
+				sleep(period);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+    	}
+    }
+    
     public void connect() throws IOException {
         System.out.println("Connecting to " + server + " on port " + port);
         client = new Socket(server, port);
@@ -29,16 +38,19 @@ public class SocketClient {
         out = new DataOutputStream(client.getOutputStream());
     }
 
-    public String receiveAndSend(String response) throws IOException, EOFException {
-        String message;
+    public void send(String message) throws IOException {
+    	out.writeUTF(message);
+    }
+    
+    public String receive() {
+    	String message;
     	try {
-    	message =  in.readUTF();
-        }catch(IOException e){
-        	System.out.println("Typsikt MAC");
-        	message = "felfel";
-        }
-        out.writeUTF(response);
-        return message;
+			message = in.readUTF();
+		} catch (IOException e) {
+			message = "Fel";
+		}
+    	System.out.println(message);
+    	return message;    	
     }
 
     public boolean isConnected() {
@@ -54,20 +66,13 @@ public class SocketClient {
     public static void main(String[] args) {
         String serverName = "10.0.1.1";
         int port = 6666;
-        
-
+  
         SocketClient sc = new SocketClient(serverName, port);
-        String message = null;
         try {
             sc.connect();
-
-            for (int i = 0; i < 10; i++) {
-                message = sc.receiveAndSend("Ok");
-                System.out.println(message);
-            }
-            sc.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Failed to connect");
         }
+        sc.start();
     }
 }
