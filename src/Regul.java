@@ -1,10 +1,6 @@
-import lejos.hardware.lcd.LCD;
-import lejos.hardware.motor.BasicMotor;
-import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.motor.NXTMotor;
 import lejos.hardware.port.*;
 import lejos.robotics.EncoderMotor;
-import lejos.robotics.RegulatedMotor;
 
 public class Regul extends Thread {		
 	
@@ -19,7 +15,7 @@ public class Regul extends Thread {
 	
 	double u; // Control signal from PID
 	double angVel, ang; // angluarVelocity and current angle
-	private static final double weightAng = 0, weightAngVel = 1;
+	private static final double weightAng = 1, weightAngVel = 2;
 
     /** Constructor. */
     public Regul (Gyro gyro, Communication comm,int priority) {
@@ -47,11 +43,9 @@ public class Regul extends Thread {
     
     public void setMotor(double speed){
     	speed = limitSpeed(speed);
-    	
     	if(comm.isConnected()) {
     		comm.send(String.valueOf(speed));
     	}
-    	
     	if (speed < 0){
     		motorA.backward();
     		motorB.backward();
@@ -59,8 +53,6 @@ public class Regul extends Thread {
     		motorA.forward();
     		motorB.forward();
     	}
-    	//motorA.setSpeed((int)speed);
-    	//motorB.setSpeed((int)speed);
     	motorA.setPower(Math.abs((int)speed));
     	motorB.setPower(Math.abs((int)speed));
     }
