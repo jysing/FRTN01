@@ -78,23 +78,18 @@ public class Graph {
 						System.out.println(num);
 						ts = (TimeSeries)TimeSeriesList.get(0);
 						ts.addOrUpdate(new Millisecond(), num);
-						try {
-							Thread.sleep(10);
-						} catch (InterruptedException ex) {
-							System.out.println(ex);
-						}
 					} else if (message.charAt(0) == 'E') {
 						message = message.substring(1);
 						double num = Double.parseDouble(message);
 						System.out.println(num);
 						ts = (TimeSeries)TimeSeriesList.get(1);
-						ts.addOrUpdate(new Millisecond(), num); // Ska vara ts2!
-						try {
-							Thread.sleep(10);
-						} catch (InterruptedException ex) {
-							System.out.println(ex);
-						}
+						ts.addOrUpdate(new Millisecond(), num);
 					}					
+				}
+				try {
+					Thread.sleep(5);
+				} catch (InterruptedException ex) {
+					System.out.println(ex);
 				}
 			}
 		}
