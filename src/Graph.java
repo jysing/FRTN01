@@ -22,6 +22,7 @@ public class Graph {
 		setup(sc);
 	}
 	private void setup(SocketClient sc){
+		TimeSeriesList = new ArrayList<TimeSeries>();
  		frame = new JFrame("Plot deluxe");
  		frame.setLayout(new GridLayout(1,0));
  		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
