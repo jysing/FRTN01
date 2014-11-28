@@ -83,7 +83,7 @@ public class Regul extends Thread {
 				e.printStackTrace();
 			}
 		}
-		gyro.setOffset(offset/count);
+		gyro.setOffset((offset/count)+1);
 	}
     
     public double getU() {
