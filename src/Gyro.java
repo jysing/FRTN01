@@ -3,13 +3,17 @@ import lejos.hardware.lcd.LCD;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.HiTechnicGyro;
 import lejos.robotics.SampleProvider;
+import lejos.robotics.filter.IntegrationFilter;
 
 public class Gyro {
 	private Port port;
 	private HiTechnicGyro sensor;
 	public SampleProvider rate;
+	public SampleProvider integration;
 	public float sample[];
+	public float sampleAng[];
 	public float offset = 0;
+	
 	private double angle;
 	public double EMAOFFSET = 0.0005;
 	public SimpsonIteration Integrator; //anv�nd denna vid getAngle
@@ -21,7 +25,9 @@ public class Gyro {
 		port = LocalEV3.get().getPort("S1");
 		sensor = new HiTechnicGyro(port);
 		sample = new float[sensor.sampleSize()];
+		sampleAng = new float[sensor.sampleSize()]; //Test med Angle
 		time = System.currentTimeMillis();
+		
 
 		angle=0;
 
@@ -31,6 +37,9 @@ public class Gyro {
 	public float getAngleVelocity() {
 		sensor.fetchSample(sample, 0);
 		offset = (float) (EMAOFFSET*sample[0]+(1-EMAOFFSET)*offset);
+		//integration = new IntegrationFilter(rate);
+		//integration.fetchSample(sampleAng, 0);
+		
 		//LCD.drawString(String.format("%3.2f", sample[0] - offset)
 		//		+ " m        " + sensor.sampleSize(), 0, 4);
 		return (float) (sample[0] - offset); //-0.05
