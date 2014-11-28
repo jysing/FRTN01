@@ -53,7 +53,15 @@ public class Graph {
  		System.out.println("15");
  		frame.setVisible(true);
  		System.out.println("16");
+ 		try{
  		TimeSeriesList.add(ts);
+ 		} catch (Exception e){
+ 			try{
+ 			TimeSeriesList.add(null);
+ 			} catch (Exception ex){
+ 				System.out.println("16-2");
+ 			}
+ 		}
  		System.out.println("17");
 	}
 	
