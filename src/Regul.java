@@ -60,6 +60,7 @@ public class Regul extends Thread {
 	}
 
 	public void run() {
+		setMotor(0);
     	calculateOffset();
     	while (true) {
     		angVel = (double)gyro.getAngleVelocity();
