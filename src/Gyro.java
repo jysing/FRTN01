@@ -2,14 +2,13 @@ import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.HiTechnicGyro;
-import lejos.robotics.SampleProvider;
 import lejos.robotics.filter.IntegrationFilter;
 
 public class Gyro {
 	private Port port;
 	private HiTechnicGyro sensor;
-	public SampleProvider rate;
-	public SampleProvider integration;
+	//public SampleProvider rate; //cant create an object from an interface...
+	public IntegrationFilter integration; //changed to IntegrationFilter that implements the interface sampleProvider
 	public float sample[];
 	public float sampleAng[];
 	public float offset = 0;
