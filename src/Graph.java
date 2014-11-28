@@ -14,7 +14,6 @@ import org.jfree.data.time.TimeSeriesCollection;
 
 public class Graph {
 	
-	//static TimeSeries ts2 = new TimeSeries("Measurement 2", Millisecond.class);
 	JFrame frame;
 	private ArrayList<TimeSeries> TimeSeriesList;
 	
@@ -54,9 +53,6 @@ public class Graph {
  		System.out.println("15");
  		frame.setVisible(true);
  		System.out.println("16");
- 		if (ts == null){
-			System.out.println("16-2");
-		}
  		TimeSeriesList.add(ts);
  		System.out.println("17");
 	}
