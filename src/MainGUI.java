@@ -14,9 +14,9 @@ public class MainGUI {
 	    try {
 		Graph graph = new Graph(sc);
 		graph.createWindow("Control signal", "Time", "Value 1", "Control signal");
-		graph.createWindow("Error input", "Time", "Value 2", "Measurement 2");
-		graph.createWindow("Angle", "Time", "Value 3", "Measurement 3");
-		graph.createWindow("Angle Velocity", "Time", "Value 4", "Measurement 4");
+		graph.createWindow("Error input", "Time", "Value 2", "Error input");
+		graph.createWindow("Angle", "Time", "Value 3", "Angle");
+		graph.createWindow("Angle Velocity", "Time", "Value 4", "Angle Velocity");
 		graph.start(sc);
 		System.out.println("Graph is operating...");
 		} catch (Exception e){
