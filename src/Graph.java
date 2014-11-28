@@ -28,33 +28,20 @@ public class Graph {
 	}
 
 	public void createWindow(String graphName, String xValue, String yValue, String data) throws InterruptedException {
-		System.out.println("5");
 		@SuppressWarnings("deprecation")
 		TimeSeries ts = new TimeSeries(data, Millisecond.class);
-		System.out.println("6");
 		TimeSeriesCollection dataset = new TimeSeriesCollection(ts);
-		System.out.println("7");
 		JFreeChart chart = ChartFactory.createTimeSeriesChart(graphName,
  				xValue, yValue, dataset, true, true, false);
-		System.out.println("8");
 		final XYPlot plot = chart.getXYPlot();
-		System.out.println("9");
 		ValueAxis axis = plot.getDomainAxis();
-		System.out.println("10");
 		axis.setAutoRange(true);
-		System.out.println("11");
 		axis.setFixedAutoRange(60000.0);
-		System.out.println("12");
  		ChartPanel label = new ChartPanel(chart);
- 		System.out.println("13");
  		frame.getContentPane().add(label);
- 		System.out.println("14");
  		frame.pack();
- 		System.out.println("15");
  		frame.setVisible(true);
- 		System.out.println("16");
  		TimeSeriesList.add(ts);
- 		System.out.println("17");
 	}
 	
 	public void start(SocketClient sc) {

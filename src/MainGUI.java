@@ -13,13 +13,9 @@ public class MainGUI {
 	    }
 	    try {
 		Graph graph = new Graph(sc);
-		System.out.println("1");
 		graph.createWindow("Control signal", "Time", "Value 1", "Control signal");
-		System.out.println("2");
 		graph.createWindow("Measurement 2", "Time", "Value 2", "Measurement 2");
-		System.out.println("3");
 		graph.start(sc);
-		System.out.println("4");
 		System.out.println("Graph is operating...");
 		} catch (Exception e){
 			System.out.println("Cannot create graph()");
