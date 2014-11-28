@@ -11,7 +11,8 @@ public class Gyro {
 	public float sample[];
 	public float offset = 0;
 	private double angle;
-	public SimpsonIteration Integrator; //använd denna vid getAngle
+	public double EMAOFFSET = 0.0005;
+	public SimpsonIteration Integrator; //anvï¿½nd denna vid getAngle
 
 	private long time, difference;
 
@@ -29,9 +30,10 @@ public class Gyro {
 
 	public float getAngleVelocity() {
 		sensor.fetchSample(sample, 0);
+		offset = (float) (EMAOFFSET*sample[0]+(1-EMAOFFSET)*offset);
 		//LCD.drawString(String.format("%3.2f", sample[0] - offset)
 		//		+ " m        " + sensor.sampleSize(), 0, 4);
-		return (float) (sample[0] - offset-0.05); //-0.05
+		return (float) (sample[0] - offset); //-0.05
 	}
 
 	public double getAngle() {
