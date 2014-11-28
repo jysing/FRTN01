@@ -1,4 +1,5 @@
 import java.awt.GridLayout;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
@@ -15,6 +16,7 @@ public class Graph {
 	
 	//static TimeSeries ts2 = new TimeSeries("Measurement 2", Millisecond.class);
 	JFrame frame;
+	static ArrayList TimeSeriesList;
 	
 	public Graph(SocketClient sc) {
 		setup(sc);
@@ -42,6 +44,7 @@ public class Graph {
  		
  		gen myGen = new gen(sc, ts);
  		new Thread(myGen).start();
+ 		TimeSeriesList.add(ts);
 	}
 
 	static class gen implements Runnable {
@@ -69,25 +72,24 @@ public class Graph {
 				//		Flags for different data		//
 				//////////////////////////////////////////
 				if (!message.equals("Fel")) {
-					//if (message.charAt(0) == '#'){ 				// # - Flag for control signal
+					if (message.charAt(0) == 'U'){
+						message = message.substring(1);
 						double num = Double.parseDouble(message);
 						System.out.println(num);
+						ts = (TimeSeries)TimeSeriesList.get(0);
 						ts.addOrUpdate(new Millisecond(), num);
-						try {
-							Thread.sleep(10);
-						} catch (InterruptedException ex) {
-							System.out.println(ex);
-						}
-					/*} else if (message.charAt(0) == '#'){ 		// % - Flag for Measurement 2
+					} else if (message.charAt(0) == 'E') {
+						message = message.substring(1);
 						double num = Double.parseDouble(message);
 						System.out.println(num);
-						ts.addOrUpdate(new Millisecond(), num); // Ska vara ts2!
-						try {
-							Thread.sleep(10);
-						} catch (InterruptedException ex) {
-							System.out.println(ex);
-						}
-					}*/					
+						ts = (TimeSeries)TimeSeriesList.get(1);
+						ts.addOrUpdate(new Millisecond(), num);
+					}					
+				}
+				try {
+					Thread.sleep(5);
+				} catch (InterruptedException ex) {
+					System.out.println(ex);
 				}
 			}
 		}

@@ -25,7 +25,7 @@ public class Gyro {
 
 		angle=0;
 
-		Integrator = new SimpsonIteration();
+		//Integrator = new SimpsonIteration();
 	}
 
 	public float getAngleVelocity() {
