@@ -11,7 +11,6 @@ public class MainGUI {
 	    } catch (IOException e) {
 	        System.out.println("Failed to connect");
 	    }
-
 	    try {
 		Graph graph = new Graph(sc);
 		System.out.println("1");
