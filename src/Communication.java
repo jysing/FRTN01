@@ -41,7 +41,10 @@ public class Communication extends Thread {
 	}
 
 	public void connect() throws IOException {
+		System.out.println("Wait on " + serverSocket.getLocalPort() + "...");
 		server = serverSocket.accept();
+
+		System.out.println("Connected to " + server.getRemoteSocketAddress());
 		out = new DataOutputStream(server.getOutputStream());
 		in = new DataInputStream(server.getInputStream());
 	}
@@ -71,10 +74,10 @@ public class Communication extends Thread {
 
 	public void send(String message) {
 		try {
-			LCD.drawString(message, 0, 2);
+			LCD.drawString(message, 0, 3);
 			out.writeUTF(message);
 		} catch (IOException e) {
-			LCD.drawString("Can't send message", 0, 2);
+			LCD.drawString("Can't send message", 0, 3);
 		}
 	}
 
