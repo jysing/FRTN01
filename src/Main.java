@@ -11,6 +11,7 @@ public class Main {
 		try {
 			comm = new Communication(regul, port, timeout, graphPrio);
 			comm.connect();
+			comm.start();
 		} catch (IOException e) {
 			LCD.drawString("massive connection error", 0, 0);
 		}
