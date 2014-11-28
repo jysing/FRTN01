@@ -1,6 +1,7 @@
 import lejos.hardware.motor.NXTMotor;
 import lejos.hardware.port.*;
 import lejos.robotics.EncoderMotor;
+import lejos.robotics.Tachometer;
 
 public class Regul extends Thread {		
 	private PID pid;
@@ -25,6 +26,7 @@ public class Regul extends Thread {
     	motorB.flt();
     	//motorA = new EV3LargeRegulatedMotor(MotorPort.A);
     	//motorB = new EV3LargeRegulatedMotor(MotorPort.B);
+    	
     }
     
     /** Sets the parameters of the PID controller */
@@ -58,6 +60,14 @@ public class Regul extends Thread {
     	}
     	return speed;
 	}
+    /*public void goToInitial() {
+    	e=?weight1?*Position.getPostition()+?weight2?*Position.getVelocity();
+    	u=pid.calculateOutput(e, 0);
+    	pid.updateState(u);
+    	
+    	
+    	
+    }*/
 
 	public void run() {
 		setMotor(0);
@@ -104,5 +114,4 @@ public class Regul extends Thread {
 		return angVel;
 	}
 }
-
 
