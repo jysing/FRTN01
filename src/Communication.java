@@ -75,7 +75,7 @@ public class Communication extends Thread {
 			out.writeUTF(message);
 		} catch (IOException e) {
 			LCD.drawString("Can't send message", 0, 3);
-		}
+		}//hehje
 	}
 
 	public String receive() throws IOException {

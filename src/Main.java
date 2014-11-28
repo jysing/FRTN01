@@ -15,9 +15,7 @@ public class Main {
 			LCD.drawString("massive connection error", 0, 2);
 			e.printStackTrace();
 		}
-		
-		regul.start();
-		
+		regul.start();		
 	}
 
 }
