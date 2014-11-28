@@ -71,11 +71,11 @@ public class Communication extends Thread {
 
 	public void send(String message) {
 		try {
-			LCD.drawString(message, 0, 3);
+			LCD.drawString(message, 0, 2);
 			out.writeUTF(message);
 		} catch (IOException e) {
-			LCD.drawString("Can't send message", 0, 3);
-		}//hehje
+			LCD.drawString("Can't send message", 0, 2);
+		}
 	}
 
 	public String receive() throws IOException {
