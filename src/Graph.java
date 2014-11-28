@@ -16,7 +16,7 @@ public class Graph {
 	
 	//static TimeSeries ts2 = new TimeSeries("Measurement 2", Millisecond.class);
 	JFrame frame;
-	static ArrayList TimeSeriesList;
+	private ArrayList<TimeSeries> TimeSeriesList;
 	
 	public Graph(SocketClient sc) {
 		setup(sc);
@@ -27,7 +27,7 @@ public class Graph {
  		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	public void createWindow(SocketClient sc, String graphName, String xValue, String yValue, String data) throws InterruptedException {
+	public void createWindow(String graphName, String xValue, String yValue, String data) throws InterruptedException {
 		@SuppressWarnings("deprecation")
 		final TimeSeries ts = new TimeSeries(data, Millisecond.class);
 		TimeSeriesCollection dataset = new TimeSeriesCollection(ts);
@@ -41,19 +41,21 @@ public class Graph {
  		frame.getContentPane().add(label);
  		frame.pack();
  		frame.setVisible(true);
- 		
- 		gen myGen = new gen(sc, ts);
- 		new Thread(myGen).start();
  		TimeSeriesList.add(ts);
+	}
+	
+	public void start(SocketClient sc) {
+		gen myGen = new gen(sc, TimeSeriesList);
+		new Thread(myGen).start();		
 	}
 
 	static class gen implements Runnable {
 		private String message;
 		private SocketClient soc;
-		private TimeSeries ts;
+		private ArrayList<TimeSeries> TimeSeriesList;
 		
-		public gen(SocketClient sc, TimeSeries timeseries) {
-			ts = timeseries;
+		public gen(SocketClient sc, ArrayList<TimeSeries> TimeSeriesList) {
+			this.TimeSeriesList = TimeSeriesList;
 			soc = sc;
 		}
 
@@ -76,14 +78,12 @@ public class Graph {
 						message = message.substring(1);
 						double num = Double.parseDouble(message);
 						System.out.println(num);
-						ts = (TimeSeries)TimeSeriesList.get(0);
-						ts.addOrUpdate(new Millisecond(), num);
+						TimeSeriesList.get(0).addOrUpdate(new Millisecond(), num);
 					} else if (message.charAt(0) == 'E') {
 						message = message.substring(1);
 						double num = Double.parseDouble(message);
 						System.out.println(num);
-						ts = (TimeSeries)TimeSeriesList.get(1);
-						ts.addOrUpdate(new Millisecond(), num);
+						TimeSeriesList.get(1).addOrUpdate(new Millisecond(), num);
 					}					
 				}
 				try {
