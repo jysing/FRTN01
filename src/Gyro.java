@@ -11,7 +11,7 @@ public class Gyro {
 	public float sample[];
 	public float offset = 0;
 	private double angle;
-	public SimpsonIteration Integrator;
+	public SimpsonIteration Integrator; //använd denna vid getAngle
 
 	private long time, difference;
 
