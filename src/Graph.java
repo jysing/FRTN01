@@ -30,7 +30,7 @@ public class Graph {
 	public void createWindow(String graphName, String xValue, String yValue, String data) throws InterruptedException {
 		System.out.println("5");
 		@SuppressWarnings("deprecation")
-		final TimeSeries ts = new TimeSeries(data, Millisecond.class); //static?
+		TimeSeries ts = new TimeSeries(data, Millisecond.class);
 		System.out.println("6");
 		TimeSeriesCollection dataset = new TimeSeriesCollection(ts);
 		System.out.println("7");
