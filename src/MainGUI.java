@@ -6,11 +6,11 @@ public class MainGUI {
 
 	public static void main(String[] args) {
 		SocketClient sc = new SocketClient(serverName, port);
-	    /*try {
+		try {
 	    	sc.connect();
 	    } catch (IOException e) {
 	        System.out.println("Failed to connect");
-	    }*/
+	    }
 	    try {
 		Graph graph = new Graph(sc);
 		graph.createWindow(sc, "Control signal", "Time", "Value 1", "Control signal");
