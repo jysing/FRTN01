@@ -27,7 +27,7 @@ public class Graph {
 
 	public void createWindow(SocketClient sc, String graphName, String xValue, String yValue, String data) throws InterruptedException {
 		@SuppressWarnings("deprecation")
-		final TimeSeries ts = new TimeSeries(data, Millisecond.class); //static?
+		final TimeSeries ts = new TimeSeries(data, Millisecond.class);
 		TimeSeriesCollection dataset = new TimeSeriesCollection(ts);
  		JFreeChart chart = ChartFactory.createTimeSeriesChart(graphName,
  				xValue, yValue, dataset, true, true, false);
@@ -78,7 +78,7 @@ public class Graph {
 						} catch (InterruptedException ex) {
 							System.out.println(ex);
 						}
-					/*} else if (message.charAt(0) == '#'){ 		// % - Flag for Measurement 2
+					/*} else if (message.charAt(0) == '%'){ 		// % - Flag for Measurement 2
 						double num = Double.parseDouble(message);
 						System.out.println(num);
 						ts.addOrUpdate(new Millisecond(), num); // Ska vara ts2!
