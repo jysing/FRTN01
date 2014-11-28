@@ -14,11 +14,15 @@ public class Main {
 			LCD.drawString("massive connection error", 0, 2);
 			e.printStackTrace();
 		}
+<<<<<<< HEAD
 		
 		Gyro gyro = new Gyro();
 		Regul regul = new Regul(gyro,comm, 2);
 		regul.start();
 		
+=======
+		regul.start();		
+>>>>>>> eeb3968c94580bc0557f4eef6dad851f26546e91
 	}
 
 }
