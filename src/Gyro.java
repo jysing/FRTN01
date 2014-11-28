@@ -37,7 +37,7 @@ public class Gyro {
 	public float getAngleVelocity() {
 		sensor.fetchSample(sample, 0);
 		offset = (float) (EMAOFFSET*sample[0]+(1-EMAOFFSET)*offset);
-		//integration = new IntegrationFilter(rate);
+		integration = new IntegrationFilter(rate);
 		//integration.fetchSample(sampleAng, 0);
 		
 		//LCD.drawString(String.format("%3.2f", sample[0] - offset)
