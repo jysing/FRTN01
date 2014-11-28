@@ -29,7 +29,7 @@ public class Communication extends Thread {
 				String message = String.valueOf(regul.getU());
 				send(message);				
 			} else {
-				LCD.drawString("It is not connected", 0, 1);
+				LCD.drawString("It is not connected", 0, 3);
 			}
 			try {
 				sleep(period);
