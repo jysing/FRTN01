@@ -35,7 +35,6 @@ public class SocketClient{
 		} catch (IOException e) {
 			message = "Fel";
 		}
-    	System.out.println(message);
     	return message;    	
     }
 

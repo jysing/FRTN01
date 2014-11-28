@@ -14,46 +14,48 @@ import org.jfree.data.time.TimeSeriesCollection;
 
 public class Graph {
 	
-	//static TimeSeries ts2 = new TimeSeries("Measurement 2", Millisecond.class);
 	JFrame frame;
-	static ArrayList TimeSeriesList;
+	private ArrayList<TimeSeries> TimeSeriesList;
 	
 	public Graph(SocketClient sc) {
 		setup(sc);
 	}
 	private void setup(SocketClient sc){
+		TimeSeriesList = new ArrayList<TimeSeries>();
  		frame = new JFrame("Plot deluxe");
- 		frame.setLayout(new GridLayout(1,0));
+ 		frame.setLayout(new GridLayout(2, 2));
  		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	public void createWindow(SocketClient sc, String graphName, String xValue, String yValue, String data) throws InterruptedException {
+	public void createWindow(String graphName, String xValue, String yValue, String data) throws InterruptedException {
 		@SuppressWarnings("deprecation")
-		final TimeSeries ts = new TimeSeries(data, Millisecond.class); //static?
+		TimeSeries ts = new TimeSeries(data, Millisecond.class);
 		TimeSeriesCollection dataset = new TimeSeriesCollection(ts);
- 		JFreeChart chart = ChartFactory.createTimeSeriesChart(graphName,
+		JFreeChart chart = ChartFactory.createTimeSeriesChart(graphName,
  				xValue, yValue, dataset, true, true, false);
- 		final XYPlot plot = chart.getXYPlot();
- 		ValueAxis axis = plot.getDomainAxis();
- 		axis.setAutoRange(true);
- 		axis.setFixedAutoRange(60000.0);
+		final XYPlot plot = chart.getXYPlot();
+		ValueAxis axis = plot.getDomainAxis();
+		axis.setAutoRange(true);
+		axis.setFixedAutoRange(60000.0);
  		ChartPanel label = new ChartPanel(chart);
  		frame.getContentPane().add(label);
  		frame.pack();
  		frame.setVisible(true);
- 		
- 		gen myGen = new gen(sc, ts);
- 		new Thread(myGen).start();
  		TimeSeriesList.add(ts);
+	}
+	
+	public void start(SocketClient sc) {
+		gen myGen = new gen(sc, TimeSeriesList);
+		new Thread(myGen).start();		
 	}
 
 	static class gen implements Runnable {
 		private String message;
 		private SocketClient soc;
-		private TimeSeries ts;
+		private ArrayList<TimeSeries> TimeSeriesList;
 		
-		public gen(SocketClient sc, TimeSeries timeseries) {
-			ts = timeseries;
+		public gen(SocketClient sc, ArrayList<TimeSeries> TimeSeriesList) {
+			this.TimeSeriesList = TimeSeriesList;
 			soc = sc;
 		}
 
@@ -73,18 +75,16 @@ public class Graph {
 				//////////////////////////////////////////
 				if (!message.equals("Fel")) {
 					if (message.charAt(0) == 'U'){
-						message = message.substring(1);
-						double num = Double.parseDouble(message);
-						System.out.println(num);
-						ts = (TimeSeries)TimeSeriesList.get(0);
-						ts.addOrUpdate(new Millisecond(), num);
+						updateGraph(0);
 					} else if (message.charAt(0) == 'E') {
-						message = message.substring(1);
-						double num = Double.parseDouble(message);
-						System.out.println(num);
-						ts = (TimeSeries)TimeSeriesList.get(1);
-						ts.addOrUpdate(new Millisecond(), num);
-					}					
+						updateGraph(1);
+					} else if (message.charAt(0) == 'A') {
+						updateGraph(2);
+					} else if (message.charAt(0) == 'V') {
+						updateGraph(3);
+					} else {
+						System.out.println("Not a recognized value");
+					}
 				}
 				try {
 					Thread.sleep(5);
@@ -92,6 +92,13 @@ public class Graph {
 					System.out.println(ex);
 				}
 			}
+		}
+		
+		private void updateGraph(int pos) {
+			message = message.substring(1);
+			double num = Double.parseDouble(message);
+			System.out.println(num);
+			TimeSeriesList.get(pos).addOrUpdate(new Millisecond(), num);
 		}
 	}
 }

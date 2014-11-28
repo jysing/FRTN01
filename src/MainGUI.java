@@ -11,11 +11,13 @@ public class MainGUI {
 	    } catch (IOException e) {
 	        System.out.println("Failed to connect");
 	    }
-
 	    try {
 		Graph graph = new Graph(sc);
-		graph.createWindow(sc, "Control signal", "Time", "Value 1", "Control signal");
-		//graph.createWindow(sc, "Measurement 2", "Time", "Value 2", "Measurement 2");
+		graph.createWindow("Control signal", "Time", "Value 1", "Control signal");
+		graph.createWindow("Error input", "Time", "Value 2", "Error input");
+		graph.createWindow("Angle", "Time", "Value 3", "Angle");
+		graph.createWindow("Angle Velocity", "Time", "Value 4", "Angle Velocity");
+		graph.start(sc);
 		System.out.println("Graph is operating...");
 		} catch (Exception e){
 			System.out.println("Cannot create graph()");
