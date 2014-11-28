@@ -88,16 +88,16 @@ public class Graph {
 				//////////////////////////////////////////
 				if (!message.equals("Fel")) {
 					if (message.charAt(0) == 'U'){
-						message = message.substring(1);
-						double num = Double.parseDouble(message);
-						System.out.println(num);
-						TimeSeriesList.get(0).addOrUpdate(new Millisecond(), num);
+						updateGraph(0);
 					} else if (message.charAt(0) == 'E') {
-						message = message.substring(1);
-						double num = Double.parseDouble(message);
-						System.out.println(num);
-						TimeSeriesList.get(1).addOrUpdate(new Millisecond(), num);
-					}					
+						updateGraph(1);
+					} else if (message.charAt(0) == 'A') {
+						updateGraph(2);
+					} else if (message.charAt(0) == 'V') {
+						updateGraph(3);
+					} else {
+						System.out.println("Not a recognized value");
+					}
 				}
 				try {
 					Thread.sleep(5);
@@ -105,6 +105,13 @@ public class Graph {
 					System.out.println(ex);
 				}
 			}
+		}
+		
+		private void updateGraph(int pos) {
+			message = message.substring(1);
+			double num = Double.parseDouble(message);
+			System.out.println(num);
+			TimeSeriesList.get(pos).addOrUpdate(new Millisecond(), num);
 		}
 	}
 }
