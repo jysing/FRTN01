@@ -10,7 +10,7 @@ public class Regul extends Thread {
 	EncoderMotor motorA;
 	EncoderMotor motorB;
 	
-	private double u; // Control signal from PID
+	private double u, e; // Control signal to/from PID
 	private double angVel, ang; // angluarVelocity and current angle
 	private static final double weightAng = 1, weightAngVel = 2;
 
@@ -64,7 +64,8 @@ public class Regul extends Thread {
     	while (true) {
     		angVel = (double)gyro.getAngleVelocity();
     		ang = (double)gyro.getAngle();
-    		u = pid.calculateOutput(weightAngVel*angVel+weightAng*ang, 0);
+    		e = weightAngVel*angVel+weightAng*ang;
+    		u = pid.calculateOutput(e, 0);
     		pid.updateState(u);
     		setMotor(u);
     	}
@@ -83,12 +84,24 @@ public class Regul extends Thread {
 				e.printStackTrace();
 			}
 		}
-		gyro.setOffset(offset/count);
+		gyro.setOffset((offset/count)+1);
 	}
     
     public double getU() {
     	return u;
     }
+
+	public double getE() {
+		return e;
+	}
+	
+	public double getA() {
+		return ang;
+	}
+	
+	public double getV() {
+		return angVel;
+	}
 }
 
 

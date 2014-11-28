@@ -8,7 +8,7 @@ import lejos.hardware.lcd.LCD;
 
 public class Communication extends Thread {
 
-	private static final long period = 10;
+	private static final long period = 20;
 	private final ServerSocket serverSocket;
 	private Socket server;
 	private DataOutputStream out;
@@ -24,12 +24,26 @@ public class Communication extends Thread {
 	}
 
 	public void run() {
+		int i = 0;
 		while (true) {
-			if(this.isConnected()) {
-				String message = String.valueOf(regul.getU());
-				send(message);				
+			if (this.isConnected()) {
+				String message = "Fel";
+				if (i == 0) {
+					message = "U" + String.valueOf(regul.getU());
+				} else if (i == 1) {
+					message = "E" + String.valueOf(regul.getE());
+				} else if (i == 2) {
+					message = "A" + String.valueOf(regul.getA());
+				} else if (i == 3) {
+					message = "V" + String.valueOf(regul.getV());
+				} else {
+					LCD.drawString("Something is very wrong with i", 0, 4);
+				}
+				i++;
+				i = i % 4;
+				send(message);
 			} else {
-				LCD.drawString("It is not connected", 0, 1);
+				LCD.drawString("It is not connected", 0, 3);
 			}
 			try {
 				sleep(period);
@@ -41,7 +55,10 @@ public class Communication extends Thread {
 	}
 
 	public void connect() throws IOException {
+		LCD.drawString("Wait on " + serverSocket.getLocalPort() + "...", 0, 0);
 		server = serverSocket.accept();
+
+		System.out.println("Connected to " + server.getRemoteSocketAddress());
 		out = new DataOutputStream(server.getOutputStream());
 		in = new DataInputStream(server.getInputStream());
 	}
@@ -75,7 +92,7 @@ public class Communication extends Thread {
 			out.writeUTF(message);
 		} catch (IOException e) {
 			LCD.drawString("Can't send message", 0, 3);
-		}//hehje
+		}
 	}
 
 	public String receive() throws IOException {
