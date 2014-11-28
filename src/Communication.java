@@ -41,7 +41,7 @@ public class Communication extends Thread {
 	}
 
 	public void connect() throws IOException {
-		System.out.println("Wait on " + serverSocket.getLocalPort() + "...");
+		LCD.drawString("Wait on " + serverSocket.getLocalPort() + "...", 0, 0);
 		server = serverSocket.accept();
 
 		System.out.println("Connected to " + server.getRemoteSocketAddress());
