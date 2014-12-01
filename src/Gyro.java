@@ -42,6 +42,7 @@ public class Gyro {
 		return sample[0] - offset - 0.05; //-0.05
 	}
 	public double getAngle() {
+
 		difference = System.currentTimeMillis() - time;
 		time = time + difference;
 		long temp = difference;
