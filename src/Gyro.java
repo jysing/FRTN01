@@ -25,37 +25,37 @@ public class Gyro {
 		port = LocalEV3.get().getPort("S1");
 		sensor = new HiTechnicGyro(port);
 		sample = new float[sensor.sampleSize()];
-		sampleAng = new float[sensor.sampleSize()]; //Test med Angle
-		sampleLowPass = new float[sensor.sampleSize()];
+		//sampleAng = new float[sensor.sampleSize()]; //Test med Angle
+		//sampleLowPass = new float[sensor.sampleSize()];
 		time = System.currentTimeMillis();
-		angle=0;
 		//Integrator = new SimpsonIteration();
 		//Clone my ass
 	}
 
 	public float getAngleVelocity() {
 		sensor.fetchSample(sample, 0);
+		//lowPass = new LowPassFilter(sensor, (float)0.01); //Lagpass med tidskonstant 0.01 osaker pa enhet
+		//offset = (float) (EMAOFFSET*sample[0]+(1-EMAOFFSET)*offset);
 		//LCD.drawString(String.format("%3.2f", sample[0] - offset)
 		//		+ " m        " + sensor.sampleSize(), 0, 4);
-		return (float) (sample[0] - offset); //-0.05
+		return (float) (sample[0] - offset - 0.05); //-0.05
 	}
 
 	public double getAngle() {
 		difference = System.currentTimeMillis() - time;
 		time = time + difference;
 		
-		lowPass = new LowPassFilter(sensor, (float)0.01); //Lagpass med tidskonstant 0.01 osaker pa enhet
-		offset = (float) (EMAOFFSET*sample[0]+(1-EMAOFFSET)*offset);
-		integration = new IntegrationFilter(sensor);
-		integration.fetchSample(sampleAng, 0);
+		//integration = new IntegrationFilter(sensor);
+		//integration.fetchSample(sampleAng, 0);
 		//LCD.drawString(
 		//		String.format("%3.2f", angle) + " m        "
 		//				+ sensor.sampleSize(), 0, 3);
-		return sampleAng[0];
-		//return angle += (double) getAngleVelocity() * difference / 1000;
+		//return sampleAng[0];
+		return angle += (double)(getAngleVelocity() * (difference / 1000));
 	}
 
 	public void setOffset(float offset) {
 		this.offset = offset;
+		angle = 0;
 	}
 }
