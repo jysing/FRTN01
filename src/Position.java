@@ -9,9 +9,9 @@ public class Position {
 		time = System.currentTimeMillis();	
 	}
 	
-		public double getVelocity() {
+		public float getPosVelocity() {
 			float oldValue = getPosition();
-			return (double) ((getPosition()-oldValue)/difference)/1000;
+			return ((getPosition()-oldValue)/difference)/1000;
 		}
 		
 		public float getPosition() {

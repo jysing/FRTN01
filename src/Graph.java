@@ -63,7 +63,7 @@ public class Graph {
 			while (true) {
 				try {
 					if (soc.isConnected()) {
-						message = soc.receive();
+						message = soc.receive();	
 					} else {
 						System.out.println("Socket not connected");
 					}
