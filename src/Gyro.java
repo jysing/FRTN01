@@ -27,15 +27,12 @@ public class Gyro {
 		sensor = new HiTechnicGyro(port);
 		lowPass = new LowPassFilter(sensor, (float)0.1);
 		sample = new float[sensor.sampleSize()];
-		//sampleAng = new float[sensor.sampleSize()]; //Test med Angle
-		//sampleLowPass = new float[sensor.sampleSize()];
 		time = System.currentTimeMillis();
 		//Integrator = new SimpsonIteration();
 	}
 
 	public double getAngleVelocity() {
 		//sensor.fetchSample(sample, 0);
-		//Lagpass med tidskonstant 0.01 osaker pa enhet
 		lowPass.fetchSample(sample, 0);
 		//offset = (float) (EMAOFFSET*sample[0]+(1-EMAOFFSET)*offset);
 		//LCD.drawString(String.format("%3.2f", sample[0] - offset)
