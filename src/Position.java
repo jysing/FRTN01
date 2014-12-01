@@ -6,18 +6,17 @@ public class Position {
 	
 	public Position(EncoderMotor motorA) {
 		this.motorA = motorA;
-		time = System.currentTimeMillis();
-		
+		time = System.currentTimeMillis();	
 	}
+	
 		public double getVelocity() {
 			float oldValue = getPosition();
 			return (double) ((getPosition()-oldValue)/difference)/1000;
 		}
-
+		
 		public float getPosition() {
 			difference = System.currentTimeMillis() - time;
 			time = time + difference;
 			return motorA.getTachoCount();
 		}
-
 }

@@ -1,7 +1,6 @@
 import lejos.hardware.motor.NXTMotor;
 import lejos.hardware.port.*;
 import lejos.robotics.EncoderMotor;
-import lejos.robotics.Tachometer;
 
 public class Regul extends Thread {		
 	private PID pid;
@@ -60,14 +59,9 @@ public class Regul extends Thread {
     	}
     	return speed;
 	}
-    /*public void goToInitial() {
+    /*In i run:
     	e=?weight1?*Position.getPostition()+?weight2?*Position.getVelocity();
-    	u=pid.calculateOutput(e, 0);
-    	pid.updateState(u);
-    	
-    	
-    	
-    }*/
+    	 }*/
 
 	public void run() {
 		setMotor(0);
