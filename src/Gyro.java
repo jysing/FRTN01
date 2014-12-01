@@ -49,7 +49,8 @@ public class Gyro {
 		//LCD.drawString(
 		//		String.format("%3.2f", angle) + " m        "
 		//				+ sensor.sampleSize(), 0, 3);
-		return angle += (double) getAngleVelocity() * difference / 1000;
+		return sampleAng[0];
+		//return angle += (double) getAngleVelocity() * difference / 1000;
 	}
 
 	public void setOffset(float offset) {
