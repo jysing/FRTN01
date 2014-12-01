@@ -59,14 +59,9 @@ public class Regul extends Thread {
     	}
     	return speed;
 	}
-    /*public void goToInitial() {
+    /*In i run:
     	e=?weight1?*Position.getPostition()+?weight2?*Position.getVelocity();
-    	u=pid.calculateOutput(e, 0);
-    	pid.updateState(u);
-    	
-    	
-    	
-    }*/
+    	 }*/
 
 	public void run() {
 		setMotor(0);

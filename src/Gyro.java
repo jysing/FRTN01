@@ -23,7 +23,7 @@ public class Gyro {
 
 	// Gyro can deliver 300 measurements per second
 	public Gyro() {
-		port = LocalEV3.get().getPort("S1");
+		port = LocalEV3.get().getPort("S2");
 		sensor = new HiTechnicGyro(port);
 		sample = new float[sensor.sampleSize()];
 		//sampleAng = new float[sensor.sampleSize()]; //Test med Angle
