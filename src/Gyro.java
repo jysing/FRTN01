@@ -38,10 +38,8 @@ public class Gyro {
 		//LCD.drawString(String.format("%3.2f", sample[0] - offset)
 		//		+ " m        " + sensor.sampleSize(), 0, 4);
 		
-		double test = (sample[0]-offset);
 		//return (sample[0] - offset- 15) ; //-0.05
-		LCD.drawString("test = " + test, 0, 6);
-		return test;
+		return sample[0]-offset;
 	}
 	public double getAngle() {
 
