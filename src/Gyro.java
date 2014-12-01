@@ -41,11 +41,10 @@ public class Gyro {
 		//		+ " m        " + sensor.sampleSize(), 0, 4);
 		return sample[0] - offset - 0.05; //-0.05
 	}
-
 	public double getAngle() {
 		difference = System.currentTimeMillis() - time;
 		time = time + difference;
-		long temp = difference / 1000;
+		long temp = difference;
 		LCD.drawString("sec = " + temp, 0, 5);
 		double temp2 = getAngleVelocity();
 		LCD.drawString("angVel = " + temp2, 0, 6);
