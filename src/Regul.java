@@ -12,7 +12,7 @@ public class Regul extends Thread {
 	
 	private double u, e; // Control signal to/from PID
 	private double angVel, ang; // angluarVelocity and current angle
-	private static final double weightAng = 0, weightAngVel = 1;
+	private static final double weightAng = 0.001, weightAngVel = 1;
 
     /** Constructor. */
     public Regul (Gyro gyro, int priority) {
@@ -101,7 +101,7 @@ public class Regul extends Thread {
 	}
 	
 	public double getA() {
-		return ang;
+		return ang/1000;
 	}
 	
 	public double getV() {

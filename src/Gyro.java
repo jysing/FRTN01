@@ -45,8 +45,8 @@ public class Gyro {
 
 		difference = System.currentTimeMillis() - time;
 		time = time + difference;
-		long temp = difference;
-		LCD.drawString("sec = " + temp, 0, 5);
+		long temp = time;
+		LCD.drawString("sec = " + difference, 0, 5);
 		double temp2 = getAngleVelocity();
 		LCD.drawString("angVel = " + temp2, 0, 6);
 		//integration = new IntegrationFilter(sensor);
@@ -55,7 +55,7 @@ public class Gyro {
 		//		String.format("%3.2f", angle) + " m        "
 		//				+ sensor.sampleSize(), 0, 3);
 		//return sampleAng[0];
-		return angle += (temp2 * temp);
+		return angle += (temp2 * difference);
 	}
 
 	public void setOffset(double offset) {
