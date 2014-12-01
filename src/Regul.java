@@ -5,6 +5,7 @@ import lejos.robotics.EncoderMotor;
 public class Regul extends Thread {		
 	private PID pid;
 	private Gyro gyro;
+	private Position posReader;
 	//RegulatedMotor motorA;
 	//RegulatedMotor motorB;
 	EncoderMotor motorA;
@@ -13,6 +14,8 @@ public class Regul extends Thread {
 	private double u, e; // Control signal to/from PID
 	private double angVel, ang; // angluarVelocity and current angle
 	private static final double weightAng = 0.001, weightAngVel = 1;
+	private float position, positionVel; // Position and position velocity
+
 
     /** Constructor. */
     public Regul (Gyro gyro, int priority) {
@@ -23,6 +26,7 @@ public class Regul extends Thread {
     	motorA.flt();
     	motorB = new NXTMotor(MotorPort.B);
     	motorB.flt();
+    	posReader = new Position(motorA);
     	//motorA = new EV3LargeRegulatedMotor(MotorPort.A);
     	//motorB = new EV3LargeRegulatedMotor(MotorPort.B);
     	
@@ -67,6 +71,8 @@ public class Regul extends Thread {
 		setMotor(0);
     	calculateOffset();
     	while (true) {
+    		position = posReader.getPosition();
+    		positionVel = posReader.getPosVelocity();
     		angVel = gyro.getAngleVelocity();
     		ang = gyro.getAngle();
     		e = weightAngVel*angVel+weightAng*ang;
@@ -106,6 +112,13 @@ public class Regul extends Thread {
 	
 	public double getV() {
 		return angVel;
+	}
+	
+	public double getP(){
+		return position;
+	}
+	public double getB(){
+		return positionVel;
 	}
 }
 

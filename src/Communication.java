@@ -36,6 +36,10 @@ public class Communication extends Thread {
 					message = "A" + String.valueOf(regul.getA());
 				} else if (i == 3) {
 					message = "V" + String.valueOf(regul.getV());
+				} else if (i == 4) {
+					message = "P" + String.valueOf(regul.getP());
+				} else if (i == 5) {
+					message = "B" + String.valueOf(regul.getB());
 				} else {
 					LCD.drawString("Something is very wrong with i", 0, 4);
 				}
