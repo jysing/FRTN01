@@ -59,21 +59,16 @@ public class Regul extends Thread {
     	}
     	return speed;
 	}
-    /*public void goToInitial() {
+    /*In i run:
     	e=?weight1?*Position.getPostition()+?weight2?*Position.getVelocity();
-    	u=pid.calculateOutput(e, 0);
-    	pid.updateState(u);
-    	
-    	
-    	
-    }*/
+    	 }*/
 
 	public void run() {
 		setMotor(0);
     	calculateOffset();
     	while (true) {
-    		angVel = (double)gyro.getAngleVelocity();
-    		ang = (double)gyro.getAngle();
+    		angVel = gyro.getAngleVelocity();
+    		ang = gyro.getAngle();
     		e = weightAngVel*angVel+weightAng*ang;
     		u = pid.calculateOutput(e, 0);
     		pid.updateState(u);
@@ -82,8 +77,8 @@ public class Regul extends Thread {
     }
     
     public void calculateOffset() {
-    	float offset = 0;
-    	float sample = 0;
+    	double offset = 0;
+    	double sample = 0;
 		int count = 100;
 		for(int i = 0; i<count; i++){
 			sample = gyro.getAngleVelocity();
