@@ -7,7 +7,6 @@ import lejos.robotics.filter.LowPassFilter;
 public class Gyro {
 	private Port port;
 	private HiTechnicGyro sensor;
-	//public SampleProvider rate; //can't create an object from an interface...
 	public IntegrationFilter integration; //changed to IntegrationFilter that implements the interface sampleProvider
 	public LowPassFilter lowPass; //low pass filter for att filtrera gyro signal
 	public float sample[];
@@ -29,10 +28,7 @@ public class Gyro {
 		sampleAng = new float[sensor.sampleSize()]; //Test med Angle
 		sampleLowPass = new float[sensor.sampleSize()];
 		time = System.currentTimeMillis();
-		
-
 		angle=0;
-
 		//Integrator = new SimpsonIteration();
 	}
 
