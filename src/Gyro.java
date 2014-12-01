@@ -1,5 +1,4 @@
 import lejos.hardware.ev3.LocalEV3;
-import lejos.hardware.lcd.LCD;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.HiTechnicGyro;
 import lejos.robotics.filter.IntegrationFilter;
@@ -8,7 +7,6 @@ import lejos.robotics.filter.LowPassFilter;
 public class Gyro {
 	private Port port;
 	private HiTechnicGyro sensor;
-	//public SampleProvider rate; //cant create an object from an interface...
 	public IntegrationFilter integration; //changed to IntegrationFilter that implements the interface sampleProvider
 	public LowPassFilter lowPass; //low pass filter for att filtrera gyro signal
 	public float sample[];
@@ -30,10 +28,7 @@ public class Gyro {
 		sampleAng = new float[sensor.sampleSize()]; //Test med Angle
 		sampleLowPass = new float[sensor.sampleSize()];
 		time = System.currentTimeMillis();
-		
-
 		angle=0;
-
 		//Integrator = new SimpsonIteration();
 	}
 
@@ -56,7 +51,8 @@ public class Gyro {
 		//LCD.drawString(
 		//		String.format("%3.2f", angle) + " m        "
 		//				+ sensor.sampleSize(), 0, 3);
-		return angle += (double) getAngleVelocity() * difference / 1000;
+		return sampleAng[0];
+		//return angle += (double) getAngleVelocity() * difference / 1000;
 	}
 
 	public void setOffset(float offset) {

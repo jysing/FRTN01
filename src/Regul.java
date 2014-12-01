@@ -1,7 +1,6 @@
 import lejos.hardware.motor.NXTMotor;
 import lejos.hardware.port.*;
 import lejos.robotics.EncoderMotor;
-import lejos.robotics.Tachometer;
 
 public class Regul extends Thread {		
 	private PID pid;

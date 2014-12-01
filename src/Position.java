@@ -2,10 +2,10 @@ import lejos.robotics.EncoderMotor;
 
 public class Position {
 	
-	private EncoderMotor motor;
+	private EncoderMotor motorA;
 	
 	public Position(EncoderMotor motorA) {
-		this.motor = motorA;
+		this.motorA = motorA;
 		
 	}
 		public float getVelocity() {
@@ -14,7 +14,7 @@ public class Position {
 		}
 
 		public double getPosition() {
-			return motor.getTachoCount();
+			return motorA.getTachoCount();
 		}
 
 }
