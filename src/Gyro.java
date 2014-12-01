@@ -30,6 +30,7 @@ public class Gyro {
 		time = System.currentTimeMillis();
 		angle=0;
 		//Integrator = new SimpsonIteration();
+		//Clone my ass
 	}
 
 	public float getAngleVelocity() {
