@@ -97,7 +97,6 @@ public class Graph {
 		private void updateGraph(int pos) {
 			message = message.substring(1);
 			double num = Double.parseDouble(message);
-			System.out.println(num);
 			TimeSeriesList.get(pos).addOrUpdate(new Millisecond(), num);
 		}
 	}

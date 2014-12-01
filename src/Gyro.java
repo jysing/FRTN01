@@ -22,7 +22,7 @@ public class Gyro {
 
 	// Gyro can deliver 300 measurements per second
 	public Gyro() {
-		port = LocalEV3.get().getPort("S1");
+		port = LocalEV3.get().getPort("S2");
 		sensor = new HiTechnicGyro(port);
 		sample = new float[sensor.sampleSize()];
 		//sampleAng = new float[sensor.sampleSize()]; //Test med Angle
@@ -38,7 +38,7 @@ public class Gyro {
 		//offset = (float) (EMAOFFSET*sample[0]+(1-EMAOFFSET)*offset);
 		//LCD.drawString(String.format("%3.2f", sample[0] - offset)
 		//		+ " m        " + sensor.sampleSize(), 0, 4);
-		return (float) (sample[0] - offset - 0.05); //-0.05
+		return (float) (sample[0] - offset-15); //-0.05
 	}
 
 	public double getAngle() {
@@ -51,7 +51,7 @@ public class Gyro {
 		//		String.format("%3.2f", angle) + " m        "
 		//				+ sensor.sampleSize(), 0, 3);
 		//return sampleAng[0];
-		return angle += (double)(getAngleVelocity() * (difference / 1000));
+		return angle += (double)(getAngleVelocity() * (difference));
 	}
 
 	public void setOffset(float offset) {
