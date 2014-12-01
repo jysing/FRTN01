@@ -1,4 +1,5 @@
 import lejos.hardware.ev3.LocalEV3;
+import lejos.hardware.lcd.LCD;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.HiTechnicGyro;
 import lejos.robotics.filter.IntegrationFilter;
@@ -12,7 +13,7 @@ public class Gyro {
 	public float sample[];
 	public float sampleAng[];
 	public float sampleLowPass[];
-	public float offset = 0;
+	public double offset = 0;
 	
 	private double angle;
 	public double EMAOFFSET = 0.0005;
@@ -32,29 +33,32 @@ public class Gyro {
 		//Clone my ass
 	}
 
-	public float getAngleVelocity() {
+	public double getAngleVelocity() {
 		sensor.fetchSample(sample, 0);
 		//lowPass = new LowPassFilter(sensor, (float)0.01); //Lagpass med tidskonstant 0.01 osaker pa enhet
 		//offset = (float) (EMAOFFSET*sample[0]+(1-EMAOFFSET)*offset);
 		//LCD.drawString(String.format("%3.2f", sample[0] - offset)
 		//		+ " m        " + sensor.sampleSize(), 0, 4);
-		return (float) (sample[0] - offset - 0.05); //-0.05
+		return sample[0] - offset - 0.05; //-0.05
 	}
 
 	public double getAngle() {
 		difference = System.currentTimeMillis() - time;
 		time = time + difference;
-		
+		long temp = difference / 1000;
+		LCD.drawString("sec = " + temp, 0, 5);
+		double temp2 = getAngleVelocity();
+		LCD.drawString("angVel = " + temp2, 0, 6);
 		//integration = new IntegrationFilter(sensor);
 		//integration.fetchSample(sampleAng, 0);
 		//LCD.drawString(
 		//		String.format("%3.2f", angle) + " m        "
 		//				+ sensor.sampleSize(), 0, 3);
 		//return sampleAng[0];
-		return angle += (double)(getAngleVelocity() * (difference / 1000));
+		return angle += (temp2 * temp);
 	}
 
-	public void setOffset(float offset) {
+	public void setOffset(double offset) {
 		this.offset = offset;
 		angle = 0;
 	}
