@@ -23,7 +23,7 @@ public class Graph {
 	private void setup(SocketClient sc){
 		TimeSeriesList = new ArrayList<TimeSeries>();
  		frame = new JFrame("Plot deluxe");
- 		frame.setLayout(new GridLayout(1,0));
+ 		frame.setLayout(new GridLayout(3,2));
  		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
@@ -82,7 +82,11 @@ public class Graph {
 						updateGraph(2);
 					} else if (message.charAt(0) == 'V') {
 						updateGraph(3);
-					} else {
+					} else if (message.charAt(0) == 'P') { //Position
+						updateGraph(4);
+					} else if (message.charAt(0) == 'B') { //Position velocity
+						updateGraph(5);
+					}else {
 						System.out.println("Not a recognized value");
 					}
 				}

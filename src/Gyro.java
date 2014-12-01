@@ -43,7 +43,7 @@ public class Gyro {
 		return (float) (sample[0] - offset); //-0.05
 	}
 
-	public double getAngle() {
+			public double getAngle() {
 		difference = System.currentTimeMillis() - time;
 		time = time + difference;
 		//LCD.drawString(
