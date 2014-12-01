@@ -35,12 +35,6 @@ public class Gyro {
 
 	public float getAngleVelocity() {
 		sensor.fetchSample(sample, 0);
-		lowPass = new LowPassFilter(sensor, (float)0.01); //Lagpass med tidskonstant 0.01 osaker pa enhet
-		
-		offset = (float) (EMAOFFSET*sample[0]+(1-EMAOFFSET)*offset);
-		integration = new IntegrationFilter(sensor);
-		integration.fetchSample(sampleAng, 0);
-		
 		//LCD.drawString(String.format("%3.2f", sample[0] - offset)
 		//		+ " m        " + sensor.sampleSize(), 0, 4);
 		return (float) (sample[0] - offset); //-0.05
@@ -49,6 +43,11 @@ public class Gyro {
 	public double getAngle() {
 		difference = System.currentTimeMillis() - time;
 		time = time + difference;
+		
+		lowPass = new LowPassFilter(sensor, (float)0.01); //Lagpass med tidskonstant 0.01 osaker pa enhet
+		offset = (float) (EMAOFFSET*sample[0]+(1-EMAOFFSET)*offset);
+		integration = new IntegrationFilter(sensor);
+		integration.fetchSample(sampleAng, 0);
 		//LCD.drawString(
 		//		String.format("%3.2f", angle) + " m        "
 		//				+ sensor.sampleSize(), 0, 3);
