@@ -33,7 +33,7 @@ public class Gyro {
 	public double getAngleVelocity() {
 		//sensor.fetchSample(sample, 0);
 		lowPass.fetchSample(sample, 0);
-		//offset = (float) (EMAOFFSET*sample[0]+(1-EMAOFFSET)*offset);
+		offset = (float) (EMAOFFSET*sample[0]+(1-EMAOFFSET)*offset);
 		return sample[0]-offset; // 0.05
 	}
 	public double getAngle() {
