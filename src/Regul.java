@@ -24,7 +24,7 @@ public class Regul extends Thread {
     	pid = new PID();
     	motorA = new NXTMotor(MotorPort.A);
     	motorA.flt();
-    	motorB = new NXTMotor(MotorPort.B);
+    	motorB = new NXTMotor(MotorPort.D);
     	motorB.flt();
     	posReader = new Position(motorA);
     	//motorA = new EV3LargeRegulatedMotor(MotorPort.A);
@@ -44,7 +44,7 @@ public class Regul extends Thread {
     
     public void setMotor(double speed){
     	speed = limitSpeed(speed);
-    	if (speed > 0){
+    	if (speed < 0){
     		motorA.backward();
     		motorB.backward();
     	} else {
@@ -95,7 +95,7 @@ public class Regul extends Thread {
 				e.printStackTrace();
 			}
 		}
-		gyro.setOffset((offset/count)-0.13);
+		gyro.setOffset((offset/count)-0.123);
 	}
     
     public double getU() {
