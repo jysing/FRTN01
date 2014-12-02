@@ -66,8 +66,10 @@ public class Regul extends Thread {
 	}
 
 	public void run() {
+		setMotor(30);
 		setMotor(0);
     	calculateOffset();
+    	
     	while (true) {
     		position = posReader.getPosition();
     		positionVel = posReader.getPosVelocity();
