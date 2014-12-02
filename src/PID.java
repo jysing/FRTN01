@@ -22,7 +22,7 @@ public class PID {
 		  p.integratorOn = false;
 		  p.K = 2.5; //K =7 med regulatedmotor
 		  p.Ti = 0.0;
-		  p.Tr = 0.0;
+		  p.Tr = 10.0;
 		  p.Td = 0;
 		  p.N = 5;
 		  
