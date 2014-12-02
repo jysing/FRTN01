@@ -39,8 +39,8 @@ public class Gyro {
 		return sample[0]-offset; // 0.05
 	}
 	public double getAngle() {
-		if(firstAng==true){
-			time = System.currentTimeMillis();
+		if(firstAng==true){ //kollar time har istallet forsta gangen for att difference skall bli liten
+			time = System.currentTimeMillis(); 
 			firstAng = false;
 		}
 		difference = System.currentTimeMillis() - time;
