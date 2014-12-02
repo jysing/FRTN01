@@ -29,7 +29,6 @@ public class Regul extends Thread {
     	posReader = new Position(motorA);
     	//motorA = new EV3LargeRegulatedMotor(MotorPort.A);
     	//motorB = new EV3LargeRegulatedMotor(MotorPort.B);
-    	
     }
     
     /** Sets the parameters of the PID controller */
@@ -98,6 +97,9 @@ public class Regul extends Thread {
 		gyro.setOffset((offset/count)-0.156);
 	}
     
+    
+    //Get methods to be used by Communication to 
+    //send information needed to build graphs
     public double getU() {
     	return u;
     }
@@ -121,4 +123,3 @@ public class Regul extends Thread {
 		return positionVel;
 	}
 }
-

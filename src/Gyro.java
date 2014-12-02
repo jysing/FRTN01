@@ -10,15 +10,15 @@ public class Gyro {
 	private HiTechnicGyro sensor;
 	public IntegrationFilter integration; //changed to IntegrationFilter that implements the interface sampleProvider
 	public LowPassFilter lowPass; //low pass filter for att filtrera gyro signal
+	
 	public float sample[];
 	public float sampleAng[];
 	public float sampleLowPass[];
-	public double offset = 0;
 	
+	public double offset = 0;
 	private double angle;
 	public double EMAOFFSET = 0.0005;
-	public SimpsonIteration Integrator; //anv�nd denna vid getAngle
-
+	
 	private long time, difference;
 
 	// Gyro can deliver 300 measurements per second
@@ -28,34 +28,24 @@ public class Gyro {
 		lowPass = new LowPassFilter(sensor, (float)0.1);
 		sample = new float[sensor.sampleSize()];
 		time = System.currentTimeMillis();
-		//Integrator = new SimpsonIteration();
 	}
 
 	public double getAngleVelocity() {
 		//sensor.fetchSample(sample, 0);
 		lowPass.fetchSample(sample, 0);
 		//offset = (float) (EMAOFFSET*sample[0]+(1-EMAOFFSET)*offset);
-		//LCD.drawString(String.format("%3.2f", sample[0] - offset)
-		//		+ " m        " + sensor.sampleSize(), 0, 4);
-		
-		//return (sample[0] - offset- 15) ; //-0.05
-		return sample[0]-offset;
+		return sample[0]-offset; // 0.05
 	}
 	public double getAngle() {
-
 		difference = System.currentTimeMillis() - time;
 		time = time + difference;
-		long temp = time;
-		//LCD.drawString("sec = " + difference, 0, 5);
-		double temp2 = getAngleVelocity();
 		
-		//integration = new IntegrationFilter(sensor);
-		//integration.fetchSample(sampleAng, 0);
-		//LCD.drawString(
-		//		String.format("%3.2f", angle) + " m        "
-		//				+ sensor.sampleSize(), 0, 3);
-		//return sampleAng[0];
-		return angle += (temp2 * difference);
+		//not needed
+		LCD.drawString("Difference: " + difference, 0, 5);
+		double angleVel = getAngleVelocity();
+		LCD.drawString("angVel: " + angleVel, 0, 6);
+		
+		return angle += (angleVel * difference);
 	}
 
 	public void setOffset(double offset) {

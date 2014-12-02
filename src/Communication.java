@@ -44,7 +44,7 @@ public class Communication extends Thread {
 					LCD.drawString("Something is very wrong with i", 0, 4);
 				}
 				i++;
-				i = i % 4;
+				i = i % 6;
 				send(message);
 			} else {
 				LCD.drawString("It is not connected", 0, 3);

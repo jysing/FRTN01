@@ -13,7 +13,8 @@ public class Main {
 			comm.connect();
 			comm.start();
 		} catch (IOException e) {
-			LCD.drawString("massive connection error", 0, 0);
+			LCD.drawString("massive connection", 0, 0);
+			LCD.drawString(" error", 0, 1);
 		}
 		regul.start();		
 	}
