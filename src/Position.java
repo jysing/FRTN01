@@ -9,14 +9,14 @@ public class Position {
 		time = System.currentTimeMillis();	
 	}
 	
-		public float getPosVelocity() {
-			float oldValue = getPosition();
+		public double getPosVelocity() {
+			double oldValue = getPosition();
+			difference = System.currentTimeMillis() - time;
+			time = time + difference;
 			return ((getPosition()-oldValue)/difference)/1000;
 		}
 		
-		public float getPosition() {
-			difference = System.currentTimeMillis() - time;
-			time = time + difference;
+		public double getPosition() {
 			return motorA.getTachoCount();
 		}
 }

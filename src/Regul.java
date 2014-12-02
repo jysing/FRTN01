@@ -1,4 +1,3 @@
-import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.NXTMotor;
 import lejos.hardware.port.*;
 import lejos.robotics.EncoderMotor;
@@ -17,7 +16,7 @@ public class Regul extends Thread {
 	private static final double weightAng = 0.003, weightAngVel = 1;
 	private static final double normalizedWeightAng = weightAng/(weightAng + weightAngVel);
 	private static final double normalizedWeightAngVel = weightAngVel/(weightAng + weightAngVel);
-	private float position, positionVel; // Position and position velocity
+	private double position, positionVel; // Position and position velocity
 
 
     /** Constructor. */
@@ -74,9 +73,7 @@ public class Regul extends Thread {
     	calculateOffset();
     	while (true) {
     		position = posReader.getPosition();
-    		LCD.drawString("position: " + position, 0, 3);
     		positionVel = posReader.getPosVelocity();
-    		LCD.drawString("positionVel: " + positionVel, 0, 4);
     		angVel = gyro.getAngleVelocity();
     		ang = gyro.getAngle();
     		e = normalizedWeightAngVel*angVel+normalizedWeightAng*ang;
