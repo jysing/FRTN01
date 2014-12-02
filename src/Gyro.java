@@ -47,7 +47,7 @@ public class Gyro {
 		
 		double temp = (angleVel * difference);
 		if(Math.abs(temp-angle) < 0.00001) angle = temp;
-		return angle += (angleVel * difference);
+		return angle;
 	}
 
 	public void setOffset(double offset) {
