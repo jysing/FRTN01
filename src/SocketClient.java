@@ -24,9 +24,13 @@ public class SocketClient{
         out = new DataOutputStream(client.getOutputStream());
     }
 
-    public void send(String message) throws IOException {
-    	out.writeUTF(message);
-    }
+    public void send(String message){ //throws IOException {
+    	try {
+    		out.writeUTF(message);
+    	} catch (IOException e){
+    		System.out.println("SocketClient: Send(String Message) failed.");
+    	}
+	}
     
     public String receive() {
     	String message;
