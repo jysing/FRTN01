@@ -121,4 +121,3 @@ public class Regul extends Thread {
 		return positionVel;
 	}
 }
-
