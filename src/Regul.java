@@ -64,9 +64,6 @@ public class Regul extends Thread {
     	}
     	return speed;
 	}
-    /*In i run:
-    	e=?weight1?*Position.getPostition()+?weight2?*Position.getVelocity();
-    	 }*/
 
 	public void run() {
 		setMotor(0);
