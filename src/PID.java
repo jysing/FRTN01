@@ -10,7 +10,7 @@ public class PID {
 	private double y = 0;
 	private  double ad;
     private double bd; 
-    private long time, H;
+    private long time, interval;
     
 	
 	// Constructor
@@ -36,11 +36,11 @@ public class PID {
 	
 	// Calculates the control signal v.
 	public synchronized double calculateOutput(double y, double yref){
-		H = System.currentTimeMillis() - time;
-		time = time + H;
+		interval = System.currentTimeMillis() - time;
+		time = time + interval;
 		this.y = y;
 		this.e = yref - y;
-		ad = p.Td/(p.Td+p.N*H);
+		ad = p.Td/(p.Td+p.N*interval);
         bd = p.K*ad*p.N; 
 		this.D = ad*D - bd*(y - yOld);
 		this.v = p.K * (p.Beta * yref - y) + I + D; // I is 0.0 if integratorOn is false
