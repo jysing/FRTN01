@@ -29,7 +29,6 @@ public class Regul extends Thread {
     	posReader = new Position(motorA);
     	//motorA = new EV3LargeRegulatedMotor(MotorPort.A);
     	//motorB = new EV3LargeRegulatedMotor(MotorPort.B);
-    	
     }
     
     /** Sets the parameters of the PID controller */
