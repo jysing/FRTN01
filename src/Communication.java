@@ -26,8 +26,9 @@ public class Communication extends Thread {
 	public void run() {
 		int i = 0;
 		while (true) {
+			String message;
 			if (this.isConnected()) {
-				String message = "Fel";
+				message = "Fel";
 				if (i == 0) {
 					message = "U" + String.valueOf(regul.getU());
 				} else if (i == 1) {
@@ -49,6 +50,17 @@ public class Communication extends Thread {
 			} else {
 				LCD.drawString("It is not connected", 0, 3);
 			}
+			
+			
+			try {
+				message = receive();
+			} catch (IOException e1) {
+				message = "Fel";
+			}
+			if(message.charAt(0)=='#'){
+				regul.calculateOffset();
+			}
+			
 			try {
 				sleep(period);
 			} catch (InterruptedException e) {
@@ -101,6 +113,11 @@ public class Communication extends Thread {
 
 	public String receive() throws IOException {
 		String response = in.readUTF();
-		return response;
+    	try {
+			response = in.readUTF();
+		} catch (IOException e) {
+			response = "Fel";
+		}
+    	return response;
 	}
 }
