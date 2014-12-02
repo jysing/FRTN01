@@ -1,4 +1,5 @@
 import lejos.hardware.ev3.LocalEV3;
+import lejos.hardware.lcd.LCD;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.HiTechnicGyro;
 import lejos.robotics.filter.IntegrationFilter;
@@ -38,7 +39,13 @@ public class Gyro {
 	public double getAngle() {
 		difference = System.currentTimeMillis() - time;
 		time = time + difference;
-		return angle += (getAngleVelocity() * difference);
+		
+		//not needed
+		LCD.drawString("Difference: " + difference, 0, 5);
+		double angleVel = getAngleVelocity();
+		LCD.drawString("angVel: " + angleVel, 0, 6);
+		
+		return angle += (angleVel * difference);
 	}
 
 	public void setOffset(double offset) {
