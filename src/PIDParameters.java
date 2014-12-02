@@ -12,9 +12,7 @@ public class PIDParameters implements Cloneable {
     public double bd;
    
     public Object clone() {
-        try {
-            ad = Td/(Td+N*H);
-            bd = K*ad*N;                   
+        try {                  
             return super.clone();
         } catch (CloneNotSupportedException x) {
             return null;

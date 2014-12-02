@@ -8,17 +8,22 @@ public class PID {
 	private double D; // Derivative state
 	private double yOld=0;
 	private double y = 0;
+	private  double ad;
+    private double bd; 
+    private long time, H;
+    
 	
 	// Constructor
 	public PID(){
 		PIDParameters p = new PIDParameters();
+		time = System.currentTimeMillis();
 		  p.Beta = 1.0;
-		  p.H = 0.02;
+		 // p.H = 0.02;
 		  p.integratorOn = false;
 		  p.K = 3; //K =7 med regulatedmotor
 		  p.Ti = 0.0;
 		  p.Tr = 0.0;
-		  p.Td = 0;
+		  p.Td = 1;
 		  p.N = 5;
 		  
 		  setParameters(p);
@@ -31,9 +36,13 @@ public class PID {
 	
 	// Calculates the control signal v.
 	public synchronized double calculateOutput(double y, double yref){
+		H = System.currentTimeMillis() - time;
+		time = time + H;
 		this.y = y;
 		this.e = yref - y;
-		this.D = p.ad*D - p.bd*(y - yOld);
+		ad = p.Td/(p.Td+p.N*H);
+        bd = p.K*ad*p.N; 
+		this.D = ad*D - bd*(y - yOld);
 		this.v = p.K * (p.Beta * yref - y) + I + D; // I is 0.0 if integratorOn is false
 		return this.v;
 	}
