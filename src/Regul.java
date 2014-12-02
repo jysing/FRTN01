@@ -97,6 +97,9 @@ public class Regul extends Thread {
 		gyro.setOffset((offset/count)-0.123);
 	}
     
+    
+    //Get methods to be used by Communication to 
+    //send information needed to build graphs
     public double getU() {
     	return u;
     }
