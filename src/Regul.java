@@ -64,9 +64,6 @@ public class Regul extends Thread {
     	}
     	return speed;
 	}
-    /*In i run:
-    	e=?weight1?*Position.getPostition()+?weight2?*Position.getVelocity();
-    	 }*/
 
 	public void run() {
 		setMotor(0);
@@ -96,7 +93,7 @@ public class Regul extends Thread {
 				e.printStackTrace();
 			}
 		}
-		gyro.setOffset((offset/count)-0.156);
+		gyro.setOffset((offset/count)-0.150); //0.156 utan EMAOFFSET
 	}
     
     //Get methods to be used by Communication to 
