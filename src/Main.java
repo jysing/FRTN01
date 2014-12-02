@@ -5,7 +5,7 @@ public class Main {
 	private static final int port = 6666, timeout = 30000;
 	private static final int regulPrio = 2, graphPrio = 1;
 	public static void main(String [] args){
-		Gyro gyro = new Gyro();
+		Gyro gyro = new Gyro(); 
 		Regul regul = new Regul(gyro, regulPrio);
 		Communication comm = null;
 		try {
