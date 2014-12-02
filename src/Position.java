@@ -10,13 +10,13 @@ public class Position {
 	}
 	
 	public float getPosVelocity() {
+		difference = System.currentTimeMillis() - time;
+		time = time + difference;
 		float oldValue = getPosition();
 		return ((getPosition()-oldValue)/difference)/1000;
 	}
 		
 	public float getPosition() {
-		difference = System.currentTimeMillis() - time;
-		time = time + difference;
 		return motorA.getTachoCount();
 	}
 }
