@@ -66,8 +66,9 @@ public class Regul extends Thread {
 	}
 
 	public void run() {
-		setMotor(0);
+		setMotor(30);
     	calculateOffset();
+    	
     	while (true) {
     		position = posReader.getPosition();
     		positionVel = posReader.getPosVelocity();
@@ -83,7 +84,7 @@ public class Regul extends Thread {
     public void calculateOffset() {
     	double offset = 0;
     	double sample = 0;
-		int count = 100;
+		int count = 1000;
 		for(int i = 0; i<count; i++){
 			sample = gyro.getAngleVelocity();
 			offset = offset + sample;

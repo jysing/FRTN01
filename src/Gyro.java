@@ -46,7 +46,11 @@ public class Gyro {
 		LCD.drawString("angVel: " + angleVel, 0, 6);
 		
 		double temp = (angleVel * difference);
-		if(Math.abs(temp-angle) > 0.000000001) angle = temp;
+
+		//if(Math.abs(temp/1000) > 0.02){
+			angle += temp;
+		//}
+
 		return angle;
 	}
 
