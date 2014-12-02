@@ -1,7 +1,11 @@
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -12,19 +16,33 @@ import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
-public class Graph {
+public class Graph implements ActionListener{
 	
 	JFrame frame;
+	JButton button;
+	JPanel panel;
+	SocketClient sc;
 	private ArrayList<TimeSeries> TimeSeriesList;
 	
 	public Graph(SocketClient sc) {
-		setup(sc);
+		this.sc = sc;
+		setup();
 	}
-	private void setup(SocketClient sc){
+	private void setup(/*SocketClient sc*/){
 		TimeSeriesList = new ArrayList<TimeSeries>();
  		frame = new JFrame("Plot deluxe");
  		frame.setLayout(new GridLayout(3,2));
- 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 		
+	}
+	
+	public void createButton() {
+		panel = new JPanel();
+ 		button = new JButton("Calibrate");
+ 		button.addActionListener(this);
+ 		panel.add(button);
+ 		frame.add(panel);
+ 		frame.pack();
+ 		frame.setVisible(true);
 	}
 
 	public void createWindow(String graphName, String xValue, String yValue, String data) throws InterruptedException {
@@ -46,7 +64,16 @@ public class Graph {
 	
 	public void start(SocketClient sc) {
 		gen myGen = new gen(sc, TimeSeriesList);
-		new Thread(myGen).start();		
+		new Thread(myGen).start();
+	}
+	
+	
+	public void actionPerformed(ActionEvent e) {
+		try {
+			sc.send("#");
+		}  catch (Exception ex){
+			System.out.println("Graph: actionPerformed(Actionevent e) failed.");
+		}
 	}
 
 	static class gen implements Runnable {
