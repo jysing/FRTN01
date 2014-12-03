@@ -99,16 +99,7 @@ public class Graph implements ActionListener, KeyListener {
 	
 	@Override
 	public void keyReleased(KeyEvent e) {
-		switch(e.getKeyCode()){
-			case 65:
-				left = 0;
-			case 68:
-				right = 0;
-			case 87:
-				up = 0;
-			case 83:
-				down = 0;
-		}
+		// Do nothing
 	}
 	
 	@Override
