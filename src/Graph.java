@@ -71,7 +71,7 @@ public class Graph implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		System.out.println("actionPerformed");
 		try {
-			sc.send("#");
+			sc.send("C");
 		}  catch (Exception ex){
 			System.out.println("Graph: actionPerformed(Actionevent e) failed.");
 		}
