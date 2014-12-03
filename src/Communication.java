@@ -52,7 +52,6 @@ public class Communication extends Thread {
 				} catch (IOException e1) {
 					message = "Fel";
 				}
-				LCD.drawString("We go a: " + message, 0, 4);
 				switch(message) {
 				case "S": regul.setMotor(0, 0);
 					break;
