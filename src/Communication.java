@@ -43,27 +43,9 @@ public class Communication extends Thread {
 				case 5: message = "B" + String.valueOf(regul.getB());
 					break;
 				}
-				/*
-				if (i == 0) {
-					message = "U" + String.valueOf(regul.getU());
-				} else if (i == 1) {
-					message = "E" + String.valueOf(regul.getE());
-				} else if (i == 2) {
-					message = "A" + String.valueOf(regul.getA());
-				} else if (i == 3) {
-					message = "V" + String.valueOf(regul.getV());
-				} else if (i == 4) {
-					message = "P" + String.valueOf(regul.getP());
-				} else if (i == 5) {
-					message = "B" + String.valueOf(regul.getB());
-				} else {
-					LCD.drawString("Something is very wrong with i", 0, 4);
-				}
-				*/
 				i++;
 				i = i % 6;
 				send(message);
-
 				try {
 					message = receive();
 					LCD.drawString(message, 0, 5);
@@ -72,31 +54,21 @@ public class Communication extends Thread {
 				}
 				LCD.drawString("We go a: " + message, 0, 4);
 				switch(message) {
+				case "S": regul.setMotor(0, 0);
+					break;
 				case "C": regul.calculateOffset();
-					
-				LCD.drawString("We go a: " + message, 0, 3);
 					break;
 				case "F": regul.setMotor(20, 20);
-				LCD.drawString("We go a: " + message, 0, 3);
 					break;
 				case "B": regul.setMotor(-20, -20);
-				LCD.drawString("We go a: " + message, 0, 3);
 					break;
 				case "L": regul.setMotor(-10, 10);
-				LCD.drawString("We go a: " + message, 0, 3);
 					break;
 				case "R": regul.setMotor(10, -10);
-				LCD.drawString("We go a: " + message, 0, 3);
 					break;
 				case "Fel": LCD.drawString("Not doing stuff", 0, 6);
 					break;
 				}
-				/*
-				if (message.charAt(0) == 'C') {
-					LCD.drawString("doint stuff", 0, 6);
-					regul.calculateOffset();
-				}
-				*/
 			} else {
 				LCD.drawString("It is not connected", 0, 3);
 			}

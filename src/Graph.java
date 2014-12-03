@@ -137,28 +137,12 @@ public class Graph implements ActionListener, KeyListener {
 					case 'B': updateGraph(5);
 						break; 
 					}
-					/*
-					if (message.charAt(0) == 'U'){
-						updateGraph(0);
-					} else if (message.charAt(0) == 'E') {
-						updateGraph(1);
-					} else if (message.charAt(0) == 'A') {
-						updateGraph(2);
-					} else if (message.charAt(0) == 'V') {
-						updateGraph(3);
-					} else if (message.charAt(0) == 'P') { //Position
-						updateGraph(4);
-					} else if (message.charAt(0) == 'B') { //Position velocity
-						updateGraph(5);
-					}else {
-						System.out.println("Not a recognized value");
-					}
-					*/
 				}
 				
 				switch(key){
+				case 0: sc.send("S");
+					break;
 				case 65: sc.send("L");
-					System.out.println("We be sending the L");
 					break;
 				case 68: sc.send("R");
 					break;
