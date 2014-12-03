@@ -86,21 +86,13 @@ public class Graph implements ActionListener, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyCode()){
-			case 65:
-				left = 1;
-				System.out.println("Left");
+			case 65: sc.send("L");
 				break;
-			case 68:
-				right = 1;
-				System.out.println("Right");
+			case 68: sc.send("R");
 				break;
-			case 87:
-				up = 1;
-				System.out.println("Up");
+			case 87: sc.send("F");
 				break;
-			case 83:
-				down = 1;
-				System.out.println("Down");
+			case 83: sc.send("B");
 				break;
 		}
 	}
