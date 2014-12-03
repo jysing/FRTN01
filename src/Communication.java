@@ -48,15 +48,16 @@ public class Communication extends Thread {
 				i = i % 6;
 				send(message);
 
-				/*try {
+				try {
 					message = receive();
 					LCD.drawString(message, 0, 5);
 				} catch (IOException e1) {
 					message = "Fel";
 				}
-				if (message.charAt(0) == '#') {
+				if (message.charAt(0) == 'C') {
+					LCD.drawString("doint stuff", 0, 6);
 					regul.calculateOffset();
-				}*/
+				}
 			} else {
 				LCD.drawString("It is not connected", 0, 3);
 			}
