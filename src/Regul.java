@@ -43,17 +43,21 @@ public class Regul extends Thread {
     	return pid.getParameters();
     }
     
-    public void setMotor(double speed){
-    	speed = limitSpeed(speed);
-    	if (speed < 0){
-    		motorA.backward();
+    public void setMotor(double speedLeft, double speedRight){
+    	speedLeft = limitSpeed(speedLeft);
+    	speedRight = limitSpeed(speedRight);
+    	if (speedLeft < 0){
     		motorB.backward();
     	} else {
-    		motorA.forward();
     		motorB.forward();
     	}
-    	motorA.setPower(Math.abs((int)speed));
-    	motorB.setPower(Math.abs((int)speed));
+    	if(speedRight < 0) {
+    		motorA.backward();
+    	} else {
+    		motorA.forward();
+    	}
+    	motorB.setPower(Math.abs((int)speedLeft));
+    	motorA.setPower(Math.abs((int)speedRight));
     }
     
     private double limitSpeed(double speed) {
@@ -66,8 +70,8 @@ public class Regul extends Thread {
 	}
 
 	public void run() {
-		setMotor(30);
-		setMotor(0);
+		setMotor(30, 30);
+		setMotor(0, 0);
     	calculateOffset();
     	
     	while (true) {
@@ -78,7 +82,7 @@ public class Regul extends Thread {
     		e = normalizedWeightAngVel*angVel+normalizedWeightAng*ang;
     		u = pid.calculateOutput(e, 0);
     		pid.updateState(u);
-    		setMotor(u);
+    		setMotor(u, u);
     	}
     }
     
@@ -95,7 +99,7 @@ public class Regul extends Thread {
 				e.printStackTrace();
 			}
 		}
-		gyro.setOffset((offset/count)-0.150); //0.156 utan EMAOFFSET
+		gyro.setOffset((offset/count)-0.130); //0.156 utan EMAOFFSET
 	}
     
     //Get methods to be used by Communication to 

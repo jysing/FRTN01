@@ -27,6 +27,7 @@ public class SocketClient{
     public void send(String message){ //throws IOException {
     	try {
     		out.writeUTF(message);
+    		out.flush();
     	} catch (IOException e){
     		System.out.println("SocketClient: Send(String Message) failed.");
     	}

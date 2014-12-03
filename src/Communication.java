@@ -47,23 +47,41 @@ public class Communication extends Thread {
 				i++;
 				i = i % 6;
 				send(message);
+
+				try {
+					message = receive();
+					LCD.drawString(message, 0, 5);
+				} catch (IOException e1) {
+					message = "Fel";
+				}
+				switch(message) {
+				case "C": regul.calculateOffset();
+					LCD.drawString("Doing stuff", 0, 6);
+					break;
+				case "F": regul.setMotor(20, 20);
+					break;
+				case "B": regul.setMotor(-20, -20);
+					break;
+				case "L": regul.setMotor(-10, 10);
+					break;
+				case "R": regul.setMotor(10, -10);
+					break;
+				case "Fel": LCD.drawString("Not doing stuff", 0, 6);
+					break;
+				}
+				/*
+				if (message.charAt(0) == 'C') {
+					LCD.drawString("doint stuff", 0, 6);
+					regul.calculateOffset();
+				}
+				*/
 			} else {
 				LCD.drawString("It is not connected", 0, 3);
 			}
-			
-			try {
-				message = receive();
-			} catch (IOException e1) {
-				message = "Fel";
-			}
-			if(message.charAt(0)=='#'){
-				regul.calculateOffset();
-			}
-			
+
 			try {
 				sleep(period);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -103,20 +121,20 @@ public class Communication extends Thread {
 
 	public void send(String message) {
 		try {
-			LCD.drawString(message, 0, 3);
 			out.writeUTF(message);
+			out.flush();
 		} catch (IOException e) {
 			LCD.drawString("Can't send message", 0, 3);
 		}
 	}
 
 	public String receive() throws IOException {
-		String response;
-    	try {
-			response = in.readUTF();
+		String response = "Fel";
+		try {
+			if(in.available() >= 8) response = in.readUTF();
 		} catch (IOException e) {
 			response = "Fel";
 		}
-    	return response;
+		return response;
 	}
 }

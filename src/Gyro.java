@@ -1,5 +1,4 @@
 import lejos.hardware.ev3.LocalEV3;
-import lejos.hardware.lcd.LCD;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.HiTechnicGyro;
 import lejos.robotics.filter.IntegrationFilter;
@@ -14,6 +13,7 @@ public class Gyro {
 	public float sample[];
 	public float sampleAng[];
 	public float sampleLowPass[];
+	private boolean firstAng = true;
 	
 	public double offset = 0;
 	private double angle;
@@ -27,30 +27,23 @@ public class Gyro {
 		sensor = new HiTechnicGyro(port);
 		lowPass = new LowPassFilter(sensor, (float)0.1);
 		sample = new float[sensor.sampleSize()];
-		time = System.currentTimeMillis();
 	}
 
 	public double getAngleVelocity() {
-		//sensor.fetchSample(sample, 0);
 		lowPass.fetchSample(sample, 0);
-		offset = (float) (EMAOFFSET*sample[0]+(1-EMAOFFSET)*offset);
+		//offset = (float) (EMAOFFSET*sample[0]+(1-EMAOFFSET)*offset);
 		return sample[0]-offset; // 0.05
 	}
 	public double getAngle() {
+		if(firstAng==true){ //kollar time har istallet forsta gangen for att difference skall bli liten
+			time = System.currentTimeMillis(); 
+			firstAng = false;
+		}
 		difference = System.currentTimeMillis() - time;
 		time = time + difference;
-		
-		//not needed
-		LCD.drawString("Difference: " + difference, 0, 5);
-		double angleVel = getAngleVelocity();
-		LCD.drawString("angVel: " + angleVel, 0, 6);
-		
-		double temp = (angleVel * difference);
-
 		//if(Math.abs(temp/1000) > 0.02){
-			angle += temp;
+			angle += (getAngleVelocity()*difference);
 		//}
-
 		return angle;
 	}
 
