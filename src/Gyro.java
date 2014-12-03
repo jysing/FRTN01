@@ -13,7 +13,7 @@ public class Gyro {
 	public float sample[];
 	public float sampleAng[];
 	public float sampleLowPass[];
-	private boolean firstAng;
+	private boolean firstAng = true;
 	
 	public double offset = 0;
 	private double angle;
@@ -27,7 +27,11 @@ public class Gyro {
 		sensor = new HiTechnicGyro(port);
 		lowPass = new LowPassFilter(sensor, (float)0.1);
 		sample = new float[sensor.sampleSize()];
+<<<<<<< HEAD
+		//time = System.currentTimeMillis(); //tiden från denna till första sample av getangvel gör att första angle blir stor.
+=======
 		firstAng=true;
+>>>>>>> 112cfdd50a53fb8c24b151bf27becdeb2da3cfdd
 	}
 
 	public double getAngleVelocity() {
