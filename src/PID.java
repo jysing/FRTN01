@@ -40,7 +40,8 @@ public class PID {
 		time = time + interval;
 		this.y = y;
 		this.e = yref - y;
-		ad = p.Td/(p.Td+p.N*interval);
+		ad = 0;
+		if(p.Td != 0) ad = p.Td/(p.Td+p.N*interval);
         bd = p.K*ad*p.N; 
 		this.D = ad*D - bd*(y - yOld);
 		this.v = p.K * (p.Beta * yref - y) + I + D; // I is 0.0 if integratorOn is false
