@@ -73,15 +73,20 @@ public class Communication extends Thread {
 				LCD.drawString("We go a: " + message, 0, 4);
 				switch(message) {
 				case "C": regul.calculateOffset();
-					LCD.drawString("Doing stuff", 0, 6);
+					
+				LCD.drawString("We go a: " + message, 0, 3);
 					break;
 				case "F": regul.setMotor(20, 20);
+				LCD.drawString("We go a: " + message, 0, 3);
 					break;
 				case "B": regul.setMotor(-20, -20);
+				LCD.drawString("We go a: " + message, 0, 3);
 					break;
 				case "L": regul.setMotor(-10, 10);
+				LCD.drawString("We go a: " + message, 0, 3);
 					break;
 				case "R": regul.setMotor(10, -10);
+				LCD.drawString("We go a: " + message, 0, 3);
 					break;
 				case "Fel": LCD.drawString("Not doing stuff", 0, 6);
 					break;
