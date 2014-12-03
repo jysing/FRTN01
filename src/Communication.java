@@ -113,9 +113,9 @@ public class Communication extends Thread {
 	}
 
 	public String receive() throws IOException {
-		String response;
+		String response = "Fel";
 		try {
-			response = in.readUTF();
+			if(in.available() >= 8) response = in.readUTF();
 		} catch (IOException e) {
 			response = "Fel";
 		}
