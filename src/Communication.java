@@ -58,7 +58,6 @@ public class Communication extends Thread {
 					LCD.drawString("doint stuff", 0, 6);
 					regul.calculateOffset();
 				}
-				
 			} else {
 				LCD.drawString("It is not connected", 0, 3);
 			}

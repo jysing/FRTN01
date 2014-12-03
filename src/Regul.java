@@ -95,7 +95,7 @@ public class Regul extends Thread {
 				e.printStackTrace();
 			}
 		}
-		gyro.setOffset((offset/count)-0.150); //0.156 utan EMAOFFSET
+		gyro.setOffset((offset/count)-0.130); //0.156 utan EMAOFFSET
 	}
     
     //Get methods to be used by Communication to 
