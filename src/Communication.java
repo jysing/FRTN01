@@ -70,6 +70,7 @@ public class Communication extends Thread {
 				} catch (IOException e1) {
 					message = "Fel";
 				}
+				LCD.drawString("We go a: " + message, 0, 4);
 				switch(message) {
 				case "C": regul.calculateOffset();
 					LCD.drawString("Doing stuff", 0, 6);
