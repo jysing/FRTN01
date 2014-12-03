@@ -6,8 +6,6 @@ public class Regul extends Thread {
 	private PID pid;
 	private Gyro gyro;
 	private Position posReader;
-	//RegulatedMotor motorA;
-	//RegulatedMotor motorB;
 	EncoderMotor motorA;
 	EncoderMotor motorB;
 	
@@ -18,9 +16,7 @@ public class Regul extends Thread {
 	private static final double normalizedWeightAngVel = weightAngVel/(weightAng + weightAngVel);
 	private double position, positionVel; // Position and position velocity
 
-
-    /** Constructor. */
-    public Regul (Gyro gyro, int priority) {
+	public Regul (Gyro gyro, int priority) {
     	setPriority(priority);
     	this.gyro = gyro;
     	pid = new PID();
@@ -29,16 +25,12 @@ public class Regul extends Thread {
     	motorB = new NXTMotor(MotorPort.D);
     	motorB.flt();
     	posReader = new Position(motorA);
-    	//motorA = new EV3LargeRegulatedMotor(MotorPort.A);
-    	//motorB = new EV3LargeRegulatedMotor(MotorPort.B);
     }
     
-    /** Sets the parameters of the PID controller */
     public void setPIDParameters(PIDParameters p) {
     	pid.setParameters(p);
     }
     
-    /** Returns the parameters of the PID controller */
     public PIDParameters getPIDParameters() {
     	return pid.getParameters();
     }

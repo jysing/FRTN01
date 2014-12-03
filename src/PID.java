@@ -19,7 +19,7 @@ public class PID {
 		time = System.currentTimeMillis();
 		  p.Beta = 1.0;
 		 // p.H = 0.02;
-		  p.integratorOn = false;
+		  p.integratorOn = true;
 		  p.K = 2.5; //K =7 med regulatedmotor
 		  p.Ti = 0.0;
 		  p.Tr = 0;
