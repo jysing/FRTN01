@@ -7,7 +7,7 @@ public class PIDParameters implements Cloneable {
     public double N;
     public double Beta;
     public double H;
-    public boolean integratorOn;
+    public boolean integratorOn = true;
     public double ad;
     public double bd;
    
