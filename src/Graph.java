@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -20,9 +21,10 @@ import org.jfree.data.time.TimeSeriesCollection;
 
 public class Graph implements ActionListener, KeyListener {
 	
-	JFrame frame;
-	JButton button;
-	JPanel panel;
+	private JFrame frame;
+	private JButton button;
+	private JPanel panel;
+	private JTextField textField,textField2;
 	SocketClient sc;
 	private ArrayList<TimeSeries> TimeSeriesList;
 	int up, down, left, right;
@@ -36,6 +38,15 @@ public class Graph implements ActionListener, KeyListener {
 		TimeSeriesList = new ArrayList<TimeSeries>();
  		frame = new JFrame("Plots");
  		panel = new JPanel();
+ 		textField = new JTextField(80);
+ 		String text = "Control the Lego Segwy by using the following keyboard keys";
+ 		textField.setText(text.substring(5,70));
+ 		panel.add(textField);
+ 		/*
+ 		textField2 = new JTextField(10);
+ 		textField2.setText("W:Left   S:Down   D:Right   W:Up");
+ 		panel.add(textField2);
+ 		*/
  		frame.setLayout(new GridLayout(3,2));
  		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 		
  		frame.addKeyListener(this);
