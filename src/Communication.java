@@ -54,7 +54,7 @@ public class Communication extends Thread {
 			/*
 			try {
 				message = receive();
-				LCD.drawString(message, 0, 7);
+				LCD.drawString(message, 0, 5);
 			} catch (IOException e1) {
 				message = "Fel";
 			}
@@ -66,7 +66,6 @@ public class Communication extends Thread {
 			try {
 				sleep(period);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -106,8 +105,8 @@ public class Communication extends Thread {
 
 	public void send(String message) {
 		try {
-			LCD.drawString(message, 0, 3);
 			out.writeUTF(message);
+			out.flush();
 		} catch (IOException e) {
 			LCD.drawString("Can't send message", 0, 3);
 		}
