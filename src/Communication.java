@@ -29,6 +29,21 @@ public class Communication extends Thread {
 			String message;
 			if (this.isConnected()) {
 				message = "Fel";
+				switch(i) {
+				case 0: message = "U" + String.valueOf(regul.getU());
+					break;
+				case 1: message = "E" + String.valueOf(regul.getE());
+					break;
+				case 2: message = "A" + String.valueOf(regul.getA());
+					break;
+				case 3: message = "V" + String.valueOf(regul.getV());
+					break;
+				case 4: message = "P" + String.valueOf(regul.getP());
+					break;
+				case 5: message = "B" + String.valueOf(regul.getB());
+					break;
+				}
+				/*
 				if (i == 0) {
 					message = "U" + String.valueOf(regul.getU());
 				} else if (i == 1) {
@@ -44,6 +59,7 @@ public class Communication extends Thread {
 				} else {
 					LCD.drawString("Something is very wrong with i", 0, 4);
 				}
+				*/
 				i++;
 				i = i % 6;
 				send(message);
