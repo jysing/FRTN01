@@ -27,7 +27,6 @@ public class Graph implements ActionListener, KeyListener {
 	private ArrayList<TimeSeries> TimeSeriesList;
 	int up, down, left, right;
 	
-	
 	public Graph(SocketClient sc) {
 		this.sc = sc;
 		setup();
@@ -85,23 +84,12 @@ public class Graph implements ActionListener, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println(e.getKeyCode());
-		switch(e.getKeyCode()){
-			case 65: sc.send("L");
-				System.out.println("We be sending the L");
-				break;
-			case 68: sc.send("R");
-				break;
-			case 87: sc.send("F");
-				break;
-			case 83: sc.send("B");
-				break;
-		}
+		gen.key = e.getKeyCode();
 	}
 	
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// Do nothing
+		gen.key = 0;
 	}
 	
 	@Override
@@ -111,19 +99,20 @@ public class Graph implements ActionListener, KeyListener {
 
 	static class gen implements Runnable {
 		private String message;
-		private SocketClient soc;
+		private SocketClient sc;
 		private ArrayList<TimeSeries> TimeSeriesList;
+		public static int key;
 		
 		public gen(SocketClient sc, ArrayList<TimeSeries> TimeSeriesList) {
 			this.TimeSeriesList = TimeSeriesList;
-			soc = sc;
+			this.sc = sc;
 		}
 
 		public void run() {
 			while (true) {
 				try {
-					if (soc.isConnected()) {
-						message = soc.receive();	
+					if (sc.isConnected()) {
+						message = sc.receive();	
 					} else {
 						System.out.println("Socket not connected");
 					}
@@ -132,8 +121,23 @@ public class Graph implements ActionListener, KeyListener {
 				}
 				//////////////////////////////////////////
 				//		Flags for different data		//
-				//////////////////////////////////////////
+				/////////////////////////////////////////
 				if (!message.equals("Fel")) {
+					switch(message.charAt(0)) {
+					case 'U': updateGraph(0);
+						break;
+					case 'E': updateGraph(1);
+						break;
+					case 'A': updateGraph(2);
+						break;
+					case 'V': updateGraph(3);
+						break;
+					case 'P': updateGraph(4);
+						break;
+					case 'B': updateGraph(5);
+						break; 
+					}
+					/*
 					if (message.charAt(0) == 'U'){
 						updateGraph(0);
 					} else if (message.charAt(0) == 'E') {
@@ -149,7 +153,21 @@ public class Graph implements ActionListener, KeyListener {
 					}else {
 						System.out.println("Not a recognized value");
 					}
+					*/
 				}
+				
+				switch(key){
+				case 65: sc.send("L");
+					System.out.println("We be sending the L");
+					break;
+				case 68: sc.send("R");
+					break;
+				case 87: sc.send("F");
+					break;
+				case 83: sc.send("B");
+					break;
+				}
+				
 				try {
 					Thread.sleep(5);
 				} catch (InterruptedException ex) {
