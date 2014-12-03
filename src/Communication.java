@@ -47,22 +47,20 @@ public class Communication extends Thread {
 				i++;
 				i = i % 6;
 				send(message);
+
+				try {
+					message = receive();
+					LCD.drawString(message, 0, 5);
+				} catch (IOException e1) {
+					message = "Fel";
+				}
+				if (message.charAt(0) == '#') {
+					regul.calculateOffset();
+				}
 			} else {
 				LCD.drawString("It is not connected", 0, 3);
 			}
-			
-			/*
-			try {
-				message = receive();
-				LCD.drawString(message, 0, 5);
-			} catch (IOException e1) {
-				message = "Fel";
-			}
-			if(message.charAt(0)=='#'){
-				regul.calculateOffset();
-			}
-			*/
-			
+
 			try {
 				sleep(period);
 			} catch (InterruptedException e) {
@@ -114,11 +112,11 @@ public class Communication extends Thread {
 
 	public String receive() throws IOException {
 		String response;
-    	try {
+		try {
 			response = in.readUTF();
 		} catch (IOException e) {
 			response = "Fel";
 		}
-    	return response;
+		return response;
 	}
 }
