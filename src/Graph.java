@@ -29,7 +29,6 @@ public class Graph implements ActionListener, KeyListener {
 	private ArrayList<TimeSeries> TimeSeriesList;
 	int up, down, left, right;
 	
-	
 	public Graph(SocketClient sc) {
 		this.sc = sc;
 		setup();
@@ -96,38 +95,12 @@ public class Graph implements ActionListener, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		switch(e.getKeyCode()){
-			case 65:
-				left = 1;
-				System.out.println("Left");
-				break;
-			case 68:
-				right = 1;
-				System.out.println("Right");
-				break;
-			case 87:
-				up = 1;
-				System.out.println("Up");
-				break;
-			case 83:
-				down = 1;
-				System.out.println("Down");
-				break;
-		}
+		gen.key = e.getKeyCode();
 	}
 	
 	@Override
 	public void keyReleased(KeyEvent e) {
-		switch(e.getKeyCode()){
-			case 65:
-				left = 0;
-			case 68:
-				right = 0;
-			case 87:
-				up = 0;
-			case 83:
-				down = 0;
-		}
+		gen.key = 0;
 	}
 	
 	@Override
@@ -137,19 +110,20 @@ public class Graph implements ActionListener, KeyListener {
 
 	static class gen implements Runnable {
 		private String message;
-		private SocketClient soc;
+		private SocketClient sc;
 		private ArrayList<TimeSeries> TimeSeriesList;
+		public static int key;
 		
 		public gen(SocketClient sc, ArrayList<TimeSeries> TimeSeriesList) {
 			this.TimeSeriesList = TimeSeriesList;
-			soc = sc;
+			this.sc = sc;
 		}
 
 		public void run() {
 			while (true) {
 				try {
-					if (soc.isConnected()) {
-						message = soc.receive();	
+					if (sc.isConnected()) {
+						message = sc.receive();	
 					} else {
 						System.out.println("Socket not connected");
 					}
@@ -158,24 +132,37 @@ public class Graph implements ActionListener, KeyListener {
 				}
 				//////////////////////////////////////////
 				//		Flags for different data		//
-				//////////////////////////////////////////
+				/////////////////////////////////////////
 				if (!message.equals("Fel")) {
-					if (message.charAt(0) == 'U'){
-						updateGraph(0);
-					} else if (message.charAt(0) == 'E') {
-						updateGraph(1);
-					} else if (message.charAt(0) == 'A') {
-						updateGraph(2);
-					} else if (message.charAt(0) == 'V') {
-						updateGraph(3);
-					} else if (message.charAt(0) == 'P') { //Position
-						updateGraph(4);
-					} else if (message.charAt(0) == 'B') { //Position velocity
-						updateGraph(5);
-					}else {
-						System.out.println("Not a recognized value");
+					switch(message.charAt(0)) {
+					case 'U': updateGraph(0);
+						break;
+					case 'E': updateGraph(1);
+						break;
+					case 'A': updateGraph(2);
+						break;
+					case 'V': updateGraph(3);
+						break;
+					case 'P': updateGraph(4);
+						break;
+					case 'B': updateGraph(5);
+						break; 
 					}
 				}
+				
+				switch(key){
+				case 0: sc.send("S");
+					break;
+				case 65: sc.send("L");
+					break;
+				case 68: sc.send("R");
+					break;
+				case 87: sc.send("F");
+					break;
+				case 83: sc.send("B");
+					break;
+				}
+				
 				try {
 					Thread.sleep(5);
 				} catch (InterruptedException ex) {
