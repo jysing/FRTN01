@@ -51,6 +51,7 @@ public class Communication extends Thread {
 				LCD.drawString("It is not connected", 0, 3);
 			}
 			
+			/*
 			try {
 				message = receive();
 				LCD.drawString(message, 0, 7);
@@ -60,6 +61,7 @@ public class Communication extends Thread {
 			if(message.charAt(0)=='#'){
 				regul.calculateOffset();
 			}
+			*/
 			
 			try {
 				sleep(period);
