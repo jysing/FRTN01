@@ -1,6 +1,8 @@
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -16,13 +18,15 @@ import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
-public class Graph implements ActionListener{
+public class Graph implements ActionListener, KeyListener {
 	
 	JFrame frame;
 	JButton button;
 	JPanel panel;
 	SocketClient sc;
 	private ArrayList<TimeSeries> TimeSeriesList;
+	int up, down, left, right;
+	
 	
 	public Graph(SocketClient sc) {
 		this.sc = sc;
@@ -30,14 +34,17 @@ public class Graph implements ActionListener{
 	}
 	private void setup(/*SocketClient sc*/){
 		TimeSeriesList = new ArrayList<TimeSeries>();
- 		frame = new JFrame("Plot deluxe");
+ 		frame = new JFrame("Plots");
+ 		panel = new JPanel();
  		frame.setLayout(new GridLayout(3,2));
  		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 		
+ 		frame.addKeyListener(this);
+ 		panel.setFocusable(true);
+ 		frame.setFocusable(true);
 	}
 	
-	public void createButton() {
-		panel = new JPanel();
- 		button = new JButton("Calibrate");
+	public void createButton(String buttonName) {
+ 		button = new JButton(buttonName);
  		button.addActionListener(this);
  		panel.add(button);
  		frame.add(panel);
@@ -67,7 +74,6 @@ public class Graph implements ActionListener{
 		new Thread(myGen).start();
 	}
 	
-	
 	public void actionPerformed(ActionEvent e) {
 		System.out.println("actionPerformed");
 		try {
@@ -75,6 +81,47 @@ public class Graph implements ActionListener{
 		}  catch (Exception ex){
 			System.out.println("Graph: actionPerformed(Actionevent e) failed.");
 		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		switch(e.getKeyCode()){
+			case 65:
+				left = 1;
+				System.out.println("Left");
+				break;
+			case 68:
+				right = 1;
+				System.out.println("Right");
+				break;
+			case 87:
+				up = 1;
+				System.out.println("Up");
+				break;
+			case 83:
+				down = 1;
+				System.out.println("Down");
+				break;
+		}
+	}
+	
+	@Override
+	public void keyReleased(KeyEvent e) {
+		switch(e.getKeyCode()){
+			case 65:
+				left = 0;
+			case 68:
+				right = 0;
+			case 87:
+				up = 0;
+			case 83:
+				down = 0;
+		}
+	}
+	
+	@Override
+	public void keyTyped(KeyEvent e){
+		// Do nothing.
 	}
 
 	static class gen implements Runnable {

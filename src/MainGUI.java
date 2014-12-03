@@ -14,14 +14,13 @@ public class MainGUI {
 		
 	    try {
 		Graph graph = new Graph(sc);	
-		
 		graph.createWindow("Control signal", "Time", "Value 1", "Control signal");
 		graph.createWindow("Error input", "Time", "Value 2", "Error input");
 		graph.createWindow("Angle", "Time", "Value 3", "Angle");
 		graph.createWindow("Angle Velocity", "Time", "Value 4", "Angle Velocity");
 		graph.createWindow("Position", "Time", "Value 5", "Position");
 		graph.createWindow("Position Velocity", "Time", "Value 6", "Position Velocity");
-		graph.createButton();
+		graph.createButton("Calibrate");
 		graph.start(sc);
 		System.out.println("Graph is operating...");
 		} catch (Exception e){
