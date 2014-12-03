@@ -99,6 +99,7 @@ public class Regul extends Thread {
 				e.printStackTrace();
 			}
 		}
+		pid.reset();
 		gyro.setOffset((offset/count)-0.130); //0.156 utan EMAOFFSET
 	}
     
