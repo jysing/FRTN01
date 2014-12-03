@@ -22,8 +22,8 @@ public class PID {
 		  p.Beta = 1.0;
 		 // p.H = 0.02;
 		  p.integratorOn = true;
-		  p.K = 4; //K =2.5
-		  p.Ti = 50; 
+		  p.K = 5; //K =2.5
+		  p.Ti = 0.4; //Ti = 0.5
 		  p.Tr = 0.5;
 		  p.Td = 0;
 		  p.N = 5;
