@@ -92,7 +92,7 @@ public class Graph implements ActionListener, KeyListener {
 	}
 	
 	public void start(SocketClient sc) {
-		gen myGen = new gen(sc, TimeSeriesList);
+		gen myGen = new gen(sc, TimeSeriesList, this);
 		new Thread(myGen).start();
 	}
 	
@@ -125,8 +125,10 @@ public class Graph implements ActionListener, KeyListener {
 		private SocketClient sc;
 		private ArrayList<TimeSeries> TimeSeriesList;
 		public static int key;
+		private Graph graph;
 		
-		public gen(SocketClient sc, ArrayList<TimeSeries> TimeSeriesList) {
+		public gen(SocketClient sc, ArrayList<TimeSeries> TimeSeriesList, Graph graph) {
+			this.graph = graph;
 			this.TimeSeriesList = TimeSeriesList;
 			this.sc = sc;
 		}
@@ -150,7 +152,7 @@ public class Graph implements ActionListener, KeyListener {
 					case 'X': String[] param = new String[6];
 						param = message.substring(1).split(",");
 						//beta, K, Ti, Tr, Td, N
-						updateParameters(Double.valueOf(param[0]),
+						graph.updateParameters(Double.valueOf(param[0]),
 								Double.valueOf(param[1]),
 								Double.valueOf(param[2]),
 								Double.valueOf(param[3]),
