@@ -41,7 +41,8 @@ public class Gyro {
 		}
 		difference = System.currentTimeMillis() - time;
 		time = time + difference;
-		return (getAngleVelocity()*difference);
+		angle += (getAngleVelocity()*difference);
+		return angle;
 	}
 
 	public void setOffset(double offset) {
