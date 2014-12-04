@@ -97,7 +97,6 @@ public class Graph implements ActionListener, KeyListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		//System.out.println("actionPerformed");
 		try {
 			sc.send("C");
 		}  catch (Exception ex){
@@ -144,10 +143,6 @@ public class Graph implements ActionListener, KeyListener {
 				} catch (Exception e) {
 					System.out.println("soc.receive() doesn't work.");
 				}
-				//////////////////////////////////////////
-				//		Flags for different data		//
-				/////////////////////////////////////////
-				System.out.println(message);
 				if (!message.equals("Fel")) {
 					switch(message.charAt(0)) {
 					case 'X': String[] param = new String[6];
