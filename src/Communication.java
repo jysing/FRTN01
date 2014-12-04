@@ -62,6 +62,7 @@ public class Communication extends Thread {
 					p.Td = Double.valueOf(newParam[5].split(":")[1]);
 					p.N = Double.valueOf(newParam[6].split(":")[1]);
 					regul.setPIDParameters(p);
+					regul.calculateOffset();
 					break;
 				case 'S': regul.setMotor(0, 0);
 					break;
