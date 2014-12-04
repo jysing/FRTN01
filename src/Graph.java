@@ -115,7 +115,7 @@ public class Graph implements ActionListener, KeyListener {
 		}
 		if(e.getSource() == button2){
 			String newParam = textArea2.getText();
-			System.out.println();
+			System.out.println(newParam);
 		}
 	}
 
