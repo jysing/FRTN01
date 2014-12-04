@@ -165,6 +165,7 @@ public class Graph implements ActionListener, KeyListener {
 				//////////////////////////////////////////
 				//		Flags for different data		//
 				/////////////////////////////////////////
+				System.out.println(message);
 				if (!message.equals("Fel")) {
 					switch(message.charAt(0)) {
 					case 'X': String[] param = new String[6];

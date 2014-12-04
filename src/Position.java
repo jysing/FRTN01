@@ -4,12 +4,14 @@ public class Position {
 	private long time, difference;
 	private EncoderMotor motorA;
 	private double oldValue, value;
+	private double meterPerDegree;
 
 	public Position(EncoderMotor motorA) {
 		this.motorA = motorA;
 		time = System.currentTimeMillis();
 		oldValue = 0;
 		value = 0;
+		meterPerDegree = 0.000697778;
 	}
 
 	public double getPosVelocity() {
@@ -21,6 +23,6 @@ public class Position {
 	}
 
 	public double getPosition() {
-		return motorA.getTachoCount();
+		return motorA.getTachoCount()*meterPerDegree;
 	}
 }

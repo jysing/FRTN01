@@ -78,7 +78,7 @@ public class Regul extends Thread {
     	}
     }
     
-    public void calculateOffset() {
+    public synchronized void calculateOffset() {
     	setMotor(0, 0);
     	double offset = 0;
     	double sample = 0;
@@ -126,7 +126,7 @@ public class Regul extends Thread {
 	public String sendPIDValues() {
 		PIDParameters p = pid.getParameters();
 		StringBuilder sb = new StringBuilder();
-		sb.append("X,");
+		sb.append("X");
 		sb.append(p.Beta + ",");
 		sb.append(p.K +",");
 		sb.append(p.Ti + ",");

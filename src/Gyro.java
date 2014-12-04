@@ -41,9 +41,7 @@ public class Gyro {
 		}
 		difference = System.currentTimeMillis() - time;
 		time = time + difference;
-		//if(Math.abs(temp/1000) > 0.02){
-			angle += (getAngleVelocity()*difference);
-		//}
+		angle += (getAngleVelocity()*difference);
 		return angle;
 	}
 
