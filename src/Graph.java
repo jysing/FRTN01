@@ -56,11 +56,11 @@ public class Graph implements ActionListener, KeyListener {
 	
 	public void updateParameters(double K, double Ti, double Td, double Tr, double N, double Beta){
 		paraString = "PID parameters:"
-				+ "\nK: " + K
-				+ "\nTd: " + Ti
-				+ "\nTd: " + Td
-				+ "\nTr: " + Tr
-				+ "\nN: " + N
+				+ "\nK:" + K
+				+ "\nTd:" + Ti
+				+ "\nTd:" + Td
+				+ "\nTr:" + Tr
+				+ "\nN:" + N
 				+ "\nBeta: " + Beta;
 		textArea2.setText(paraString);
 	}
@@ -113,6 +113,7 @@ public class Graph implements ActionListener, KeyListener {
 		if(e.getSource() == button2){
 			String newParam = textArea2.getText();
 			System.out.println(newParam);
+			System.out.println(newParam.split(" "));
 		}
 	}
 
