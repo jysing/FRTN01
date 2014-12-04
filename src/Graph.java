@@ -114,16 +114,8 @@ public class Graph implements ActionListener, KeyListener {
 			}
 		}
 		if(e.getSource() == button2){
-			updateString(textArea2.getText());
+			textArea2.getText();
 		}
-	}
-	
-	public void updateString(String newString){
-		paraString = newString;
-	}
-	
-	public String returnString(){
-		return paraString;
 	}
 
 	@Override
