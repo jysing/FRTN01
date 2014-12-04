@@ -134,7 +134,6 @@ public class Regul extends Thread {
 		sb.append(p.Tr + ",");
 		sb.append(p.Td + ",");
 		sb.append(p.N + ",");
-		LCD.drawString(sb.toString(), 0, 3);
 		return sb.toString();
 	}
 }
