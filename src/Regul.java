@@ -1,4 +1,3 @@
-import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.NXTMotor;
 import lejos.hardware.port.*;
 import lejos.robotics.EncoderMotor;
