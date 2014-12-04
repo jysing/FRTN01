@@ -44,7 +44,7 @@ public class Graph implements ActionListener, KeyListener {
  		panel.add(textArea);
  		textArea2 = new JTextArea("PID parameters:", 10, 20);
  		panel.add(textArea2);
- 		//updateParameters(0, 0, 0, 0, 0, 0);
+ 		updateParameters(0, 0, 0, 0, 0, 0);
  		frame.setLayout(new GridLayout(3,2));
  		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 		
  		frame.addKeyListener(this);
@@ -56,10 +56,10 @@ public class Graph implements ActionListener, KeyListener {
 		textArea2.setText("PID parameters:"
 				+ "\nK: " + K
 				+ "\nTd: " + Ti
-				+ "\nTi: " + Td);/*
-				+ "\nTi: " + Tr
-				+ "\nTi: " + N
-				+ "\nTi: " + Beta);*/
+				+ "\nTd: " + Td
+				+ "\nTr: " + Tr
+				+ "\nN: " + N
+				+ "\nBeta: " + Beta);
 	}
 	
 	public void build(){
