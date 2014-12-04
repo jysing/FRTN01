@@ -44,7 +44,7 @@ public class Graph implements ActionListener, KeyListener {
  		panel.add(textArea);
  		textArea2 = new JTextArea("PID parameters:", 10, 20);
  		panel.add(textArea2);
- 		updateParameters(0, 0, 0);
+ 		updateParameters(1, 2, 3);
  		frame.setLayout(new GridLayout(3,2));
  		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 		
  		frame.addKeyListener(this);
@@ -94,9 +94,10 @@ public class Graph implements ActionListener, KeyListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("actionPerformed");
+		//System.out.println("actionPerformed");
 		try {
-			sc.send("C");
+			updateParameters(0, 0, 0);
+			//sc.send("C");
 		}  catch (Exception ex){
 			System.out.println("Graph: actionPerformed(Actionevent e) failed.");
 		}
@@ -158,6 +159,8 @@ public class Graph implements ActionListener, KeyListener {
 						break; 
 					}
 				}
+				
+				updateParameters(K,TD,TI);
 				
 				switch(key){
 				case 0: sc.send("S");
