@@ -17,6 +17,6 @@ public class Main {
 			LCD.drawString(" error", 0, 1);
 		}
 		regul.sendPIDValues();
-		regul.start();		
+		//regul.start();		
 	}
 }
