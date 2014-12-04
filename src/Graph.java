@@ -61,7 +61,7 @@ public class Graph implements ActionListener, KeyListener {
 				+ "\nTd:" + Td
 				+ "\nTr:" + Tr
 				+ "\nN:" + N
-				+ "\nBeta: " + Beta;
+				+ "\nBeta:" + Beta;
 		textArea2.setText(paraString);
 	}
 	
@@ -72,10 +72,10 @@ public class Graph implements ActionListener, KeyListener {
 	}
 	
 	public void createButtons() {
- 		button1 = new JButton("Calibrate");
+ 		button1 = new JButton("Reset");
  		button1.addActionListener(this);
  		panel.add(button1);
- 		button2 = new JButton("Joakim");
+ 		button2 = new JButton("Update param");
  		button2.addActionListener(this);
  		panel.add(button2);
 	}
@@ -113,7 +113,8 @@ public class Graph implements ActionListener, KeyListener {
 		if(e.getSource() == button2){
 			String newParam = textArea2.getText();
 			System.out.println(newParam);
-			System.out.println(newParam.split(" "));
+			String [] temp = newParam.split(" ");
+			System.out.println(temp[0] + " " + temp [1] + " " + " " + temp[2]);
 		}
 	}
 
