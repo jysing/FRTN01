@@ -69,8 +69,8 @@ public class Regul extends Thread {
     	while (true) {
     		position = posReader.getPosition();
     		positionVel = posReader.getPosVelocity();
-    		angVel = (gyro.getAngleVelocity()/1000);
-    		ang = gyro.getAngle();
+    		angVel = (gyro.getAngleVelocity());
+    		ang = gyro.getAngle()/1000;
     		e = normalizedWeightAngVel*angVel+normalizedWeightAng*ang;
     		u = pid.calculateOutput(e, 0);
     		pid.updateState(u);
@@ -108,7 +108,7 @@ public class Regul extends Thread {
 	}
 	
 	public double getA() {
-		return ang/1000;
+		return ang;
 	}
 	
 	public double getV() {

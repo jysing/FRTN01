@@ -13,7 +13,7 @@ public class Position {
 		double oldValue = getPosition();
 		difference = System.currentTimeMillis() - time;
 		time = time + difference;
-		return ((getPosition() - oldValue) / difference) / 1000;
+		return ((getPosition() - oldValue) / difference);
 	}
 
 	public double getPosition() {
