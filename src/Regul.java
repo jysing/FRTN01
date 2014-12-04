@@ -68,7 +68,7 @@ public class Regul extends Thread {
     	
     	while (true) {
     		position = posReader.getPosition();
-    		positionVel = posReader.getPosVelocity()/1000;
+    		positionVel = (posReader.getPosVelocity()/1000);
     		angVel = gyro.getAngleVelocity();
     		ang = (gyro.getAngle()/1000);
     		e = normalizedWeightAngVel*angVel+normalizedWeightAng*ang;
