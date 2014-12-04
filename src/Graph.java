@@ -21,9 +21,9 @@ import org.jfree.data.time.TimeSeriesCollection;
 
 public class Graph implements ActionListener, KeyListener {
 	
-	private JFrame frame, frame2;
+	private JFrame frame;
 	private JButton button1, button2;
-	private JPanel panel, panel2;
+	private JPanel panel;
 	private JTextArea textArea, textArea2;
 	SocketClient sc;
 	private ArrayList<TimeSeries> TimeSeriesList;
@@ -67,11 +67,8 @@ public class Graph implements ActionListener, KeyListener {
 	
 	public void build(){
 		frame.add(panel);
-		frame2.add(panel2);
 		frame.pack();
- 		frame2.pack();
  		frame.setVisible(true);
- 		frame2.setVisible(true);
 	}
 	
 	public void createButtons() {
@@ -114,7 +111,8 @@ public class Graph implements ActionListener, KeyListener {
 			}
 		}
 		if(e.getSource() == button2){
-			textArea2.getText();
+			String newParam = textArea2.getText();
+			System.out.println();
 		}
 	}
 
@@ -157,10 +155,6 @@ public class Graph implements ActionListener, KeyListener {
 				} catch (Exception e) {
 					System.out.println("soc.receive() doesn't work.");
 				}
-				//////////////////////////////////////////
-				//		Flags for different data		//
-				/////////////////////////////////////////
-				System.out.println(message);
 				if (!message.equals("Fel")) {
 					switch(message.charAt(0)) {
 					case 'X': String[] param = new String[6];
