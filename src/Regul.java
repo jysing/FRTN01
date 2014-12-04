@@ -1,3 +1,4 @@
+import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.NXTMotor;
 import lejos.hardware.port.*;
 import lejos.robotics.EncoderMotor;
@@ -133,6 +134,7 @@ public class Regul extends Thread {
 		sb.append(p.Tr + ",");
 		sb.append(p.Td + ",");
 		sb.append(p.N + ",");
+		LCD.drawString(sb.toString(), 0, 3);
 		return sb.toString();
 	}
 }
