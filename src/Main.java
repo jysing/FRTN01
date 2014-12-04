@@ -11,12 +11,12 @@ public class Main {
 		try {
 			comm = new Communication(regul, port, timeout, graphPrio);
 			comm.connect();
+			comm.sendPIDValues();
 			comm.start();
 		} catch (IOException e) {
 			LCD.drawString("massive connection", 0, 0);
 			LCD.drawString(" error", 0, 1);
 		}
-		regul.sendPIDValues();
 		//regul.start();		
 	}
 }
