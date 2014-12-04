@@ -147,7 +147,12 @@ public class Graph implements ActionListener, KeyListener {
 					case 'X': String[] param = new String[6];
 						param = message.substring(1).split(",");
 						//beta, K, Ti, Tr, Td, N
-						updateParameters(param[0],param[1],param[2],param[3],param[4],param[5]);
+						updateParameters(Double.valueOf(param[0]),
+								Double.valueOf(param[1]),
+								Double.valueOf(param[2]),
+								Double.valueOf(param[3]),
+								Double.valueOf(param[4]),
+								Double.valueOf(param[5]));
 						break;
 					case 'U': updateGraph(0, 120);
 						break;
