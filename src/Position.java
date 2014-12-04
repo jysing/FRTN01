@@ -18,7 +18,7 @@ public class Position {
 		difference = System.currentTimeMillis() - time;
 		time = time + difference;
 		value = ((getPosition() - oldValue) / difference);
-		oldValue = getPosition();
+		oldValue = value;
 		return value;
 	}
 
