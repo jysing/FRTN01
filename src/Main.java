@@ -16,6 +16,7 @@ public class Main {
 			LCD.drawString("massive connection", 0, 0);
 			LCD.drawString(" error", 0, 1);
 		}
+		regul.sendPIDValues();
 		regul.start();		
 	}
 }

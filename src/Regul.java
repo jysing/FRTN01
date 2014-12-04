@@ -68,9 +68,9 @@ public class Regul extends Thread {
     	
     	while (true) {
     		position = posReader.getPosition();
-    		positionVel = posReader.getPosVelocity();
-    		angVel = (gyro.getAngleVelocity());
-    		ang = gyro.getAngle()/1000;
+    		positionVel = posReader.getPosVelocity()/1000;
+    		angVel = gyro.getAngleVelocity();
+    		ang = (gyro.getAngle()/1000);
     		e = normalizedWeightAngVel*angVel+normalizedWeightAng*ang;
     		u = pid.calculateOutput(e, 0);
     		pid.updateState(u);
@@ -95,6 +95,7 @@ public class Regul extends Thread {
 		setMotor(0, 0);
 		pid.reset();
 		gyro.setOffset((offset/count)-0.130); //0.156 utan EMAOFFSET
+		angVel = 0;
 	}
     
     //Get methods to be used by Communication to 
@@ -120,5 +121,18 @@ public class Regul extends Thread {
 	}
 	public double getB(){
 		return positionVel;
+	}
+
+	public String sendPIDValues() {
+		PIDParameters p = pid.getParameters();
+		StringBuilder sb = new StringBuilder();
+		sb.append("X,");
+		sb.append(p.Beta + ",");
+		sb.append(p.K +",");
+		sb.append(p.Ti + ",");
+		sb.append(p.Tr + ",");
+		sb.append(p.Td + ",");
+		sb.append(p.N + ",");
+		return sb.toString();
 	}
 }
