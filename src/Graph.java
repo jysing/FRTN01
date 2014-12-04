@@ -62,7 +62,7 @@ public class Graph implements ActionListener, KeyListener {
 				+ "\nTr:" + Tr
 				+ "\nTd:" + Td
 				+ "\nN:" + N;
-		textArea2.setText("N" + paraString);
+		textArea2.setText(paraString);
 	}
 	
 	public void build(){
@@ -112,7 +112,7 @@ public class Graph implements ActionListener, KeyListener {
 		}
 		if(e.getSource() == button2){
 			String newParam = textArea2.getText();
-			sc.send(newParam);
+			sc.send("N" + newParam);
 		}
 	}
 
