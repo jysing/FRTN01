@@ -1,4 +1,4 @@
-import java.awt.GridLayout;
+	import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JTextArea;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -24,10 +24,11 @@ public class Graph implements ActionListener, KeyListener {
 	private JFrame frame;
 	private JButton button;
 	private JPanel panel;
-	private JTextField textField,textField2;
+	private JTextArea textArea,textArea2;
 	SocketClient sc;
 	private ArrayList<TimeSeries> TimeSeriesList;
 	int up, down, left, right;
+	double K = 0, Td = 0, Ti = 0;
 	
 	public Graph(SocketClient sc) {
 		this.sc = sc;
@@ -37,15 +38,13 @@ public class Graph implements ActionListener, KeyListener {
 		TimeSeriesList = new ArrayList<TimeSeries>();
  		frame = new JFrame("Plots");
  		panel = new JPanel();
- 		textField = new JTextField(80);
- 		String text = "Control the Lego Segwy by using the following keyboard keys";
- 		textField.setText(text.substring(5,70));
- 		panel.add(textField);
- 		/*
- 		textField2 = new JTextField(10);
- 		textField2.setText("W:Left   S:Down   D:Right   W:Up");
- 		panel.add(textField2);
- 		*/
+ 		String text = "Control the Lego Segwy by using the following keyboard keys:"
+ 				+ "\nA:Left\nS:Down\nD:Right\nW:Up";
+ 		textArea = new JTextArea(text, 5, 10);
+ 		panel.add(textArea);
+ 		textArea2 = new JTextArea("PID parameters:", 10, 20);
+ 		panel.add(textArea2);
+ 		updateParameters(0, 0, 0);
  		frame.setLayout(new GridLayout(3,2));
  		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 		
  		frame.addKeyListener(this);
@@ -53,11 +52,21 @@ public class Graph implements ActionListener, KeyListener {
  		frame.setFocusable(true);
 	}
 	
+	public void updateParameters(double K, double Td, double Ti){
+		textArea2.setText("PID parameters:"
+				+"\nK: " + K 
+				+"\nTd: " + Td
+				+"\nTi: " + Ti);
+	}
+	
+	public void build(){
+		frame.add(panel);
+	}
+	
 	public void createButton(String buttonName) {
  		button = new JButton(buttonName);
  		button.addActionListener(this);
  		panel.add(button);
- 		frame.add(panel);
  		frame.pack();
  		frame.setVisible(true);
 	}
@@ -135,17 +144,17 @@ public class Graph implements ActionListener, KeyListener {
 				/////////////////////////////////////////
 				if (!message.equals("Fel")) {
 					switch(message.charAt(0)) {
-					case 'U': updateGraph(0);
+					case 'U': updateGraph(0, 120);
 						break;
-					case 'E': updateGraph(1);
+					case 'E': updateGraph(1, 200);
 						break;
-					case 'A': updateGraph(2);
+					case 'A': updateGraph(2, 20);
 						break;
-					case 'V': updateGraph(3);
+					case 'V': updateGraph(3, 200);
 						break;
-					case 'P': updateGraph(4);
+					case 'P': updateGraph(4, 200);
 						break;
-					case 'B': updateGraph(5);
+					case 'B': updateGraph(5, 100);
 						break; 
 					}
 				}
@@ -171,9 +180,14 @@ public class Graph implements ActionListener, KeyListener {
 			}
 		}
 		
-		private void updateGraph(int pos) {
+		private void updateGraph(int pos, double maxValue) {
 			message = message.substring(1);
 			double num = Double.parseDouble(message);
+			if (num > maxValue){
+				num = maxValue;
+			} else if (num < (-maxValue)){
+				num = -maxValue;
+			}
 			TimeSeriesList.get(pos).addOrUpdate(new Millisecond(), num);
 		}
 	}

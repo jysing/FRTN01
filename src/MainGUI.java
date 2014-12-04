@@ -22,6 +22,7 @@ public class MainGUI {
 		graph.createWindow("Position", "Time", "Value 5", "Position");
 		graph.createWindow("Position Velocity", "Time", "Value 6", "Position Velocity");
 		graph.createButton("Calibrate");
+		graph.build();
 		graph.start(sc);
 		System.out.println("Graph is operating...");
 		} catch (Exception e){
