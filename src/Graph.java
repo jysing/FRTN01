@@ -105,8 +105,7 @@ public class Graph implements ActionListener, KeyListener {
 		new Thread(myGen).start();
 	}
 	
-	public void actionPerformed(ActionEvent e) {
-		//System.out.println("actionPerformed");
+	public void actionPerformed(ActionEvent e) { 
 		if(e.getSource() == button1){
 			try {
 				sc.send("C");
@@ -115,8 +114,12 @@ public class Graph implements ActionListener, KeyListener {
 			}
 		}
 		if(e.getSource() == button2){
-			returnString();
+			updateString(textArea2.getText());
 		}
+	}
+	
+	public void updateString(String newString){
+		paraString = newString;
 	}
 	
 	public String returnString(){
