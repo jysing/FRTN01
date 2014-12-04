@@ -113,7 +113,7 @@ public class Graph implements ActionListener, KeyListener {
 		if(e.getSource() == button2){
 			String newParam = textArea2.getText();
 			System.out.println(newParam);
-			String [] temp = newParam.split(" ");
+			String [] temp = newParam.split("\n");
 			System.out.println(temp[0] + " " + temp [1] + " " + " " + temp[2]);
 		}
 	}
