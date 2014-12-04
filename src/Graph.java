@@ -105,29 +105,18 @@ public class Graph implements ActionListener, KeyListener {
 		new Thread(myGen).start();
 	}
 	
-	public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
-		try {
-			sc.send("C");
-		}  catch (Exception ex){
-			System.out.println("Graph: actionPerformed(Actionevent e) failed.");
-=======
-		//System.out.println("actionPerformed");
+	public void actionPerformed(ActionEvent e) { 
 		if(e.getSource() == button1){
 			try {
 				sc.send("C");
 			}  catch (Exception ex){
 				System.out.println("Graph: actionPerformed(Actionevent e) failed.");
 			}
->>>>>>> 80e0b1e4d6002e8cb03c9e394a97d1221d49c23a
 		}
 		if(e.getSource() == button2){
-			returnString();
+			String newParam = textArea2.getText();
+			System.out.println();
 		}
-	}
-	
-	public String returnString(){
-		return paraString;
 	}
 
 	@Override
