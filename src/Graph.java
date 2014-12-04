@@ -21,9 +21,9 @@ import org.jfree.data.time.TimeSeriesCollection;
 
 public class Graph implements ActionListener, KeyListener {
 	
-	private JFrame frame, frame2;
+	private JFrame frame;
 	private JButton button1, button2;
-	private JPanel panel, panel2;
+	private JPanel panel;
 	private JTextArea textArea, textArea2;
 	SocketClient sc;
 	private ArrayList<TimeSeries> TimeSeriesList;
@@ -67,11 +67,8 @@ public class Graph implements ActionListener, KeyListener {
 	
 	public void build(){
 		frame.add(panel);
-		frame2.add(panel2);
 		frame.pack();
- 		frame2.pack();
  		frame.setVisible(true);
- 		frame2.setVisible(true);
 	}
 	
 	public void createButtons() {
