@@ -68,7 +68,7 @@ public class Regul extends Thread {
     	
     	while (true) {
     		position = posReader.getPosition();
-    		positionVel = posReader.getPosVelocity();
+    		positionVel = (posReader.getPosVelocity()/1000);
     		angVel = gyro.getAngleVelocity();
     		ang = (gyro.getAngle()/1000);
     		e = normalizedWeightAngVel*angVel+normalizedWeightAng*ang;
@@ -95,6 +95,7 @@ public class Regul extends Thread {
 		setMotor(0, 0);
 		pid.reset();
 		gyro.setOffset((offset/count)-0.130); //0.156 utan EMAOFFSET
+		angVel = 0;
 	}
     
     //Get methods to be used by Communication to 
