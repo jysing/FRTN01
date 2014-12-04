@@ -38,12 +38,10 @@ public class Gyro {
 		if(firstAng==true){ //kollar time har istallet forsta gangen for att difference skall bli liten
 			time = System.currentTimeMillis(); 
 			firstAng = false;
-			return 0;
-		} else {
-			difference = System.currentTimeMillis() - time;
-			time = time + difference;
-			return (getAngleVelocity()*difference);			
 		}
+		difference = System.currentTimeMillis() - time;
+		time = time + difference;
+		return (getAngleVelocity()*difference);
 	}
 
 	public void setOffset(double offset) {
