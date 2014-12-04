@@ -54,7 +54,6 @@ public class Communication extends Thread {
 				}
 				switch(message.charAt(0)) {
 				case 'N': String[] newParam = message.substring(1).split("\n"); //starts at 1
-					LCD.drawString(message, 0, 3);
 					PIDParameters p = new PIDParameters();
 					p.Beta = Double.valueOf(newParam[1].split(":")[1]);
 					p.K = Double.valueOf(newParam[2].split(":")[1]); //K =2.5 //0.84
