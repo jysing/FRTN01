@@ -19,7 +19,7 @@ public class MainGUI {
 		graph.createWindow("Angle Velocity", "Time", "Value 4", "Angle Velocity");
 		graph.createWindow("Position", "Time", "Value 5", "Position");
 		graph.createWindow("Position Velocity", "Time", "Value 6", "Position Velocity");
-		graph.createButton("Calibrate");
+		graph.createButtons();
 		graph.build();
 		graph.start(sc);
 		System.out.println("Graph is operating...");
