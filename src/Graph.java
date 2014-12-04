@@ -96,8 +96,7 @@ public class Graph implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent e) {
 		//System.out.println("actionPerformed");
 		try {
-			updateParameters(0, 0, 0);
-			//sc.send("C");
+			sc.send("C");
 		}  catch (Exception ex){
 			System.out.println("Graph: actionPerformed(Actionevent e) failed.");
 		}
