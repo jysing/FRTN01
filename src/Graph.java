@@ -54,15 +54,15 @@ public class Graph implements ActionListener, KeyListener {
  		
 	}
 	
-	public void updateParameters(double K, double Ti, double Td, double Tr, double N, double Beta){
+	public void updateParameters(double beta, double K, double Ti, double Tr, double Td, double N){
 		paraString = "PID parameters:"
+				+ "\nBeta:" + Beta
 				+ "\nK:" + K
-				+ "\nTd:" + Ti
-				+ "\nTd:" + Td
+				+ "\nTi:" + Ti
 				+ "\nTr:" + Tr
-				+ "\nN:" + N
-				+ "\nBeta:" + Beta;
-		textArea2.setText(paraString);
+				+ "\nTd:" + Td
+				+ "\nN:" + N;
+		textArea2.setText("N" + paraString);
 	}
 	
 	public void build(){
@@ -112,9 +112,7 @@ public class Graph implements ActionListener, KeyListener {
 		}
 		if(e.getSource() == button2){
 			String newParam = textArea2.getText();
-			System.out.println(newParam);
-			String [] temp = newParam.split("\n");
-			System.out.println(temp[0] + " " + temp [1] + " " + " " + temp[2]);
+			sc.send(newParam);
 		}
 	}
 

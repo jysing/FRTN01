@@ -52,20 +52,28 @@ public class Communication extends Thread {
 				} catch (IOException e1) {
 					message = "Fel";
 				}
-				switch(message) {
-				case "S": regul.setMotor(0, 0);
+				switch(message.charAt(0)) {
+				case 'N': String[] newParam = message.substring(1).split("\n"); //starts at 1
+					PIDParameters p = new PIDParameters();
+					p.Beta = Double.valueOf(newParam[1].split(":")[1]);
+					p.K = Double.valueOf(newParam[2].split(":")[1]); //K =2.5 //0.84
+					p.Ti = Double.valueOf(newParam[3].split(":")[1]); //Ti = 0.5
+					p.Tr = Double.valueOf(newParam[4].split(":")[1]);
+					p.Td = Double.valueOf(newParam[5].split(":")[1]);
+					p.N = Double.valueOf(newParam[6].split(":")[1]);
+					regul.setPIDParameters(p);
 					break;
-				case "C": regul.calculateOffset();
+				case 'S': regul.setMotor(0, 0);
 					break;
-				case "F": regul.setMotor(20, 20);
+				case 'C': regul.calculateOffset();
 					break;
-				case "B": regul.setMotor(-20, -20);
+				case 'F': regul.setMotor(20, 20);
 					break;
-				case "L": regul.setMotor(-10, 10);
+				case 'B': regul.setMotor(-20, -20);
 					break;
-				case "R": regul.setMotor(10, -10);
+				case 'L': regul.setMotor(-10, 10);
 					break;
-				case "Fel": LCD.drawString("Not doing stuff", 0, 6);
+				case 'R': regul.setMotor(10, -10);
 					break;
 				}
 			} else {
