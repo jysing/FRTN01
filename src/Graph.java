@@ -21,20 +21,21 @@ import org.jfree.data.time.TimeSeriesCollection;
 
 public class Graph implements ActionListener, KeyListener {
 	
-	private JFrame frame;
-	private JButton button;
-	private JPanel panel;
-	private JTextArea textArea,textArea2;
+	private JFrame frame, frame2;
+	private JButton button1, button2;
+	private JPanel panel, panel2;
+	private JTextArea textArea, textArea2;
 	SocketClient sc;
 	private ArrayList<TimeSeries> TimeSeriesList;
 	int up, down, left, right;
 	double K = 0, Ti = 0, Td = 0, Tr = 0, N = 0, Beta = 0; 
+	String paraString;
 	
 	public Graph(SocketClient sc) {
 		this.sc = sc;
-		setup();
+		setupPlots();
 	}
-	private void setup(/*SocketClient sc*/){
+	private void setupPlots(){
 		TimeSeriesList = new ArrayList<TimeSeries>();
  		frame = new JFrame("Plots");
  		panel = new JPanel();
@@ -42,7 +43,7 @@ public class Graph implements ActionListener, KeyListener {
  				+ "\nA:Left\nS:Down\nD:Right\nW:Up";
  		textArea = new JTextArea(text, 5, 10);
  		panel.add(textArea);
- 		textArea2 = new JTextArea("PID parameters:", 10, 20);
+ 		textArea2 = new JTextArea("PID parameters:", 5, 10);
  		panel.add(textArea2);
  		updateParameters(0, 0, 0, 0, 0, 0);
  		frame.setLayout(new GridLayout(3,2));
@@ -50,28 +51,36 @@ public class Graph implements ActionListener, KeyListener {
  		frame.addKeyListener(this);
  		panel.setFocusable(true);
  		frame.setFocusable(true);
+ 		
 	}
 	
 	public void updateParameters(double K, double Ti, double Td, double Tr, double N, double Beta){
-		textArea2.setText("PID parameters:"
+		paraString = "PID parameters:"
 				+ "\nK: " + K
 				+ "\nTd: " + Ti
 				+ "\nTd: " + Td
 				+ "\nTr: " + Tr
 				+ "\nN: " + N
-				+ "\nBeta: " + Beta);
+				+ "\nBeta: " + Beta;
+		textArea2.setText(paraString);
 	}
 	
 	public void build(){
 		frame.add(panel);
+		frame2.add(panel2);
+		frame.pack();
+ 		frame2.pack();
+ 		frame.setVisible(true);
+ 		frame2.setVisible(true);
 	}
 	
-	public void createButton(String buttonName) {
- 		button = new JButton(buttonName);
- 		button.addActionListener(this);
- 		panel.add(button);
- 		frame.pack();
- 		frame.setVisible(true);
+	public void createButtons() {
+ 		button1 = new JButton("Calibrate");
+ 		button1.addActionListener(this);
+ 		panel.add(button1);
+ 		button2 = new JButton("Joakim");
+ 		button2.addActionListener(this);
+ 		panel.add(button2);
 	}
 
 	public void createWindow(String graphName, String xValue, String yValue, String data) throws InterruptedException {
@@ -98,11 +107,20 @@ public class Graph implements ActionListener, KeyListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		//System.out.println("actionPerformed");
-		try {
-			sc.send("C");
-		}  catch (Exception ex){
-			System.out.println("Graph: actionPerformed(Actionevent e) failed.");
+		if(e.getSource() == button1){
+			try {
+				sc.send("C");
+			}  catch (Exception ex){
+				System.out.println("Graph: actionPerformed(Actionevent e) failed.");
+			}
 		}
+		if(e.getSource() == button2){
+			returnString();
+		}
+	}
+	
+	public String returnString(){
+		return paraString;
 	}
 
 	@Override
