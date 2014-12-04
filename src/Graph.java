@@ -28,7 +28,7 @@ public class Graph implements ActionListener, KeyListener {
 	SocketClient sc;
 	private ArrayList<TimeSeries> TimeSeriesList;
 	int up, down, left, right;
-	double K = 0, Td = 0, Ti = 0;
+	double K = 0, Ti = 0, Td = 0, Tr = 0, N = 0, Beta = 0; 
 	
 	public Graph(SocketClient sc) {
 		this.sc = sc;
@@ -44,7 +44,7 @@ public class Graph implements ActionListener, KeyListener {
  		panel.add(textArea);
  		textArea2 = new JTextArea("PID parameters:", 10, 20);
  		panel.add(textArea2);
- 		updateParameters(1, 2, 3);
+ 		//updateParameters(0, 0, 0, 0, 0, 0);
  		frame.setLayout(new GridLayout(3,2));
  		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 		
  		frame.addKeyListener(this);
@@ -52,11 +52,14 @@ public class Graph implements ActionListener, KeyListener {
  		frame.setFocusable(true);
 	}
 	
-	public void updateParameters(double K, double Td, double Ti){
+	public void updateParameters(double K, double Ti, double Td, double Tr, double N, double Beta){
 		textArea2.setText("PID parameters:"
-				+"\nK: " + K 
-				+"\nTd: " + Td
-				+"\nTi: " + Ti);
+				+ "\nK: " + K
+				+ "\nTd: " + Ti
+				+ "\nTi: " + Td);/*
+				+ "\nTi: " + Tr
+				+ "\nTi: " + N
+				+ "\nTi: " + Beta);*/
 	}
 	
 	public void build(){
@@ -159,7 +162,7 @@ public class Graph implements ActionListener, KeyListener {
 					}
 				}
 				
-				updateParameters(K,TD,TI);
+				//updateParameters(K, TD, TI);
 				
 				switch(key){
 				case 0: sc.send("S");
