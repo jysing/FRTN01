@@ -79,6 +79,7 @@ public class Regul extends Thread {
     }
     
     public void calculateOffset() {
+    	setMotor(0, 0);
     	double offset = 0;
     	double sample = 0;
 		int count = 100;
@@ -91,6 +92,7 @@ public class Regul extends Thread {
 				e.printStackTrace();
 			}
 		}
+		setMotor(0, 0);
 		pid.reset();
 		gyro.setOffset((offset/count)-0.130); //0.156 utan EMAOFFSET
 	}

@@ -49,6 +49,7 @@ public class Gyro {
 
 	public void setOffset(double offset) {
 		this.offset = offset;
+		firstAng = true;
 		angle = 0;
 	}
 }
