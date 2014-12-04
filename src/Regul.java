@@ -79,7 +79,7 @@ public class Regul extends Thread {
     	}
     }
     
-    public void calculateOffset() {
+    public synchronized void calculateOffset() {
     	setMotor(0, 0);
     	double offset = 0;
     	double sample = 0;
