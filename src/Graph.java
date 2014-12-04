@@ -144,6 +144,11 @@ public class Graph implements ActionListener, KeyListener {
 				/////////////////////////////////////////
 				if (!message.equals("Fel")) {
 					switch(message.charAt(0)) {
+					case 'X': String[] param = new String[6];
+						param = message.substring(1).split(",");
+						//beta, K, Ti, Tr, Td, N
+						updateParameters(param[0],param[1],param[2],param[3],param[4],param[5]);
+						break;
 					case 'U': updateGraph(0, 120);
 						break;
 					case 'E': updateGraph(1, 200);
@@ -159,7 +164,6 @@ public class Graph implements ActionListener, KeyListener {
 					}
 				}
 				
-				updateParameters(K,TD,TI);
 				
 				switch(key){
 				case 0: sc.send("S");

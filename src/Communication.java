@@ -130,4 +130,8 @@ public class Communication extends Thread {
 		}
 		return response;
 	}
+
+	public void sendPIDValues() {
+		send(regul.sendPIDValues());
+	}
 }
