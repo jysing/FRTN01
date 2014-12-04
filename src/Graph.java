@@ -28,7 +28,7 @@ public class Graph implements ActionListener, KeyListener {
 	SocketClient sc;
 	private ArrayList<TimeSeries> TimeSeriesList;
 	int up, down, left, right;
-	double K = 0, Td = 0, Ti = 0;
+	double K = 0, Ti = 0, Td = 0, Tr = 0, N = 0, Beta = 0; 
 	
 	public Graph(SocketClient sc) {
 		this.sc = sc;
@@ -44,7 +44,7 @@ public class Graph implements ActionListener, KeyListener {
  		panel.add(textArea);
  		textArea2 = new JTextArea("PID parameters:", 10, 20);
  		panel.add(textArea2);
- 		updateParameters(1, 2, 3);
+ 		//updateParameters(0, 0, 0, 0, 0, 0);
  		frame.setLayout(new GridLayout(3,2));
  		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 		
  		frame.addKeyListener(this);
@@ -52,11 +52,14 @@ public class Graph implements ActionListener, KeyListener {
  		frame.setFocusable(true);
 	}
 	
-	public void updateParameters(double K, double Td, double Ti){
+	public void updateParameters(double K, double Ti, double Td, double Tr, double N, double Beta){
 		textArea2.setText("PID parameters:"
-				+"\nK: " + K 
-				+"\nTd: " + Td
-				+"\nTi: " + Ti);
+				+ "\nK: " + K
+				+ "\nTd: " + Ti
+				+ "\nTi: " + Td);/*
+				+ "\nTi: " + Tr
+				+ "\nTi: " + N
+				+ "\nTi: " + Beta);*/
 	}
 	
 	public void build(){
@@ -89,7 +92,7 @@ public class Graph implements ActionListener, KeyListener {
 	}
 	
 	public void start(SocketClient sc) {
-		gen myGen = new gen(sc, TimeSeriesList);
+		gen myGen = new gen(sc, TimeSeriesList, this);
 		new Thread(myGen).start();
 	}
 	
@@ -122,8 +125,10 @@ public class Graph implements ActionListener, KeyListener {
 		private SocketClient sc;
 		private ArrayList<TimeSeries> TimeSeriesList;
 		public static int key;
+		private Graph graph;
 		
-		public gen(SocketClient sc, ArrayList<TimeSeries> TimeSeriesList) {
+		public gen(SocketClient sc, ArrayList<TimeSeries> TimeSeriesList, Graph graph) {
+			this.graph = graph;
 			this.TimeSeriesList = TimeSeriesList;
 			this.sc = sc;
 		}
@@ -147,13 +152,12 @@ public class Graph implements ActionListener, KeyListener {
 					case 'X': String[] param = new String[6];
 						param = message.substring(1).split(",");
 						//beta, K, Ti, Tr, Td, N
-						/*updateParameters(Double.valueOf(param[0]),
+						graph.updateParameters(Double.valueOf(param[0]),
 								Double.valueOf(param[1]),
 								Double.valueOf(param[2]),
 								Double.valueOf(param[3]),
 								Double.valueOf(param[4]),
 								Double.valueOf(param[5]));
-								*/
 						break;
 					case 'U': updateGraph(0, 120);
 						break;
@@ -161,7 +165,7 @@ public class Graph implements ActionListener, KeyListener {
 						break;
 					case 'A': updateGraph(2, 20);
 						break;
-					case 'V': updateGraph(3, 200);
+					case 'V': updateGraph(3, 10000);
 						break;
 					case 'P': updateGraph(4, 200);
 						break;
@@ -169,7 +173,6 @@ public class Graph implements ActionListener, KeyListener {
 						break; 
 					}
 				}
-				
 				
 				switch(key){
 				case 0: sc.send("S");
