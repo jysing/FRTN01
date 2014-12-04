@@ -6,21 +6,17 @@ public class Regul extends Thread {
 	private PID pid;
 	private Gyro gyro;
 	private Position posReader;
-	//RegulatedMotor motorA;
-	//RegulatedMotor motorB;
 	EncoderMotor motorA;
 	EncoderMotor motorB;
 	
 	private double u, e; // Control signal to/from PID
 	private double angVel, ang; // angluarVelocity and current angle
-	private static final double weightAng = 0.003, weightAngVel = 1;
+	private static final double weightAng = 3, weightAngVel = 0.3;
 	private static final double normalizedWeightAng = weightAng/(weightAng + weightAngVel);
 	private static final double normalizedWeightAngVel = weightAngVel/(weightAng + weightAngVel);
 	private double position, positionVel; // Position and position velocity
 
-
-    /** Constructor. */
-    public Regul (Gyro gyro, int priority) {
+	public Regul (Gyro gyro, int priority) {
     	setPriority(priority);
     	this.gyro = gyro;
     	pid = new PID();
@@ -29,16 +25,12 @@ public class Regul extends Thread {
     	motorB = new NXTMotor(MotorPort.D);
     	motorB.flt();
     	posReader = new Position(motorA);
-    	//motorA = new EV3LargeRegulatedMotor(MotorPort.A);
-    	//motorB = new EV3LargeRegulatedMotor(MotorPort.B);
     }
     
-    /** Sets the parameters of the PID controller */
     public void setPIDParameters(PIDParameters p) {
     	pid.setParameters(p);
     }
     
-    /** Returns the parameters of the PID controller */
     public PIDParameters getPIDParameters() {
     	return pid.getParameters();
     }
@@ -77,7 +69,7 @@ public class Regul extends Thread {
     	while (true) {
     		position = posReader.getPosition();
     		positionVel = posReader.getPosVelocity();
-    		angVel = gyro.getAngleVelocity();
+    		angVel = (gyro.getAngleVelocity()/1000);
     		ang = gyro.getAngle();
     		e = normalizedWeightAngVel*angVel+normalizedWeightAng*ang;
     		u = pid.calculateOutput(e, 0);
@@ -87,6 +79,7 @@ public class Regul extends Thread {
     }
     
     public void calculateOffset() {
+    	setMotor(0, 0);
     	double offset = 0;
     	double sample = 0;
 		int count = 100;
@@ -99,6 +92,8 @@ public class Regul extends Thread {
 				e.printStackTrace();
 			}
 		}
+		setMotor(0, 0);
+		pid.reset();
 		gyro.setOffset((offset/count)-0.130); //0.156 utan EMAOFFSET
 	}
     

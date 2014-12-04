@@ -1,3 +1,5 @@
+import lejos.hardware.lcd.LCD;
+
 
 public class PID {
 	private PIDParameters p;
@@ -19,11 +21,11 @@ public class PID {
 		time = System.currentTimeMillis();
 		  p.Beta = 1.0;
 		 // p.H = 0.02;
-		  p.integratorOn = false;
-		  p.K = 2.5; //K =7 med regulatedmotor
-		  p.Ti = 0.0;
-		  p.Tr = 0;
-		  p.Td = 1;
+		  p.integratorOn = true;
+		  p.K = 5; //K =2.5
+		  p.Ti = 0.4; //Ti = 0.5
+		  p.Tr = 0.5;
+		  p.Td = 0;
 		  p.N = 5;
 		  
 		  setParameters(p);
@@ -50,8 +52,10 @@ public class PID {
 	
 	// Updates the controller state.
 	public synchronized void updateState(double u){
+		 LCD.drawString("Integral:" + I, 0, 3);
 		 if (p.integratorOn) {
-			  I = I + (p.K * p.H / p.Ti) * e + (p.H / p.Tr) * (u - v);  
+			  I = I + ((p.K * interval / p.Ti) * e + (interval / p.Tr) * (u - v))/1000;  
+			 
 		  } else {
 			  I = 0.0;
 		  }
@@ -60,7 +64,7 @@ public class PID {
 	
 	// Returns the sampling interval expressed as a long.
 	public synchronized long getHMillis(){
-		return (long)(p.H * 1000.0);
+		return (long)(interval * 1000.0);
 	}
 	
 	// Sets the PIDParameters.
