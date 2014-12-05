@@ -55,6 +55,12 @@ public class Graph implements ActionListener, KeyListener {
 	}
 	
 	public void updateParameters(double K, double Ti, double Td, double Tr, double N, double Beta){
+		this.K = K;
+		this.Ti = Ti;
+		this.Ti = Td;
+		this.Ti = Tr;
+		this.Ti = N;
+		this.Ti = Beta;
 		paraString = "PID parameters:"
 				+ "\nK:" + K
 				+ "\nTd:" + Ti
@@ -100,6 +106,7 @@ public class Graph implements ActionListener, KeyListener {
 	public void start(SocketClient sc) {
 		gen myGen = new gen(sc, TimeSeriesList, this);
 		new Thread(myGen).start();
+		
 	}
 	
 	public void actionPerformed(ActionEvent e) { 
@@ -133,7 +140,7 @@ public class Graph implements ActionListener, KeyListener {
 		// Do nothing.
 	}
 
-	static class gen implements Runnable {
+	static class gen extends Thread {
 		private String message;
 		private SocketClient sc;
 		private ArrayList<TimeSeries> TimeSeriesList;
