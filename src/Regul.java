@@ -10,7 +10,7 @@ public class Regul extends Thread {
 	EncoderMotor motorA;
 	EncoderMotor motorB;
 	
-	private boolean manual = false;
+	private boolean manual;
 	private double manualSpeedLeft, manualSpeedRight;
 	private static final long period = 10;
 	private double u, e; // Control signal to/from PID
