@@ -87,6 +87,12 @@ public class Regul extends Thread {
     		u = pid.calculateOutput(e, 0);
     		pid.updateState(u);
     		setMotor(u, u);
+    		
+    		try {
+				Thread.sleep(period);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
     	}
     }
     
