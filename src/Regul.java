@@ -41,7 +41,7 @@ public class Regul extends Thread {
     public synchronized void manualControl(double speedLeft, double speedRight) {
     	setMotor(speedLeft, speedRight);
     	try {
-			this.sleep(period);
+			Thread.sleep(period);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
