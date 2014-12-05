@@ -105,6 +105,7 @@ public class Graph implements ActionListener, KeyListener {
 	public void start(SocketClient sc) {
 		gen myGen = new gen(sc, TimeSeriesList, this);
 		new Thread(myGen).start();
+		
 	}
 	
 	public void actionPerformed(ActionEvent e) { 
@@ -137,7 +138,7 @@ public class Graph implements ActionListener, KeyListener {
 		// Do nothing.
 	}
 
-	static class gen implements Runnable {
+	static class gen extends Thread {
 		private String message;
 		private SocketClient sc;
 		private ArrayList<TimeSeries> TimeSeriesList;
