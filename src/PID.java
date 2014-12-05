@@ -19,9 +19,9 @@ public class PID {
 		time = System.currentTimeMillis();
 		  p.Beta = 1.0;
 		 // p.H = 0.02;
-		  p.integratorOn = false;
-		  p.K = 60; //K =2.5 //0.84
-		  p.Ti = 0.004; //Ti = 0.5
+		  p.integratorOn = true;
+		  p.K = 50; //K =2.5 //0.84
+		  p.Ti = 0.5; //Ti = 0.5
 		  p.Tr = 0.5;
 		  p.Td = 0;
 		  p.N = 5;

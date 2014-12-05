@@ -63,8 +63,8 @@ public class Communication extends Thread {
 					regul.setPIDParameters(p);
 					regul.calculateOffset();
 					break;
-				//case 'S': regul.setMotor(0, 0);
-				//	break;
+				case 'S': regul.setManualFalse();
+					break;
 				case 'C': regul.calculateOffset();
 					break;
 				case 'F': regul.manualControl(60, 60);
@@ -78,12 +78,11 @@ public class Communication extends Thread {
 				}
 			} else {
 				LCD.drawString("It is not connected", 0, 3);
-				/*try {
-					//this.connect();
+				try{	
+					this.connect();
 				} catch (IOException e) {
 					LCD.drawString("Could not reconnect", 0, 3);				}
 				this.sendPIDValues();
-				*/
 			}
 
 			try {

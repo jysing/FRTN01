@@ -84,9 +84,14 @@ public class Regul extends Thread {
     		if(false) {
     			if (i == 0) setMotor(manualSpeedLeft, manualSpeedRight);
     			i++;
-    			if(i == 5) {
+    			if(i >= 5) {
     				manual = false;
     				i = 0;
+    			}
+    			try {
+    				Thread.sleep(period);
+    			} catch (InterruptedException e1) {
+    				e1.printStackTrace();
     			}
     		} else {
     			position = posReader.getPosition();
@@ -97,13 +102,7 @@ public class Regul extends Thread {
     			u = pid.calculateOutput(e, 0);
     			pid.updateState(u);
     			setMotor(u, u);    			
-    		}
-    		
-    		try {
-				Thread.sleep(period);
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
+    		}    		
     	}
     }
     
@@ -167,5 +166,9 @@ public class Regul extends Thread {
 		sb.append(p.Td + ",");
 		sb.append(p.N + ",");
 		return sb.toString();
+	}
+
+	public void setManualFalse() {
+		manual = false;
 	}
 }
