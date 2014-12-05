@@ -1,5 +1,3 @@
-import lejos.hardware.lcd.LCD;
-
 
 public class PID {
 	private PIDParameters p;

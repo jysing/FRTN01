@@ -9,6 +9,8 @@ public class Regul extends Thread {
 	EncoderMotor motorA;
 	EncoderMotor motorB;
 	
+	private boolean manual;
+	private double manualSpeedLeft, manualSpeedRight;
 	private static final long period = 10;
 	private double u, e; // Control signal to/from PID
 	private double angVel, ang; // angluarVelocity and current angle
@@ -22,6 +24,9 @@ public class Regul extends Thread {
 	public Regul (Gyro gyro, int priority) {
     	setPriority(priority);
     	this.gyro = gyro;
+    	manual = false;
+    	manualSpeedLeft = 0;
+    	manualSpeedRight = 0;
     	pid = new PID();
     	motorA = new NXTMotor(MotorPort.A);
     	motorA.flt();
@@ -39,12 +44,9 @@ public class Regul extends Thread {
     }
     
     public synchronized void manualControl(double speedLeft, double speedRight) {
-    	setMotor(speedLeft, speedRight);
-    	try {
-			Thread.sleep(period);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+    	manualSpeedLeft = speedLeft;
+    	manualSpeedRight = speedRight;
+    	manual = true;
     }
     
     public void setMotor(double speedLeft, double speedRight){
@@ -79,14 +81,18 @@ public class Regul extends Thread {
     	calculateOffset();
     	
     	while (true) {
-    		position = posReader.getPosition();
-    		positionVel = (posReader.getPosVelocity()*1000);
-    		angVel = gyro.getAngleVelocity();
-    		ang = (gyro.getAngle()/1000);
-    		e = normalizedWeightAngVel*angVel+normalizedWeightAng*ang+position*normalizedWeightPos+positionVel*normalizedWeightPosVel;
-    		u = pid.calculateOutput(e, 0);
-    		pid.updateState(u);
-    		setMotor(u, u);
+    		if(manual) {
+    			setMotor(manualSpeedLeft, manualSpeedRight);
+    		} else {
+    			position = posReader.getPosition();
+    			positionVel = (posReader.getPosVelocity()*1000);
+    			angVel = gyro.getAngleVelocity();
+    			ang = (gyro.getAngle()/1000);
+    			e = normalizedWeightAngVel*angVel+normalizedWeightAng*ang+position*normalizedWeightPos+positionVel*normalizedWeightPosVel;
+    			u = pid.calculateOutput(e, 0);
+    			pid.updateState(u);
+    			setMotor(u, u);    			
+    		}
     		
     		try {
 				Thread.sleep(period);
