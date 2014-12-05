@@ -108,6 +108,10 @@ public class Regul extends Thread {
 		pid.reset();
 		gyro.setOffset((offset/count)-0.130); //0.156 utan EMAOFFSET
 		angVel = 0;
+		ang = 0;
+		posReader.reset();
+		position = 0;
+		positionVel = 0;
 	}
     
     //Get methods to be used by Communication to 
