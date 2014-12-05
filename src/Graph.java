@@ -25,11 +25,10 @@ public class Graph implements ActionListener, KeyListener {
 	private JButton button1, button2;
 	private JPanel panel;
 	private JTextArea textArea, textArea2;
-	SocketClient sc;
+	private SocketClient sc;
 	private ArrayList<TimeSeries> TimeSeriesList;
-	int up, down, left, right;
-	double K = 0, Ti = 0, Td = 0, Tr = 0, N = 0, Beta = 0; 
-	String paraString;
+	private double K = 0, Ti = 0, Td = 0, Tr = 0, N = 0, beta = 0; 
+	private String paraString;
 	
 	public Graph(SocketClient sc) {
 		this.sc = sc;
@@ -50,18 +49,24 @@ public class Graph implements ActionListener, KeyListener {
  		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 		
  		frame.addKeyListener(this);
  		panel.setFocusable(true);
- 		frame.setFocusable(true);
- 		
+ 		frame.setFocusable(true);	
 	}
 	
-	public void updateParameters(double K, double Ti, double Td, double Tr, double N, double Beta){
+	public void updateParameters(double beta, double K, double Ti, double Tr, double Td, double N){
+		this.beta = beta;
+		this.K = K;
+		this.Ti = Ti;
+		this.Tr = Tr;
+		this.Td = Td;
+		this.N = N;
+		
 		paraString = "PID parameters:"
+				+ "\nBeta:" + beta
 				+ "\nK:" + K
-				+ "\nTd:" + Ti
-				+ "\nTd:" + Td
+				+ "\nTi:" + Ti
 				+ "\nTr:" + Tr
-				+ "\nN:" + N
-				+ "\nBeta:" + Beta;
+				+ "\nTd:" + Td
+				+ "\nN:" + N;
 		textArea2.setText(paraString);
 	}
 	
@@ -105,6 +110,7 @@ public class Graph implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent e) { 
 		if(e.getSource() == button1){
 			try {
+				updateParameters(beta, K, Ti, Tr, Td, N);
 				sc.send("C");
 			}  catch (Exception ex){
 				System.out.println("Graph: actionPerformed(Actionevent e) failed.");
@@ -112,9 +118,7 @@ public class Graph implements ActionListener, KeyListener {
 		}
 		if(e.getSource() == button2){
 			String newParam = textArea2.getText();
-			System.out.println(newParam);
-			String [] temp = newParam.split("\n");
-			System.out.println(temp[0] + " " + temp [1] + " " + " " + temp[2]);
+			sc.send("N" + newParam);
 		}
 	}
 
