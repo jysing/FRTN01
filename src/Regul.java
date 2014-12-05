@@ -1,3 +1,4 @@
+import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.NXTMotor;
 import lejos.hardware.port.*;
 import lejos.robotics.EncoderMotor;
@@ -9,7 +10,7 @@ public class Regul extends Thread {
 	EncoderMotor motorA;
 	EncoderMotor motorB;
 	
-	private boolean manual;
+	private boolean manual = false;
 	private double manualSpeedLeft, manualSpeedRight;
 	private static final long period = 10;
 	private double u, e; // Control signal to/from PID
@@ -24,7 +25,6 @@ public class Regul extends Thread {
 	public Regul (Gyro gyro, int priority) {
     	setPriority(priority);
     	this.gyro = gyro;
-    	manual = false;
     	manualSpeedLeft = 0;
     	manualSpeedRight = 0;
     	pid = new PID();
@@ -62,7 +62,7 @@ public class Regul extends Thread {
     	} else {
     		motorA.forward();
     	}
-    	motorB.setPower(Math.abs((int)speedLeft));
+    	motorB.setPower((int) Math.abs(speedLeft));
     	motorA.setPower(Math.abs((int)speedRight));
     }
     
@@ -103,6 +103,11 @@ public class Regul extends Thread {
     			pid.updateState(u);
     			setMotor(u, u);    			
     		}    		
+    		if(manual) {
+    			LCD.drawString("true", 0, 4);
+    		} else {
+    			LCD.drawString("false", 0, 4);
+    		}
     	}
     }
     
@@ -130,8 +135,6 @@ public class Regul extends Thread {
 		positionVel = 0;
 	}
     
-    //Get methods to be used by Communication to 
-    //send information needed to build graphs
     public double getU() {
     	return u;
     }
