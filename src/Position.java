@@ -16,7 +16,8 @@ public class Position {
 
 	public double getPosVelocity() {
 		difference = System.currentTimeMillis() - time;
-		time = time + difference;
+		time += difference;
+		oldValue = getPosition();
 		if(difference != 0)	value = ((getPosition() - oldValue) / difference);
 		oldValue = value;
 		return value;
