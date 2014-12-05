@@ -79,6 +79,11 @@ public class Communication extends Thread {
 				}
 			} else {
 				LCD.drawString("It is not connected", 0, 3);
+				try {
+					this.connect();
+				} catch (IOException e) {
+					LCD.drawString("Could not reconnect", 0, 3);				}
+				this.sendPIDValues();
 			}
 
 			try {
