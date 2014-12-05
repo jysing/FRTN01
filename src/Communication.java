@@ -63,8 +63,8 @@ public class Communication extends Thread {
 					regul.setPIDParameters(p);
 					regul.calculateOffset();
 					break;
-				case 'S': regul.manualControl(0, 0);
-					break;
+				//case 'S': regul.setMotor(0, 0);
+				//	break;
 				case 'C': regul.calculateOffset();
 					break;
 				case 'F': regul.manualControl(60, 60);
