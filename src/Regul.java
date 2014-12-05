@@ -81,7 +81,7 @@ public class Regul extends Thread {
     	calculateOffset();
     	int i = 0;
     	while (true) {
-    		if(manual) {
+    		if(false) {
     			if (i == 0) setMotor(manualSpeedLeft, manualSpeedRight);
     			i++;
     			if(i == 5) {
