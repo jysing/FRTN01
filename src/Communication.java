@@ -48,7 +48,6 @@ public class Communication extends Thread {
 				send(message);
 				try {
 					message = receive();
-					LCD.drawString(message, 0, 5);
 				} catch (IOException e1) {
 					message = "Fel";
 				}
