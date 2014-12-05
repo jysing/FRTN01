@@ -52,7 +52,6 @@ public class PID {
 	
 	// Updates the controller state.
 	public synchronized void updateState(double u){
-		 LCD.drawString("Integral:" + I, 0, 3);
 		 if (p.integratorOn) {
 			  I = I + ((p.K * interval / p.Ti) * e + (interval / p.Tr) * (u - v))/1000;  
 			 
