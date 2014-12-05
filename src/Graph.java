@@ -190,8 +190,8 @@ public class Graph implements ActionListener, KeyListener {
 				}
 				
 				switch(key){
-				//case 0: sc.send("S");
-				//	break;
+				case 0: sc.send("S");
+					break;
 				case 65: sc.send("L");
 					break;
 				case 68: sc.send("R");
