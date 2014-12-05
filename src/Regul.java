@@ -14,7 +14,7 @@ public class Regul extends Thread {
 	private static final long period = 10;
 	private double u, e; // Control signal to/from PID
 	private double angVel, ang; // angluarVelocity and current angle
-	private static final double weightAng = 1, weightAngVel = 0, weightPos = 4, weightPosVel = 0;
+	private static final double weightAng = 1, weightAngVel = 0.1, weightPos = 4, weightPosVel = 0;
 	private static final double normalizedWeightAng = weightAng/(weightAng + weightAngVel + weightPos + weightPosVel);
 	private static final double normalizedWeightAngVel = weightAngVel/(weightAng + weightAngVel + weightPos + weightPosVel);
 	private static final double normalizedWeightPos = weightPos/(weightAng + weightAngVel + weightPos + weightPosVel);
