@@ -82,7 +82,7 @@ public class Regul extends Thread {
     	int i = 0;
     	manual = false;
     	while (true) {
-    		if(false) {
+    		if(manual) {
     			if (i == 0) setMotor(manualSpeedLeft, manualSpeedRight);
     			i++;
     			if(i >= 5) {
