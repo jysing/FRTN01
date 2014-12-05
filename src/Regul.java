@@ -38,6 +38,15 @@ public class Regul extends Thread {
     	return pid.getParameters();
     }
     
+    public synchronized void manualControl(double speedLeft, double speedRight) {
+    	setMotor(speedLeft, speedRight);
+    	try {
+			Thread.sleep(period);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+    }
+    
     public void setMotor(double speedLeft, double speedRight){
     	speedLeft = limitSpeed(speedLeft);
     	speedRight = limitSpeed(speedRight);
