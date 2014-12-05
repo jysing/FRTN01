@@ -79,10 +79,12 @@ public class Regul extends Thread {
 		setMotor(30, 30);
 		setMotor(0, 0);
     	calculateOffset();
-    	
+    	int i = 0;
     	while (true) {
     		if(manual) {
     			setMotor(manualSpeedLeft, manualSpeedRight);
+    			i++;
+    			if(i == 5) manual = false;
     		} else {
     			position = posReader.getPosition();
     			positionVel = (posReader.getPosVelocity()*1000);
