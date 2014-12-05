@@ -30,5 +30,6 @@ public class Position {
 	public void reset() {
 		oldValue = 0;
 		value = 0;
+		motorA.resetTachoCount();
 	}
 }
