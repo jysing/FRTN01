@@ -67,13 +67,13 @@ public class Communication extends Thread {
 					break;
 				case 'C': regul.calculateOffset();
 					break;
-				case 'F': regul.manualControl(20, 20);
+				case 'F': regul.manualControl(60, 60);
 					break;
-				case 'B': regul.manualControl(-20, -20);
+				case 'B': regul.manualControl(-60, -60);
 					break;
-				case 'L': regul.manualControl(-10, 10);
+				case 'L': regul.manualControl(-30, 30);
 					break;
-				case 'R': regul.manualControl(10, -10);
+				case 'R': regul.manualControl(30, -30);
 					break;
 				}
 			} else {
