@@ -203,7 +203,7 @@ public class Graph implements ActionListener, KeyListener {
 				}
 				
 				try {
-					Thread.sleep(5);
+					Thread.sleep(20);
 				} catch (InterruptedException ex) {
 					System.out.println(ex);
 				}
