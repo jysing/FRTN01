@@ -11,7 +11,7 @@ public class Regul extends Thread {
 	
 	private double u, e; // Control signal to/from PID
 	private double angVel, ang; // angluarVelocity and current angle
-	private static final double weightAng = 3, weightAngVel = 0.3, weightPos = 1, weightPosVel = 0;
+	private static final double weightAng = 3, weightAngVel = 0.3, weightPos = 1, weightPosVel = 1;
 	private static final double normalizedWeightAng = weightAng/(weightAng + weightAngVel + weightPos + weightPosVel);
 	private static final double normalizedWeightAngVel = weightAngVel/(weightAng + weightAngVel + weightPos + weightPosVel);
 	private static final double normalizedWeightPos = weightPos/(weightAng + weightAngVel + weightPos + weightPosVel);
@@ -73,7 +73,7 @@ public class Regul extends Thread {
     		positionVel = (posReader.getPosVelocity()/1000);
     		angVel = gyro.getAngleVelocity();
     		ang = (gyro.getAngle()/1000);
-    		e = normalizedWeightAngVel*angVel+normalizedWeightAng*ang+position*normalizedWeightPos+positionVel*normalizedWeightPosVel;
+    		e = normalizedWeightAngVel*angVel+normalizedWeightAng*ang+position*normalizedWeightPos;
     		u = pid.calculateOutput(e, 0);
     		pid.updateState(u);
     		setMotor(u, u);
