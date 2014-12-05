@@ -20,10 +20,10 @@ public class PID {
 		  p.Beta = 1.0;
 		 // p.H = 0.02;
 		  p.integratorOn = true;
-		  p.K = 50; //K =2.5 //0.84
+		  p.K = 30; //K =2.5 //0.84
 		  p.Ti = 0.5; //Ti = 0.5
 		  p.Tr = 0.5;
-		  p.Td = 0;
+		  p.Td = 3;
 		  p.N = 5;
 		  
 		  setParameters(p);
