@@ -46,6 +46,7 @@ public class Communication extends Thread {
 				i++;
 				i = i % 6;
 				send(message);
+				message = "Fel";
 				try {
 					message = receive();
 				} catch (IOException e1) {
