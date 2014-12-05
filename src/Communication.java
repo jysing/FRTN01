@@ -48,7 +48,6 @@ public class Communication extends Thread {
 				send(message);
 				try {
 					message = receive();
-					LCD.drawString(message, 0, 5);
 				} catch (IOException e1) {
 					message = "Fel";
 				}
@@ -64,21 +63,27 @@ public class Communication extends Thread {
 					regul.setPIDParameters(p);
 					regul.calculateOffset();
 					break;
-				case 'S': regul.setMotor(0, 0);
+				case 'S': regul.manualControl(0, 0);
 					break;
 				case 'C': regul.calculateOffset();
 					break;
-				case 'F': regul.setMotor(20, 20);
+				case 'F': regul.manualControl(20, 20);
 					break;
-				case 'B': regul.setMotor(-20, -20);
+				case 'B': regul.manualControl(-20, -20);
 					break;
-				case 'L': regul.setMotor(-10, 10);
+				case 'L': regul.manualControl(-10, 10);
 					break;
-				case 'R': regul.setMotor(10, -10);
+				case 'R': regul.manualControl(10, -10);
 					break;
 				}
 			} else {
 				LCD.drawString("It is not connected", 0, 3);
+				/*try {
+					//this.connect();
+				} catch (IOException e) {
+					LCD.drawString("Could not reconnect", 0, 3);				}
+				this.sendPIDValues();
+				*/
 			}
 
 			try {

@@ -18,12 +18,17 @@ public class Position {
 	public double getPosVelocity() {
 		difference = System.currentTimeMillis() - time;
 		time = time + difference;
-		value = ((getPosition() - oldValue) / difference);
+		if(difference != 0)	value = ((getPosition() - oldValue) / difference);
 		oldValue = value;
 		return value;
 	}
 
 	public double getPosition() {
 		return motorA.getTachoCount()*meterPerDegree;
+	}
+	
+	public void reset() {
+		oldValue = 0;
+		value = 0;
 	}
 }
