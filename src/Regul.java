@@ -81,7 +81,7 @@ public class Regul extends Thread {
     	calculateOffset();
     	int i = 0;
     	while (true) {
-    		if(manual) {
+    		/*if(manual) {
     			setMotor(manualSpeedLeft, manualSpeedRight);
     			i++;
     			if(i == 5) {
@@ -89,6 +89,7 @@ public class Regul extends Thread {
     				i = 0;
     			}
     		} else {
+    		*/
     			position = posReader.getPosition();
     			positionVel = (posReader.getPosVelocity()*1000);
     			angVel = gyro.getAngleVelocity();
@@ -97,7 +98,7 @@ public class Regul extends Thread {
     			u = pid.calculateOutput(e, 0);
     			pid.updateState(u);
     			setMotor(u, u);    			
-    		}
+    		//}
     		
     		try {
 				Thread.sleep(period);
