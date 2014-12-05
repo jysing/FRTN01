@@ -25,11 +25,11 @@ public class Position {
 	}
 
 	public double getPosition() {
-		motorA.resetTachoCount();
 		return motorA.getTachoCount()*meterPerDegree;
 	}
 	
 	public void reset() {
+		motorA.resetTachoCount();
 		oldValue = 0;
 		value = 0;
 	}
