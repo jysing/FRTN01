@@ -9,6 +9,7 @@ public class Regul extends Thread {
 	EncoderMotor motorA;
 	EncoderMotor motorB;
 	
+	private static final long period = 10;
 	private double u, e; // Control signal to/from PID
 	private double angVel, ang; // angluarVelocity and current angle
 	private static final double weightAng = 3, weightAngVel = 0.3, weightPos = 1, weightPosVel = 0;
