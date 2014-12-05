@@ -46,7 +46,7 @@ public class Regul extends Thread {
     public synchronized void manualControl(double speedLeft, double speedRight) {
     	manualSpeedLeft = speedLeft;
     	manualSpeedRight = speedRight;
-    	manual = true;
+    	//manual = true;
     }
     
     public void setMotor(double speedLeft, double speedRight){
