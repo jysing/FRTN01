@@ -144,6 +144,8 @@ public class Regul extends Thread {
 		posReader.reset();
 		position = 0;
 		positionVel = 0;
+		u = 0;
+		e = 0;
 	}
     
     public double getU() {
