@@ -168,6 +168,7 @@ public class Graph implements ActionListener, KeyListener {
 		private ArrayList<TimeSeries> TimeSeriesList;
 		public static int key;
 		private Graph graph;
+		private static final long period = 100;
 
 		public gen(SocketClient sc, ArrayList<TimeSeries> TimeSeriesList,
 				Graph graph) {
@@ -250,7 +251,7 @@ public class Graph implements ActionListener, KeyListener {
 				}
 
 				try {
-					Thread.sleep(20);
+					Thread.sleep(period);
 				} catch (InterruptedException ex) {
 					System.out.println(ex);
 				}
