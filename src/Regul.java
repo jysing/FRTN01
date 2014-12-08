@@ -13,7 +13,7 @@ public class Regul extends Thread {
 	
 	private boolean manual;
 	private double manualSpeedLeft, manualSpeedRight;
-	private static final long period = 100;
+	private static final long period = 5;
 	private double u, e, ref; // Control signal to/from PID
 	private double angVel, ang; // angluarVelocity and current angle
 	private static final double weightAng = 1, weightAngVel = 0.1;
@@ -116,6 +116,12 @@ public class Regul extends Thread {
     			e = normalizedWeightAngVel*angVel+normalizedWeightAng*ang;
     			u = pidAng.calculateOutput(e, -ref);
     			setMotor(u, u);
+			}
+    		
+    		try {
+				Thread.sleep(period);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
 			}
     		
     		/*if(manual) {
