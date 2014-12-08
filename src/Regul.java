@@ -1,3 +1,4 @@
+import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.NXTMotor;
 import lejos.hardware.port.*;
 import lejos.robotics.EncoderMotor;
@@ -9,10 +10,12 @@ public class Regul extends Thread {
 	EncoderMotor motorA;
 	EncoderMotor motorB;
 	
-	private static final long period = 10;
+	private boolean manual;
+	private double manualSpeedLeft, manualSpeedRight;
+	private static final long period = 100;
 	private double u, e; // Control signal to/from PID
 	private double angVel, ang; // angluarVelocity and current angle
-	private static final double weightAng = 1, weightAngVel = 0, weightPos = 4, weightPosVel = 0;
+	private static final double weightAng = 1, weightAngVel = 0.1, weightPos = 4, weightPosVel = 0;
 	private static final double normalizedWeightAng = weightAng/(weightAng + weightAngVel + weightPos + weightPosVel);
 	private static final double normalizedWeightAngVel = weightAngVel/(weightAng + weightAngVel + weightPos + weightPosVel);
 	private static final double normalizedWeightPos = weightPos/(weightAng + weightAngVel + weightPos + weightPosVel);
@@ -22,6 +25,8 @@ public class Regul extends Thread {
 	public Regul (Gyro gyro, int priority) {
     	setPriority(priority);
     	this.gyro = gyro;
+    	manualSpeedLeft = 0;
+    	manualSpeedRight = 0;
     	pid = new PID();
     	motorA = new NXTMotor(MotorPort.A);
     	motorA.flt();
@@ -39,12 +44,9 @@ public class Regul extends Thread {
     }
     
     public synchronized void manualControl(double speedLeft, double speedRight) {
-    	setMotor(speedLeft, speedRight);
-    	try {
-			Thread.sleep(period);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+    	manualSpeedLeft = speedLeft;
+    	manualSpeedRight = speedRight;
+    	manual = true;
     }
     
     public void setMotor(double speedLeft, double speedRight){
@@ -60,7 +62,7 @@ public class Regul extends Thread {
     	} else {
     		motorA.forward();
     	}
-    	motorB.setPower(Math.abs((int)speedLeft));
+    	motorB.setPower((int) Math.abs(speedLeft));
     	motorA.setPower(Math.abs((int)speedRight));
     }
     
@@ -77,22 +79,36 @@ public class Regul extends Thread {
 		setMotor(30, 30);
 		setMotor(0, 0);
     	calculateOffset();
-    	
+    	int i = 0;
+    	manual = false;
     	while (true) {
-    		position = posReader.getPosition();
-    		positionVel = (posReader.getPosVelocity()*1000);
-    		angVel = gyro.getAngleVelocity();
-    		ang = (gyro.getAngle()/1000);
-    		e = normalizedWeightAngVel*angVel+normalizedWeightAng*ang+position*normalizedWeightPos+positionVel*normalizedWeightPosVel;
-    		u = pid.calculateOutput(e, 0);
-    		pid.updateState(u);
-    		setMotor(u, u);
-    		
-    		try {
-				Thread.sleep(period);
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
+    		if(manual) {
+    			if (i == 0) setMotor(manualSpeedLeft, manualSpeedRight);
+    			i++;
+    			if(i >= 5) {
+    				manual = false;
+    				i = 0;
+    			}
+    			try {
+    				Thread.sleep(period);
+    			} catch (InterruptedException e1) {
+    				e1.printStackTrace();
+    			}
+    		} else {
+    			position = posReader.getPosition();
+    			positionVel = (posReader.getPosVelocity()*1000);
+    			angVel = gyro.getAngleVelocity();
+    			ang = (gyro.getAngle()/1000);
+    			e = normalizedWeightAngVel*angVel+normalizedWeightAng*ang+position*normalizedWeightPos+positionVel*normalizedWeightPosVel;
+    			u = pid.calculateOutput(e, 0);
+    			pid.updateState(u);
+    			setMotor(u, u);    			
+    		}    		
+    		if(manual) {
+    			LCD.drawString("true", 0, 4);
+    		} else {
+    			LCD.drawString("false", 0, 4);
+    		}
     	}
     }
     
@@ -120,8 +136,6 @@ public class Regul extends Thread {
 		positionVel = 0;
 	}
     
-    //Get methods to be used by Communication to 
-    //send information needed to build graphs
     public double getU() {
     	return u;
     }
@@ -156,5 +170,9 @@ public class Regul extends Thread {
 		sb.append(p.Td + ",");
 		sb.append(p.N + ",");
 		return sb.toString();
+	}
+
+	public void setManualFalse() {
+		manual = false;
 	}
 }
