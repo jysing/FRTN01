@@ -95,14 +95,16 @@ public class Regul extends Thread {
     				e1.printStackTrace();
     			}
     		} else {
-    			position = posReader.getPosition();
-    			positionVel = (posReader.getPosVelocity()*1000);
-    			angVel = gyro.getAngleVelocity();
-    			ang = (gyro.getAngle()/1000);
-    			e = normalizedWeightAngVel*angVel+normalizedWeightAng*ang+position*normalizedWeightPos+positionVel*normalizedWeightPosVel;
-    			u = pid.calculateOutput(e, 0);
-    			pid.updateState(u);
-    			setMotor(u, u);    			
+    			synchronized (pid) {
+    				position = posReader.getPosition();
+    				positionVel = (posReader.getPosVelocity()*1000);
+    				angVel = gyro.getAngleVelocity();
+    				ang = (gyro.getAngle()/1000);
+    				e = normalizedWeightAngVel*angVel+normalizedWeightAng*ang+position*normalizedWeightPos+positionVel*normalizedWeightPosVel;
+    				u = pid.calculateOutput(e, 0);
+    				pid.updateState(u);
+    				setMotor(u, u);					
+				}
     		}    		
     		if(manual) {
     			LCD.drawString("true", 0, 4);
