@@ -13,7 +13,7 @@ public class MainGUI {
 	    }
 	    
 	    try {
-		Graph graph = new Graph(sc);	
+		Graph graph = new Graph(sc);
 		graph.createWindow("Control signal", "Time", "Value 1", "Control signal");
 		graph.createWindow("Error input", "Time", "Value 2", "Error input");
 		graph.createWindow("Angle", "Time", "Value 3", "Angle");

@@ -46,44 +46,46 @@ public class Communication extends Thread {
 				i++;
 				i = i % 6;
 				send(message);
+				message = "Fel";
 				try {
 					message = receive();
 				} catch (IOException e1) {
 					message = "Fel";
 				}
-				switch(message.charAt(0)) {
-				case 'N': String[] newParam = message.substring(1).split("\n"); //starts at 1
+				if(!message.equals("Fel")) {
+					switch(message.charAt(0)) {
+					case 'N': String[] newParam = message.substring(1).split("\n"); //starts at 1
 					PIDParameters p = new PIDParameters();
 					p.Beta = Double.valueOf(newParam[1].split(":")[1]);
-					p.K = Double.valueOf(newParam[2].split(":")[1]); //K =2.5 //0.84
-					p.Ti = Double.valueOf(newParam[3].split(":")[1]); //Ti = 0.5
+					p.K = Double.valueOf(newParam[2].split(":")[1]);
+					p.Ti = Double.valueOf(newParam[3].split(":")[1]);
 					p.Tr = Double.valueOf(newParam[4].split(":")[1]);
 					p.Td = Double.valueOf(newParam[5].split(":")[1]);
 					p.N = Double.valueOf(newParam[6].split(":")[1]);
 					regul.setPIDParameters(p);
 					regul.calculateOffset();
 					break;
-				case 'S': regul.manualControl(0, 0);
+					case 'S': regul.setManualFalse();
 					break;
-				case 'C': regul.calculateOffset();
+					case 'C': regul.calculateOffset();
 					break;
-				case 'F': regul.manualControl(20, 20);
+					case 'F': regul.manualControl(60, 60);
 					break;
-				case 'B': regul.manualControl(-20, -20);
+					case 'B': regul.manualControl(-60, -60);
 					break;
-				case 'L': regul.manualControl(-10, 10);
+					case 'L': regul.manualControl(-30, 30);
 					break;
-				case 'R': regul.manualControl(10, -10);
+					case 'R': regul.manualControl(30, -30);
 					break;
+					}
 				}
 			} else {
 				LCD.drawString("It is not connected", 0, 3);
-				/*try {
-					//this.connect();
+				try{	
+					this.connect();
 				} catch (IOException e) {
 					LCD.drawString("Could not reconnect", 0, 3);				}
 				this.sendPIDValues();
-				*/
 			}
 
 			try {
