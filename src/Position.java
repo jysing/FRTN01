@@ -1,4 +1,3 @@
-import lejos.hardware.lcd.LCD;
 import lejos.robotics.EncoderMotor;
 
 public class Position {
