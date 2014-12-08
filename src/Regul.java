@@ -107,7 +107,7 @@ public class Regul extends Thread {
     			ang = (gyro.getAngle()/1000);
     			e = normalizedWeightAngVel*angVel+normalizedWeightAng*ang;
     			u = pidAng.calculateOutput(e, ref);
-    			setMotor(u/manualSpeedLeft, u/manualSpeedRight);
+    			setMotor(u*manualSpeedLeft, u*manualSpeedRight);
 			}
     		
     		try {
