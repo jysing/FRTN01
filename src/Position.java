@@ -16,7 +16,7 @@ public class Position {
 		tempValue = 0;
 		meterPerDegree = 0.000697778;
 		reset = false;
-		filterValue = 0;
+		filterValue = 1;
 		oldFilterValue = 0;
 	}
 
