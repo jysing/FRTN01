@@ -25,8 +25,8 @@ public class Position {
 			tempValue = getPosition();
 			value = ((tempValue - oldValue) / difference);
 			oldValue = tempValue;
-			filterValue = (-(difference-2)/(difference*2))*oldFilterValue+
-					((difference/(difference*2))*value)+((difference/(difference*2))*oldValue);
+			filterValue = (-(difference-2)/(difference+2))*oldFilterValue+
+					((difference/(difference+2))*value)+((difference/(difference+2))*oldValue);
 			oldFilterValue = filterValue;
 		}
 		return filterValue;
