@@ -19,6 +19,7 @@ public class Regul extends Thread {
 	private double position, positionVel; // Position and position velocity
 	private static final double weightAng = 1, weightAngVel = 0.1;
 	private static final double weightPos = 4, weightPosVel = 0;
+	private static final int maxRef = 3;
 	private static final double normalizedWeightAng = weightAng/(weightAng + weightAngVel);
 	private static final double normalizedWeightAngVel = weightAngVel/(weightAng + weightAngVel);
 	private static final double normalizedWeightPos = weightPos/(weightPos + weightPosVel);
@@ -99,8 +100,8 @@ public class Regul extends Thread {
     				positionVel = (posReader.getPosVelocity()*1000);
     				e = position*normalizedWeightPos+positionVel*normalizedWeightPosVel;
     				ref = pidPos.calculateOutput(e, 0);
-    				if(ref > 5) ref = 5;
-    				if(ref < 5) ref = -5;
+    				if(ref > maxRef) ref = maxRef;
+    				if(ref < -maxRef) ref = -maxRef;
     			}    			
     		}
     		
