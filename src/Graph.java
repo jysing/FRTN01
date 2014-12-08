@@ -203,7 +203,7 @@ public class Graph implements ActionListener, KeyListener {
 					case 'M':
 						param = message.substring(1).split(",");
 						// beta, K, Ti, Tr, Td, N
-						graph.updateParametersOuter(Double.valueOf(param[0]),
+						graph.updateParametersInner(Double.valueOf(param[0]),
 								Double.valueOf(param[1]),
 								Double.valueOf(param[2]),
 								Double.valueOf(param[3]),
