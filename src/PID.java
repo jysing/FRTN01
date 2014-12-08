@@ -33,7 +33,7 @@ public class PID {
 			p.K = -10;
 			p.Ti = 0.05;
 			p.Tr = 0.5;
-			p.Td = 0.05;
+			p.Td = 0.25;
 			p.N = 5;
 			
 			setParameters(p);
