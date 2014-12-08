@@ -78,7 +78,7 @@ public class Communication extends Thread {
 					case 'R': regul.manualControl(30, -30);
 					break;
 					}
-				} //hejhej
+				}
 			} else {
 				LCD.drawString("It is not connected", 0, 3);
 				try{	
