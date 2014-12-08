@@ -62,20 +62,20 @@ public class Communication extends Thread {
 					p.Tr = Double.valueOf(newParam[4].split(":")[1]);
 					p.Td = Double.valueOf(newParam[5].split(":")[1]);
 					p.N = Double.valueOf(newParam[6].split(":")[1]);
-					regul.setPIDParameters(p);
+					regul.setPIDAngParameters(p);
 					regul.calculateOffset();
 					break;
 					case 'S': regul.setManualFalse();
 					break;
 					case 'C': regul.calculateOffset();
 					break;
-					case 'F': regul.manualControl(60, 60);
+					case 'F': regul.manualControl(1, 1, 5);
 					break;
-					case 'B': regul.manualControl(-60, -60);
+					case 'B': regul.manualControl(1, 1, -5);
 					break;
-					case 'L': regul.manualControl(-30, 30);
+					case 'L': regul.manualControl(-1, 1, 0);
 					break;
-					case 'R': regul.manualControl(30, -30);
+					case 'R': regul.manualControl(1, -1, 0);
 					break;
 					}
 				}
@@ -84,8 +84,9 @@ public class Communication extends Thread {
 				try{	
 					this.connect();
 				} catch (IOException e) {
-					LCD.drawString("Could not reconnect", 0, 3);				}
-				this.sendPIDValues();
+					LCD.drawString("Could not reconnect", 0, 3);
+					sendPIDAngValues();
+				}
 			}
 
 			try {
@@ -147,7 +148,7 @@ public class Communication extends Thread {
 		return response;
 	}
 
-	public void sendPIDValues() {
-		send(regul.sendPIDValues());
+	public void sendPIDAngValues() {
+		send(regul.sendPIDAngValues());
 	}
 }

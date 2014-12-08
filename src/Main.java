@@ -11,7 +11,7 @@ public class Main {
 		try {
 			comm = new Communication(regul, port, timeout, graphPrio);
 			comm.connect();
-			comm.sendPIDValues();
+			comm.sendPIDAngValues();
 			comm.start();
 		} catch (IOException e) {
 			LCD.drawString("massive connection", 0, 0);
