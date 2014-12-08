@@ -2,7 +2,7 @@ import lejos.hardware.lcd.LCD;
 import lejos.robotics.EncoderMotor;
 
 public class Position {
-	private long time, difference, h;
+	private long time, difference;
 	private EncoderMotor motorA;
 	private double oldValue, value, tempValue, filterValue, oldFilterValue;
 	private double meterPerDegree;
@@ -25,8 +25,8 @@ public class Position {
 			tempValue = getPosition();
 			value = ((tempValue - oldValue) / difference);
 			oldValue = tempValue;
-			h = difference;
-			filterValue = (-(h-2)/(h*2))*oldFilterValue+((h/(h*2))*value)+((h/(h*2))*oldValue);
+			filterValue = (-(difference-2)/(difference*2))*oldFilterValue+
+					((difference/(difference*2))*value)+((difference/(difference*2))*oldValue);
 			oldFilterValue = filterValue;
 		}
 		return filterValue;
