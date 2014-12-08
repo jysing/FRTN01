@@ -93,8 +93,8 @@ public class Regul extends Thread {
     	calculateOffset();
     	manual = false;
     	while (true) {
-    		if(!manual) {
-    			synchronized (pidPos) {
+   			synchronized (pidPos) {
+    			if(!manual) {
     				position = posReader.getPosition();
     				positionVel = (posReader.getPosVelocity()*1000);
     				e = position*normalizedWeightPos+positionVel*normalizedWeightPosVel;
