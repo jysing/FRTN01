@@ -29,7 +29,7 @@ public class SocketClient{
     		out.writeUTF(message);
     		out.flush();
     	} catch (IOException e){
-    		System.out.println("SocketClient: Send(String Message) failed.");
+    		System.out.println("SocketClient: Send " + message + " failed.");
     	}
 	}
     
