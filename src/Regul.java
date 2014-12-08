@@ -27,8 +27,8 @@ public class Regul extends Thread {
 	public Regul (Gyro gyro, int priority) {
     	setPriority(priority);
     	this.gyro = gyro;
-    	manualSpeedLeft = 0;
-    	manualSpeedRight = 0;
+    	manualSpeedLeft = 1;
+    	manualSpeedRight = 1;
     	//pid = new PID();
     	pidAng = new PID("Ang");
     	pidPos = new PID("Pos");
@@ -64,9 +64,10 @@ public class Regul extends Thread {
     	return pidPos.getParameters();
     }
     
-    public synchronized void manualControl(double speedLeft, double speedRight) {
+    public synchronized void manualControl(double speedLeft, double speedRight, double angRef) {
     	manualSpeedLeft = speedLeft;
     	manualSpeedRight = speedRight;
+    	ref = angRef;
     	manual = true;
     }
     
@@ -103,19 +104,21 @@ public class Regul extends Thread {
     	//int i = 0;
     	manual = false;
     	while (true) {
-    		synchronized (pidPos) {
-    			position = posReader.getPosition();
-    			positionVel = (posReader.getPosVelocity()*1000);
-    			e = position*normalizedWeightPos+positionVel*normalizedWeightPosVel;
-    			ref = pidPos.calculateOutput(e, 0);
+    		if(!manual) {
+    			synchronized (pidPos) {
+    				position = posReader.getPosition();
+    				positionVel = (posReader.getPosVelocity()*1000);
+    				e = position*normalizedWeightPos+positionVel*normalizedWeightPosVel;
+    				ref = -pidPos.calculateOutput(e, 0);
+    			}    			
     		}
     		
     		synchronized (pidAng) {
     			angVel = gyro.getAngleVelocity();
     			ang = (gyro.getAngle()/1000);
     			e = normalizedWeightAngVel*angVel+normalizedWeightAng*ang;
-    			u = pidAng.calculateOutput(e, -ref);
-    			setMotor(u, u);
+    			u = pidAng.calculateOutput(e, ref);
+    			setMotor(u/manualSpeedLeft, u/manualSpeedRight);
 			}
     		
     		try {
@@ -123,29 +126,6 @@ public class Regul extends Thread {
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
-    		
-    		/*if(manual) {
-    			if (i == 0) setMotor(manualSpeedLeft, manualSpeedRight);
-    			i++;
-    			if(i >= 5) {
-    				manual = false;
-    				i = 0;
-    			}
-    			try {
-    				Thread.sleep(period);
-    			} catch (InterruptedException e1) {
-    				e1.printStackTrace();
-    			}
-    		} else {
-    			position = posReader.getPosition();
-    			positionVel = (posReader.getPosVelocity()*1000);
-    			angVel = gyro.getAngleVelocity();
-    			ang = (gyro.getAngle()/1000);
-    			e = normalizedWeightAngVel*angVel+normalizedWeightAng*ang+position*normalizedWeightPos+positionVel*normalizedWeightPosVel;
-    			u = pid.calculateOutput(e, 0);
-    			pid.updateState(u);
-    			setMotor(u, u);    			
-    		} */
     	}
     }
     
@@ -219,7 +199,9 @@ public class Regul extends Thread {
 		return sb.toString();
 	}
 
-	public void setManualFalse() {
+	public synchronized void setManualFalse() {
+		manualSpeedLeft = 1;
+    	manualSpeedRight = 1;
 		manual = false;
 	}
 }
