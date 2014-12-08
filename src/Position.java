@@ -2,9 +2,9 @@ import lejos.hardware.lcd.LCD;
 import lejos.robotics.EncoderMotor;
 
 public class Position {
-	private long time, difference;
+	private long time, difference, h;
 	private EncoderMotor motorA;
-	private double oldValue, value, tempValue, medelValue1, medelValue2;
+	private double oldValue, value, tempValue, filterValue, oldFilterValue;
 	private double meterPerDegree;
 	private boolean reset;
 
@@ -16,19 +16,18 @@ public class Position {
 		tempValue = 0;
 		meterPerDegree = 0.000697778;
 		reset = false;
-		medelValue1 = 0;
-		medelValue2 = 0;
 	}
 
 	public double getPosVelocity() {
-		medelValue2 = medelValue1;
-		medelValue1 = value;
 		difference = System.currentTimeMillis() - time;
 		time += difference;
 		tempValue = getPosition();
 		if(difference != 0)	value = ((tempValue - oldValue) / difference);
 		oldValue = tempValue;
-		return (value+medelValue1+medelValue2)/3;
+		h = difference;
+		filterValue = (-(h-2)/(h*2))*oldFilterValue+((h/(h*2))*value)+((h/(h*2))*oldValue);
+		oldFilterValue = filterValue;
+		return filterValue;
 	}
 
 	public double getPosition() {
