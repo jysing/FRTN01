@@ -16,6 +16,8 @@ public class Position {
 		tempValue = 0;
 		meterPerDegree = 0.000697778;
 		reset = false;
+		filterValue = 1;
+		oldFilterValue = 0;
 	}
 
 	public double getPosVelocity() {
@@ -29,7 +31,7 @@ public class Position {
 					((difference/(difference+2))*value)+((difference/(difference+2))*oldValue);
 			oldFilterValue = filterValue;
 		}
-		return filterValue;
+		return 10;
 	}
 
 	public double getPosition() {
