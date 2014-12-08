@@ -20,13 +20,9 @@ public class PID {
 		if(type.equals("Ang")){
 			p.Beta = 1.0;
 			p.integratorOn = true;
-<<<<<<< HEAD
+
 			p.K = 25; //K =2.5 //0.84
 			p.Ti = 0.05; //Ti = 0.5
-=======
-			p.K = 40;
-			p.Ti = 0.5;
->>>>>>> f36f6312e27a57656c703da7d7711887883fdbf2
 			p.Tr = 0.5;
 			p.Td = 0.5;
 			p.N = 5;
@@ -35,13 +31,8 @@ public class PID {
 		} else if(type.equals("Pos")) {
 			p.Beta = 1.0;
 			p.integratorOn = true;
-<<<<<<< HEAD
 			p.K = 30; //K =2.5 //0.84
 			p.Ti = 0.5; //Ti = 0.5
-=======
-			p.K = 40;
-			p.Ti = 0.5;
->>>>>>> f36f6312e27a57656c703da7d7711887883fdbf2
 			p.Tr = 0.5;
 			p.Td = 0.5;
 			p.N = 5;
