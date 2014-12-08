@@ -50,5 +50,7 @@ public class Position {
 		tempValue = 0;
 		oldValue = 0;
 		value = 0;
+		filterValue = 0;
+		oldFilterValue = 0;
 	}
 }
