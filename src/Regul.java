@@ -93,8 +93,8 @@ public class Regul extends Thread {
     	calculateOffset();
     	manual = false;
     	while (true) {
-    		if(!manual) {
-    			synchronized (pidPos) {
+   			synchronized (pidPos) {
+    			if(!manual) {
     				position = posReader.getPosition();
     				positionVel = (posReader.getPosVelocity()*1000);
     				e = position*normalizedWeightPos+positionVel*normalizedWeightPosVel;
@@ -107,7 +107,7 @@ public class Regul extends Thread {
     			ang = (gyro.getAngle()/1000);
     			e = normalizedWeightAngVel*angVel+normalizedWeightAng*ang;
     			u = pidAng.calculateOutput(e, ref);
-    			setMotor(u/manualSpeedLeft, u/manualSpeedRight);
+    			setMotor(u*manualSpeedLeft, u*manualSpeedRight);
 			}
     		
     		try {
