@@ -17,7 +17,7 @@ public class Position {
 		reset = false;
 		filterValue = 0;
 		oldFilterValue = 0;
-		filterConstant = 0.01;
+		filterConstant = 0.1;
 	}
 
 	public synchronized double getPosVelocity() {
