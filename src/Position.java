@@ -21,12 +21,14 @@ public class Position {
 	public double getPosVelocity() {
 		difference = System.currentTimeMillis() - time;
 		time += difference;
-		tempValue = getPosition();
-		if(difference != 0)	value = ((tempValue - oldValue) / difference);
-		oldValue = tempValue;
-		h = difference;
-		filterValue = (-(h-2)/(h*2))*oldFilterValue+((h/(h*2))*value)+((h/(h*2))*oldValue);
-		oldFilterValue = filterValue;
+		if(difference != 0)	{
+			tempValue = getPosition();
+			value = ((tempValue - oldValue) / difference);
+			oldValue = tempValue;
+			h = difference;
+			filterValue = (-(h-2)/(h*2))*oldFilterValue+((h/(h*2))*value)+((h/(h*2))*oldValue);
+			oldFilterValue = filterValue;
+		}
 		return filterValue;
 	}
 
