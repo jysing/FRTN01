@@ -8,7 +8,7 @@ import lejos.hardware.lcd.LCD;
 
 public class Communication extends Thread {
 
-	private static final long period = 20;
+	private static final long period = 100;
 	private final ServerSocket serverSocket;
 	private Socket server;
 	private DataOutputStream out;
@@ -67,9 +67,9 @@ public class Communication extends Thread {
 					break;
 					case 'C': regul.calculateOffset();
 					break;
-					case 'F': regul.manualControl(1, 1, 5);
+					case 'F': regul.manualControl(1, 1, 10);
 					break;
-					case 'B': regul.manualControl(1, 1, -5);
+					case 'B': regul.manualControl(1, 1, -10);
 					break;
 					case 'L': regul.manualControl(-1, 1, 0);
 					break;

@@ -98,7 +98,7 @@ public class Regul extends Thread {
     				position = posReader.getPosition();
     				positionVel = (posReader.getPosVelocity()*1000);
     				e = position*normalizedWeightPos+positionVel*normalizedWeightPosVel;
-    				ref = -pidPos.calculateOutput(e, 0);
+    				ref = pidPos.calculateOutput(e, 0);
     			}    			
     		}
     		
