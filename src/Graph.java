@@ -174,7 +174,21 @@ public class Graph implements ActionListener, KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// Do nothing.
+		key = e.getKeyCode();
+		switch (key) {
+		case 65:
+			sc.send("L");
+			break;
+		case 68:
+			sc.send("R");
+			break;
+		case 87:
+			sc.send("F");
+			break;
+		case 83:
+			sc.send("B");
+			break;
+		}
 	}
 
 	static class gen extends Thread {
