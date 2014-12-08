@@ -29,12 +29,12 @@ public class Gyro {
 		sample = new float[sensor.sampleSize()];
 	}
 
-	public double getAngleVelocity() {
+	public synchronized double getAngleVelocity() {
 		lowPass.fetchSample(sample, 0);
 		offset = (float) (EMAOFFSET*sample[0]+(1-EMAOFFSET)*offset);
 		return sample[0]-offset; // 0.05
 	}
-	public double getAngle() {
+	public synchronized double getAngle() {
 		if(firstAng==true){ //kollar time har istallet forsta gangen for att difference skall bli liten
 			time = System.currentTimeMillis(); 
 			firstAng = false;
@@ -45,7 +45,7 @@ public class Gyro {
 		return angle;
 	}
 
-	public void setOffset(double offset) {
+	public synchronized void setOffset(double offset) {
 		this.offset = offset;
 		firstAng = true;
 		angle = 0;
