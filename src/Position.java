@@ -1,5 +1,4 @@
 import lejos.robotics.EncoderMotor;
-import lejos.robotics.filter.LowPassFilter;
 
 public class Position {
 	private long time, difference;
@@ -18,7 +17,7 @@ public class Position {
 		reset = false;
 		filterValue = 0;
 		oldFilterValue = 0;
-		filterConstant = 0.01;
+		filterConstant = 1;
 	}
 
 	public synchronized double getPosVelocity() {
