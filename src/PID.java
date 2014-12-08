@@ -30,8 +30,8 @@ public class PID {
 		} else if(type.equals("Pos")) {
 			p.Beta = 1.0;
 			p.integratorOn = true;
-			p.K = 30;
-			p.Ti = 0.5;
+			p.K = -10;
+			p.Ti = 0.05;
 			p.Tr = 0.5;
 			p.Td = 0.05;
 			p.N = 5;
