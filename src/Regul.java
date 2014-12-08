@@ -4,7 +4,8 @@ import lejos.hardware.port.*;
 import lejos.robotics.EncoderMotor;
 
 public class Regul extends Thread {		
-	private PID pid;
+	//private PID pid;
+	private PID pidAng, pidPos;
 	private Gyro gyro;
 	private Position posReader;
 	EncoderMotor motorA;
@@ -13,13 +14,14 @@ public class Regul extends Thread {
 	private boolean manual;
 	private double manualSpeedLeft, manualSpeedRight;
 	private static final long period = 100;
-	private double u, e; // Control signal to/from PID
+	private double u, e, ref; // Control signal to/from PID
 	private double angVel, ang; // angluarVelocity and current angle
-	private static final double weightAng = 1, weightAngVel = 0.1, weightPos = 4, weightPosVel = 0;
-	private static final double normalizedWeightAng = weightAng/(weightAng + weightAngVel + weightPos + weightPosVel);
-	private static final double normalizedWeightAngVel = weightAngVel/(weightAng + weightAngVel + weightPos + weightPosVel);
-	private static final double normalizedWeightPos = weightPos/(weightAng + weightAngVel + weightPos + weightPosVel);
-	private static final double normalizedWeightPosVel = weightPosVel/(weightAng + weightAngVel + weightPos + weightPosVel);
+	private static final double weightAng = 1, weightAngVel = 0.1;
+	private static final double weightPos = 4, weightPosVel = 0;
+	private static final double normalizedWeightAng = weightAng/(weightAng + weightAngVel);
+	private static final double normalizedWeightAngVel = weightAngVel/(weightAng + weightAngVel);
+	private static final double normalizedWeightPos = weightPos/(weightPos + weightPosVel);
+	private static final double normalizedWeightPosVel = weightPosVel/(weightPos + weightPosVel);
 	private double position, positionVel; // Position and position velocity
 
 	public Regul (Gyro gyro, int priority) {
@@ -27,20 +29,39 @@ public class Regul extends Thread {
     	this.gyro = gyro;
     	manualSpeedLeft = 0;
     	manualSpeedRight = 0;
-    	pid = new PID();
+    	//pid = new PID();
+    	pidAng = new PID("Ang");
+    	pidPos = new PID("Pos");
     	motorA = new NXTMotor(MotorPort.A);
     	motorA.flt();
     	motorB = new NXTMotor(MotorPort.D);
     	motorB.flt();
     	posReader = new Position(motorA);
     }
-    
+    /*
     public void setPIDParameters(PIDParameters p) {
     	pid.setParameters(p);
     }
     
     public PIDParameters getPIDParameters() {
     	return pid.getParameters();
+    }
+    */
+	
+	public void setPIDAngParameters(PIDParameters p) {
+    	pidAng.setParameters(p);
+    }
+    
+    public PIDParameters getPIDAngParameters() {
+    	return pidAng.getParameters();
+    }
+    
+    public void setPIDPosParameters(PIDParameters p) {
+    	pidPos.setParameters(p);
+    }
+    
+    public PIDParameters getPIDPosParameters() {
+    	return pidPos.getParameters();
     }
     
     public synchronized void manualControl(double speedLeft, double speedRight) {
@@ -79,10 +100,25 @@ public class Regul extends Thread {
 		setMotor(30, 30);
 		setMotor(0, 0);
     	calculateOffset();
-    	int i = 0;
+    	//int i = 0;
     	manual = false;
     	while (true) {
-    		if(manual) {
+    		synchronized (pidPos) {
+    			position = posReader.getPosition();
+    			positionVel = (posReader.getPosVelocity()*1000);
+    			e = position*normalizedWeightPos+positionVel*normalizedWeightPosVel;
+    			ref = pidPos.calculateOutput(e, 0);
+    		}
+    		
+    		synchronized (pidAng) {
+    			angVel = gyro.getAngleVelocity();
+    			ang = (gyro.getAngle()/1000);
+    			e = normalizedWeightAngVel*angVel+normalizedWeightAng*ang;
+    			u = pidAng.calculateOutput(e, -ref);
+    			setMotor(u, u);
+			}
+    		
+    		/*if(manual) {
     			if (i == 0) setMotor(manualSpeedLeft, manualSpeedRight);
     			i++;
     			if(i >= 5) {
@@ -103,12 +139,7 @@ public class Regul extends Thread {
     			u = pid.calculateOutput(e, 0);
     			pid.updateState(u);
     			setMotor(u, u);    			
-    		}    		
-    		if(manual) {
-    			LCD.drawString("true", 0, 4);
-    		} else {
-    			LCD.drawString("false", 0, 4);
-    		}
+    		} */
     	}
     }
     
@@ -127,7 +158,8 @@ public class Regul extends Thread {
 			}
 		}
 		setMotor(0, 0);
-		pid.reset();
+		pidAng.reset();
+		pidPos.reset();
 		gyro.setOffset((offset/count)-0.130); //0.156 utan EMAOFFSET
 		angVel = 0;
 		ang = 0;
@@ -159,8 +191,17 @@ public class Regul extends Thread {
 		return positionVel;
 	}
 
-	public String sendPIDValues() {
-		PIDParameters p = pid.getParameters();
+	public String sendPIDAngValues() {
+		PIDParameters p = pidAng.getParameters();
+		return valuesToString(p);
+	}
+
+	public String sendPIDPosValues() {
+		PIDParameters p = pidAng.getParameters();
+		return valuesToString(p);
+	}
+	
+	private String valuesToString(PIDParameters p) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("X");
 		sb.append(p.Beta + ",");

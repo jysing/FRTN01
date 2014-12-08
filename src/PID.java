@@ -1,3 +1,5 @@
+import lejos.hardware.lcd.LCD;
+
 
 public class PID {
 	private PIDParameters p;
@@ -14,20 +16,34 @@ public class PID {
     
 	
 	// Constructor
-	public PID(){
+	public PID(String type){
 		PIDParameters p = new PIDParameters();
 		time = System.currentTimeMillis();
-		  p.Beta = 1.0;
-		 // p.H = 0.02;
-		  p.integratorOn = true;
-		  p.K = 40; //K =2.5 //0.84
-		  p.Ti = 0.5; //Ti = 0.5
-		  p.Tr = 0.5;
-		  p.Td = 0.05;
-		  p.N = 5;
-		  
-		  setParameters(p);
-		  
+		if(type.equals("Ang")){
+			p.Beta = 1.0;
+			// p.H = 0.02;
+			p.integratorOn = true;
+			p.K = 40; //K =2.5 //0.84
+			p.Ti = 0.5; //Ti = 0.5
+			p.Tr = 0.5;
+			p.Td = 0.05;
+			p.N = 5;
+			
+			setParameters(p);			
+		} else if(type.equals("Pos")) {
+			p.Beta = 1.0;
+			// p.H = 0.02;
+			p.integratorOn = true;
+			p.K = 40; //K =2.5 //0.84
+			p.Ti = 0.5; //Ti = 0.5
+			p.Tr = 0.5;
+			p.Td = 0.05;
+			p.N = 5;
+			
+			setParameters(p);
+		} else {
+			LCD.drawString("Wrong type of pid",0,3);
+		}
 		  this.I = 0;
 		  this.v = 0;
 		  this.e = 0;
