@@ -27,7 +27,8 @@ public class Graph implements ActionListener, KeyListener {
 	private JTextArea textArea, textArea2, textArea3;
 	private SocketClient sc;
 	private ArrayList<TimeSeries> TimeSeriesList;
-	private double K = 0, Ti = 0, Td = 0, Tr = 0, N = 0, beta = 0; 
+	private double K_outer = 0, Ti_outer = 0, Td_outer = 0, Tr_outer = 0, N_outer = 0, beta_outer = 0;
+	private double K_inner = 0, Ti_inner = 0, Td_inner = 0, Tr_inner = 0, N_inner = 0, beta_inner = 0;
 	private String paraString;
 	
 	public Graph(SocketClient sc) {
@@ -56,12 +57,12 @@ public class Graph implements ActionListener, KeyListener {
 	}
 	
 	public void updateParametersOuter(double beta, double K, double Ti, double Tr, double Td, double N){
-		this.beta = beta;
-		this.K = K;
-		this.Ti = Ti;
-		this.Tr = Tr;
-		this.Td = Td;
-		this.N = N;
+		this.beta_outer = beta;
+		this.K_outer = K;
+		this.Ti_outer = Ti;
+		this.Tr_outer = Tr;
+		this.Td_outer = Td;
+		this.N_outer = N;
 		
 		paraString = "PID (Outer):"
 				+ "\nBeta:" + beta
@@ -74,12 +75,12 @@ public class Graph implements ActionListener, KeyListener {
 	}
 	
 	public void updateParametersInner(double beta, double K, double Ti, double Tr, double Td, double N){
-		this.beta = beta;
-		this.K = K;
-		this.Ti = Ti;
-		this.Tr = Tr;
-		this.Td = Td;
-		this.N = N;
+		this.beta_inner = beta;
+		this.K_inner = K;
+		this.Ti_inner = Ti;
+		this.Tr_inner = Tr;
+		this.Td_inner = Td;
+		this.N_inner = N;
 		
 		paraString = "PID (Inner):"
 				+ "\nBeta:" + beta
@@ -132,8 +133,8 @@ public class Graph implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent e) { 
 		if(e.getSource() == resetButton){
 			try {
-				updateParametersOuter(beta, K, Ti, Tr, Td, N);
-				updateParametersInner(beta, K, Ti, Tr, Td, N);
+				updateParametersOuter(beta_outer, K_outer, Ti_outer, Tr_outer, Td_outer, N_outer);
+				updateParametersInner(beta_inner, K_inner, Ti_inner, Tr_inner, Td_inner, N_inner);
 				sc.send("C");
 			}  catch (Exception ex){
 				System.out.println("Graph: actionPerformed(Actionevent e) failed.");
