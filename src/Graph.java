@@ -22,12 +22,13 @@ import org.jfree.data.time.TimeSeriesCollection;
 public class Graph implements ActionListener, KeyListener {
 	
 	private JFrame frame;
-	private JButton button1, button2;
+	private JButton resetButton, updateButton;
 	private JPanel panel;
-	private JTextArea textArea, textArea2;
+	private JTextArea textArea, textArea2, textArea3;
 	private SocketClient sc;
 	private ArrayList<TimeSeries> TimeSeriesList;
-	private double K = 0, Ti = 0, Td = 0, Tr = 0, N = 0, beta = 0; 
+	private double K_outer = 0, Ti_outer = 0, Td_outer = 0, Tr_outer = 0, N_outer = 0, beta_outer = 0;
+	private double K_inner = 0, Ti_inner = 0, Td_inner = 0, Tr_inner = 0, N_inner = 0, beta_inner = 0;
 	private String paraString;
 	
 	public Graph(SocketClient sc) {
@@ -42,9 +43,12 @@ public class Graph implements ActionListener, KeyListener {
  				+ "\nA:Left\nS:Down\nD:Right\nW:Up";
  		textArea = new JTextArea(text, 5, 10);
  		panel.add(textArea);
- 		textArea2 = new JTextArea("PID parameters:", 5, 10);
+ 		textArea2 = new JTextArea("PID parameters Outer:", 5, 10);
+ 		textArea3 = new JTextArea("PID parameters Inner:", 5, 10);
  		panel.add(textArea2);
- 		updateParameters(0, 0, 0, 0, 0, 0);
+ 		panel.add(textArea3);
+ 		updateParametersOuter(0, 0, 0, 0, 0, 0);
+ 		updateParametersInner(0, 0, 0, 0, 0, 0);
  		frame.setLayout(new GridLayout(3,2));
  		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 		
  		frame.addKeyListener(this);
@@ -52,15 +56,15 @@ public class Graph implements ActionListener, KeyListener {
  		frame.setFocusable(true);	
 	}
 	
-	public void updateParameters(double beta, double K, double Ti, double Tr, double Td, double N){
-		this.beta = beta;
-		this.K = K;
-		this.Ti = Ti;
-		this.Tr = Tr;
-		this.Td = Td;
-		this.N = N;
+	public void updateParametersOuter(double beta, double K, double Ti, double Tr, double Td, double N){
+		this.beta_outer = beta;
+		this.K_outer = K;
+		this.Ti_outer = Ti;
+		this.Tr_outer = Tr;
+		this.Td_outer = Td;
+		this.N_outer = N;
 		
-		paraString = "PID parameters:"
+		paraString = "PID (Outer):"
 				+ "\nBeta:" + beta
 				+ "\nK:" + K
 				+ "\nTi:" + Ti
@@ -70,6 +74,24 @@ public class Graph implements ActionListener, KeyListener {
 		textArea2.setText(paraString);
 	}
 	
+	public void updateParametersInner(double beta, double K, double Ti, double Tr, double Td, double N){
+		this.beta_inner = beta;
+		this.K_inner = K;
+		this.Ti_inner = Ti;
+		this.Tr_inner = Tr;
+		this.Td_inner = Td;
+		this.N_inner = N;
+		
+		paraString = "PID (Inner):"
+				+ "\nBeta:" + beta
+				+ "\nK:" + K
+				+ "\nTi:" + Ti
+				+ "\nTr:" + Tr
+				+ "\nTd:" + Td
+				+ "\nN:" + N;
+		textArea3.setText(paraString);
+	}
+	
 	public void build(){
 		frame.add(panel);
 		frame.pack();
@@ -77,12 +99,12 @@ public class Graph implements ActionListener, KeyListener {
 	}
 	
 	public void createButtons() {
- 		button1 = new JButton("Reset");
- 		button1.addActionListener(this);
- 		panel.add(button1);
- 		button2 = new JButton("Update param");
- 		button2.addActionListener(this);
- 		panel.add(button2);
+ 		resetButton = new JButton("Reset");
+ 		resetButton.addActionListener(this);
+ 		panel.add(resetButton);
+ 		updateButton = new JButton("Update param");
+ 		updateButton.addActionListener(this);
+ 		panel.add(updateButton);
 	}
 
 	public void createWindow(String graphName, String xValue, String yValue, String data) throws InterruptedException {
@@ -109,17 +131,20 @@ public class Graph implements ActionListener, KeyListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) { 
-		if(e.getSource() == button1){
+		if(e.getSource() == resetButton){
 			try {
-				updateParameters(beta, K, Ti, Tr, Td, N);
+				updateParametersOuter(beta_outer, K_outer, Ti_outer, Tr_outer, Td_outer, N_outer);
+				updateParametersInner(beta_inner, K_inner, Ti_inner, Tr_inner, Td_inner, N_inner);
 				sc.send("C");
 			}  catch (Exception ex){
 				System.out.println("Graph: actionPerformed(Actionevent e) failed.");
 			}
 		}
-		if(e.getSource() == button2){
+		if(e.getSource() == updateButton){
 			String newParam = textArea2.getText();
 			sc.send("N" + newParam);
+			//String newParam2 = textArea2.getText();
+			//sc.send("N" + newParam2); // byta send string "N"?
 		}
 	}
 
@@ -167,13 +192,16 @@ public class Graph implements ActionListener, KeyListener {
 					case 'X': String[] param = new String[6];
 						param = message.substring(1).split(",");
 						//beta, K, Ti, Tr, Td, N
-						graph.updateParameters(Double.valueOf(param[0]),
+						graph.updateParametersOuter(Double.valueOf(param[0]),
 								Double.valueOf(param[1]),
 								Double.valueOf(param[2]),
 								Double.valueOf(param[3]),
 								Double.valueOf(param[4]),
 								Double.valueOf(param[5]));
 						break;
+						///
+						/// New case for updating inner paramters????
+						///
 					case 'U': updateGraph(0, 120);
 						break;
 					case 'E': updateGraph(1, 200);

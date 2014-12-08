@@ -1,4 +1,5 @@
 import lejos.robotics.EncoderMotor;
+import lejos.robotics.filter.LowPassFilter;
 
 public class Position {
 	private long time, difference;

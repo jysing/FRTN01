@@ -20,7 +20,10 @@ public class PID {
 		if(type.equals("Ang")){
 			p.Beta = 1.0;
 			p.integratorOn = true;
+<<<<<<< HEAD
 
+=======
+>>>>>>> dc3f8096e26362e181c97ba2b1704f9cc584be13
 			p.K = 25; //K =2.5 //0.84
 			p.Ti = 0.05; //Ti = 0.5
 			p.Tr = 0.5;

@@ -11,7 +11,6 @@ public class MainGUI {
 	    } catch (IOException e) {
 	        System.out.println("Failed to connect");
 	    }
-	    
 	    try {
 		Graph graph = new Graph(sc);
 		graph.createWindow("Control signal", "Time", "Value 1", "Control signal");
