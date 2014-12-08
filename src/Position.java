@@ -20,7 +20,7 @@ public class Position {
 		oldFilterValue = 0;
 	}
 
-	public double getPosVelocity() {
+	public synchronized double getPosVelocity() {
 		difference = System.currentTimeMillis() - time;
 		time += difference;
 		if(difference != 0)	{
@@ -34,15 +34,17 @@ public class Position {
 		return 10;
 	}
 
-	public double getPosition() {
+	public synchronized double getPosition() {
 		if(reset){
 			motorA.resetTachoCount();
 			reset = false;
+			return 0;
+		} else {			
+			return motorA.getTachoCount()*meterPerDegree;
 		}
-		return motorA.getTachoCount()*meterPerDegree;
 	}
 	
-	public void reset() {
+	public synchronized void reset() {
 		reset = true;
 		tempValue = 0;
 		oldValue = 0;
