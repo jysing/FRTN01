@@ -14,17 +14,14 @@ public class PID {
     private double bd; 
     private long time, interval;
     
-	
-	// Constructor
 	public PID(String type){
 		PIDParameters p = new PIDParameters();
 		time = System.currentTimeMillis();
 		if(type.equals("Ang")){
 			p.Beta = 1.0;
-			// p.H = 0.02;
 			p.integratorOn = true;
-			p.K = 40; //K =2.5 //0.84
-			p.Ti = 0.5; //Ti = 0.5
+			p.K = 40;
+			p.Ti = 0.5;
 			p.Tr = 0.5;
 			p.Td = 0.05;
 			p.N = 5;
@@ -32,10 +29,9 @@ public class PID {
 			setParameters(p);			
 		} else if(type.equals("Pos")) {
 			p.Beta = 1.0;
-			// p.H = 0.02;
 			p.integratorOn = true;
-			p.K = 40; //K =2.5 //0.84
-			p.Ti = 0.5; //Ti = 0.5
+			p.K = 40;
+			p.Ti = 0.5;
 			p.Tr = 0.5;
 			p.Td = 0.05;
 			p.N = 5;
@@ -50,7 +46,6 @@ public class PID {
 		  this.D = 0;
 	}
 	
-	// Calculates the control signal v.
 	public synchronized double calculateOutput(double y, double yref){
 		interval = System.currentTimeMillis() - time;
 		time = time + interval;
@@ -64,7 +59,6 @@ public class PID {
 		return this.v;
 	}
 	
-	// Updates the controller state.
 	public synchronized void updateState(double u){
 		 if (p.integratorOn) {
 			  I = I + ((p.K * interval / p.Ti) * e + (interval / p.Tr) * (u - v))/1000;  
@@ -75,13 +69,10 @@ public class PID {
 		 yOld = y;
 	}
 	
-	// Returns the sampling interval expressed as a long.
 	public synchronized long getHMillis(){
 		return (long)(interval * 1000.0);
 	}
 	
-	// Sets the PIDParameters.
-	// Must clone newParameters.
 	public synchronized void setParameters(PIDParameters newParameters){
 		p = (PIDParameters)newParameters.clone();
 		if (!p.integratorOn) {

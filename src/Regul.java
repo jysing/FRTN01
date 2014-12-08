@@ -1,4 +1,3 @@
-import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.NXTMotor;
 import lejos.hardware.port.*;
 import lejos.robotics.EncoderMotor;
@@ -16,20 +15,19 @@ public class Regul extends Thread {
 	private static final long period = 5;
 	private double u, e, ref; // Control signal to/from PID
 	private double angVel, ang; // angluarVelocity and current angle
+	private double position, positionVel; // Position and position velocity
 	private static final double weightAng = 1, weightAngVel = 0.1;
 	private static final double weightPos = 4, weightPosVel = 0;
 	private static final double normalizedWeightAng = weightAng/(weightAng + weightAngVel);
 	private static final double normalizedWeightAngVel = weightAngVel/(weightAng + weightAngVel);
 	private static final double normalizedWeightPos = weightPos/(weightPos + weightPosVel);
 	private static final double normalizedWeightPosVel = weightPosVel/(weightPos + weightPosVel);
-	private double position, positionVel; // Position and position velocity
 
 	public Regul (Gyro gyro, int priority) {
     	setPriority(priority);
     	this.gyro = gyro;
     	manualSpeedLeft = 1;
     	manualSpeedRight = 1;
-    	//pid = new PID();
     	pidAng = new PID("Ang");
     	pidPos = new PID("Pos");
     	motorA = new NXTMotor(MotorPort.A);
@@ -38,15 +36,6 @@ public class Regul extends Thread {
     	motorB.flt();
     	posReader = new Position(motorA);
     }
-    /*
-    public void setPIDParameters(PIDParameters p) {
-    	pid.setParameters(p);
-    }
-    
-    public PIDParameters getPIDParameters() {
-    	return pid.getParameters();
-    }
-    */
 	
 	public void setPIDAngParameters(PIDParameters p) {
     	pidAng.setParameters(p);
@@ -101,7 +90,6 @@ public class Regul extends Thread {
 		setMotor(30, 30);
 		setMotor(0, 0);
     	calculateOffset();
-    	//int i = 0;
     	manual = false;
     	while (true) {
     		if(!manual) {
