@@ -31,7 +31,7 @@ public class Position {
 					((difference/(difference+2))*value)+((difference/(difference+2))*oldValue);
 			oldFilterValue = filterValue;
 		}
-		return filterValue;
+		return 10;
 	}
 
 	public double getPosition() {
