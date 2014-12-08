@@ -1,10 +1,12 @@
 import lejos.robotics.EncoderMotor;
+import lejos.robotics.filter.LowPassFilter;
 
 public class Position {
 	private long time, difference;
 	private EncoderMotor motorA;
 	private double oldValue, value, tempValue;
 	private double meterPerDegree;
+	private LowPassFilter lowPass;
 
 	public Position(EncoderMotor motorA) {
 		this.motorA = motorA;
@@ -13,6 +15,7 @@ public class Position {
 		value = 0;
 		tempValue = 0;
 		meterPerDegree = 0.000697778;
+		lowPass = new LowPassFilter(motorA, (float)0.1);
 	}
 
 	public double getPosVelocity() {
