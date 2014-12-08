@@ -1,3 +1,4 @@
+import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.NXTMotor;
 import lejos.hardware.port.*;
 import lejos.robotics.EncoderMotor;
@@ -112,7 +113,7 @@ public class Regul extends Thread {
     		try {
 				Thread.sleep(period);
 			} catch (InterruptedException e1) {
-				e1.printStackTrace();
+				LCD.drawString("Could not sleep regul", 0, 1);
 			}
     	}
     }
@@ -167,17 +168,17 @@ public class Regul extends Thread {
 
 	public String sendPIDAngValues() {
 		PIDParameters p = pidAng.getParameters();
-		return valuesToString(p);
+		return valuesToString(p, 'X');
 	}
 
 	public String sendPIDPosValues() {
-		PIDParameters p = pidAng.getParameters();
-		return valuesToString(p);
+		PIDParameters p = pidPos.getParameters();
+		return valuesToString(p, 'Y');
 	}
 	
-	private String valuesToString(PIDParameters p) {
+	private String valuesToString(PIDParameters p, char identifier) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("X");
+		sb.append(identifier);
 		sb.append(p.Beta + ",");
 		sb.append(p.K +",");
 		sb.append(p.Ti + ",");

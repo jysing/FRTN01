@@ -25,6 +25,7 @@ public class Communication extends Thread {
 
 	public void run() {
 		int i = 0;
+		PIDParameters p;
 		while (true) {
 			String message;
 			if (this.isConnected()) {
@@ -54,17 +55,14 @@ public class Communication extends Thread {
 				}
 				if(!message.equals("Fel")) {
 					switch(message.charAt(0)) {
-					case 'N': String[] newParam = message.substring(1).split("\n"); //starts at 1
-					PIDParameters p = new PIDParameters();
-					p.Beta = Double.valueOf(newParam[1].split(":")[1]);
-					p.K = Double.valueOf(newParam[2].split(":")[1]);
-					p.Ti = Double.valueOf(newParam[3].split(":")[1]);
-					p.Tr = Double.valueOf(newParam[4].split(":")[1]);
-					p.Td = Double.valueOf(newParam[5].split(":")[1]);
-					p.N = Double.valueOf(newParam[6].split(":")[1]);
+					case 'N': p = newParam(message);
 					regul.setPIDAngParameters(p);
 					regul.calculateOffset();
 					break;
+					case 'M': p = newParam(message);
+					regul.setPIDPosParameters(p);
+					regul.calculateOffset();
+						break;
 					case 'S': regul.setManualFalse();
 					break;
 					case 'C': regul.calculateOffset();
@@ -86,6 +84,7 @@ public class Communication extends Thread {
 				} catch (IOException e) {
 					LCD.drawString("Could not reconnect", 0, 3);
 					sendPIDAngValues();
+					sendPIDPosValues();
 				}
 			}
 
@@ -95,6 +94,18 @@ public class Communication extends Thread {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	private PIDParameters newParam(String message){
+		String[] newParam = message.substring(1).split("\n"); //starts at 1
+		PIDParameters p = new PIDParameters();
+		p.Beta = Double.valueOf(newParam[1].split(":")[1]);
+		p.K = Double.valueOf(newParam[2].split(":")[1]);
+		p.Ti = Double.valueOf(newParam[3].split(":")[1]);
+		p.Tr = Double.valueOf(newParam[4].split(":")[1]);
+		p.Td = Double.valueOf(newParam[5].split(":")[1]);
+		p.N = Double.valueOf(newParam[6].split(":")[1]);
+		return p;
 	}
 
 	public void connect() throws IOException {
@@ -150,5 +161,9 @@ public class Communication extends Thread {
 
 	public void sendPIDAngValues() {
 		send(regul.sendPIDAngValues());
+	}
+	
+	public void sendPIDPosValues() {
+		send(regul.sendPIDPosValues());
 	}
 }
