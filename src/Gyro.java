@@ -17,7 +17,7 @@ public class Gyro {
 	
 	public double offset = 0;
 	private double angle;
-	public double EMAOFFSET = 0.0005;
+	public double EMAOFFSET = 0.0001;
 	
 	private long time, difference;
 
@@ -31,7 +31,7 @@ public class Gyro {
 
 	public double getAngleVelocity() {
 		lowPass.fetchSample(sample, 0);
-		//offset = (float) (EMAOFFSET*sample[0]+(1-EMAOFFSET)*offset);
+		offset = (float) (EMAOFFSET*sample[0]+(1-EMAOFFSET)*offset);
 		return sample[0]-offset; // 0.05
 	}
 	public double getAngle() {
