@@ -36,18 +36,17 @@ public class Position {
 	}
 
 	public synchronized double getPosition() {
-		/*if(reset){
+		if(reset){
 			motorA.resetTachoCount();
 			reset = false;
 			return 0;
-		} else {*/			
+		} else {			
 			return motorA.getTachoCount()*meterPerDegree;
-		//}
+		}
 	}
 	
 	public synchronized void reset() {
-		//reset = true;
-		motorA.resetTachoCount();
+		reset = true;
 		tempValue = 0;
 		oldValue = 0;
 		value = 0;
