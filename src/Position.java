@@ -5,6 +5,7 @@ public class Position {
 	private EncoderMotor motorA;
 	private double oldValue, value, tempValue;
 	private double meterPerDegree;
+	private boolean reset;
 
 	public Position(EncoderMotor motorA) {
 		this.motorA = motorA;
@@ -13,6 +14,7 @@ public class Position {
 		value = 0;
 		tempValue = 0;
 		meterPerDegree = 0.000697778;
+		reset = false;
 	}
 
 	public double getPosVelocity() {
@@ -25,11 +27,15 @@ public class Position {
 	}
 
 	public double getPosition() {
+		if(reset){
+			motorA.resetTachoCount();
+			reset = false;
+		}
 		return motorA.getTachoCount()*meterPerDegree;
 	}
 	
 	public void reset() {
-		motorA.resetTachoCount();
+		reset = true;
 		tempValue = 0;
 		oldValue = 0;
 		value = 0;
