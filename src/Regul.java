@@ -75,7 +75,7 @@ public class Regul extends Thread {
     		motorA.forward();
     	}
     	motorB.setPower((int) Math.abs(speedLeft));
-    	motorA.setPower(Math.abs((int)speedRight));
+    	motorA.setPower((int)Math.abs(speedRight));
     }
     
     private double limitSpeed(double speed) {
