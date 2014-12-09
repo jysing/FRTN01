@@ -29,6 +29,7 @@ public class SocketClient {
 		try {
 			out.writeUTF(message);
 			out.flush();
+			System.out.println("Managed to send: " + message);
 		} catch (IOException e) {
 			System.out.println("SocketClient: Send " + message + " failed.");
 		}

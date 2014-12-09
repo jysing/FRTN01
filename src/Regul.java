@@ -19,8 +19,8 @@ public class Regul extends Thread {
 	private double position, positionVel; // Position and position velocity
 	private static final double weightAng = 1, weightAngVel = 0.1;
 	private static final double weightPos = 4, weightPosVel = 0;
-	private static final int maxRef = 3;
-	private static final double normalizedWeightAng = weightAng
+	private static final double maxRef = 1; //0.5
+ 	private static final double normalizedWeightAng = weightAng
 			/ (weightAng + weightAngVel);
 	private static final double normalizedWeightAngVel = weightAngVel
 			/ (weightAng + weightAngVel);
@@ -115,7 +115,7 @@ public class Regul extends Thread {
 				u = pidAng.calculateOutput(e, ref);
 				u = limitSpeed(u);
 				setMotor(u * manualSpeedLeft, u * manualSpeedRight);
-				pidAng.updateState(u);
+				pidAng.updateState(u);					
 			}
 
 			try {
