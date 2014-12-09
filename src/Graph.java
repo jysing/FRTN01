@@ -150,7 +150,25 @@ public class Graph implements ActionListener, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		
+		key = e.getKeyCode();
+		System.out.println("                    " + key + " from keyPressed");
+		switch (key) {
+		//case 0:
+			//sc.send("S");
+			//break;
+		case 65:
+			sc.send("L");
+			break;
+		case 68:
+			sc.send("R");
+			break;
+		case 87:
+			sc.send("F");
+			break;
+		case 83:
+			sc.send("B");
+			break;
+		}
 	}
 
 	@Override
@@ -161,7 +179,7 @@ public class Graph implements ActionListener, KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 		key = e.getKeyCode();
-		System.out.println("                    " + key);
+		System.out.println("                    " + key + " from keyTyped");
 		switch (key) {
 		//case 0:
 			//sc.send("S");
