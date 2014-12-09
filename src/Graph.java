@@ -231,7 +231,7 @@ public class Graph implements ActionListener, KeyListener {
 						break;
 					}
 				}
-
+				System.out.println("                    " + key);
 				switch (key) {
 				case 0:
 					sc.send("S");
