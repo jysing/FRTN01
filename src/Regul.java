@@ -68,8 +68,8 @@ public class Regul extends Thread {
 	}
 
 	public void setMotor(double speedLeft, double speedRight) {
-		speedLeft = limitSpeed(speedLeft);
-		speedRight = limitSpeed(speedRight);
+		//speedLeft = limitSpeed(speedLeft);
+		//speedRight = limitSpeed(speedRight);
 		if (speedLeft < 0) {
 			motorB.backward();
 		} else {
@@ -103,8 +103,7 @@ public class Regul extends Thread {
 				if (!manual) {
 					position = posReader.getPosition();
 					positionVel = (posReader.getPosVelocity() * 1000);
-					e = position * normalizedWeightPos + positionVel
-							* normalizedWeightPosVel;
+					e = position * normalizedWeightPos + positionVel * normalizedWeightPosVel;
 					ref = pidPos.calculateOutput(e, 0);
 					if (ref > maxRef) ref = maxRef;
 					if (ref < -maxRef) ref = -maxRef;
@@ -117,6 +116,7 @@ public class Regul extends Thread {
 				ang = (gyro.getAngle() / 1000);
 				e = normalizedWeightAngVel * angVel + normalizedWeightAng * ang;
 				u = pidAng.calculateOutput(e, ref);
+				u = limitSpeed(u);
 				setMotor(u * manualSpeedLeft, u * manualSpeedRight);
 				pidAng.updateState(u);
 			}
