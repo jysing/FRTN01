@@ -22,7 +22,7 @@ public class PID {
 			p.K = 32; 
 			p.Ti = 0.05; 
 			p.Tr = 10;
-			p.Td = 0.25;
+			p.Td = 0.00125;
 			p.N = 5;
 
 			setParameters(p);
@@ -32,7 +32,7 @@ public class PID {
 			p.K = -10;
 			p.Ti = 0.05;
 			p.Tr = 0.05;
-			p.Td = 0.25;
+			p.Td = 0.00125;
 			p.N = 5;
 
 			setParameters(p);
@@ -51,7 +51,7 @@ public class PID {
 		this.y = y;
 		this.e = yref - y;
 		ad = 0;
-		if (p.Td != 0) ad = p.Td / (p.Td + p.N * (interval/1000));
+		if (p.Td != 0) ad = p.Td / (p.Td + p.N * interval);
 		bd = p.K * ad * p.N;
 		this.D = ad * D - bd * (y - yOld);
 		this.v = p.K * (p.Beta * yref - y) + I + D; // I is 0.0 if integratorOn
@@ -61,7 +61,7 @@ public class PID {
 
 	public synchronized void updateState(double u) {
 		if (p.integratorOn) {
-			I = I + ((p.K * interval / p.Ti) * e + (interval / p.Tr) * (u - v)) / 1000;
+			I = I + ((p.K * interval / p.Ti) * e + (interval / p.Tr) * (u - v));
 		} else {
 			I = 0.0;
 		}
