@@ -115,7 +115,7 @@ public class Regul extends Thread {
 				u = pidAng.calculateOutput(e, ref);
 				u = limitSpeed(u);
 				setMotor(u * manualSpeedLeft, u * manualSpeedRight);
-				pidAng.updateState(u);
+				pidAng.updateState(u);					
 			}
 
 			try {
