@@ -32,6 +32,7 @@ public class Graph implements ActionListener, KeyListener {
 	private double K_inner = 0, Ti_inner = 0, Td_inner = 0, Tr_inner = 0,
 			N_inner = 0, beta_inner = 0;
 	private String paraString;
+	private int key;
 
 	public Graph(SocketClient sc) {
 		this.sc = sc;
@@ -149,7 +150,7 @@ public class Graph implements ActionListener, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		int key = e.getKeyCode();
+		key = e.getKeyCode();
 		System.out.println("                    " + key + " from keyPressed");
 		switch (key) {
 		case 65:
