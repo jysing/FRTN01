@@ -78,10 +78,10 @@ public class Communication extends Thread {
 						regul.calculateOffset();
 						break;
 					case 'F':
-						regul.manualControl(1, 1, 1);
+						regul.manualControl(1, 1, 2);
 						break;
 					case 'B':
-						regul.manualControl(1, 1, -1);
+						regul.manualControl(1, 1, -2);
 						break;
 					case 'L':
 						regul.manualControl(0.5, 1, 0);

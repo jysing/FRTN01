@@ -41,10 +41,8 @@ public class Position {
 
 	public synchronized double getPosition() {
 		if (reset) {
-			double temp = motorA.getTachoCount();
-			preReset = temp;
+			preReset = motorA.getTachoCount();
 			reset = false;
-			return temp;
 		}
 			return (motorA.getTachoCount()-preReset )* meterPerDegree;
 	}
