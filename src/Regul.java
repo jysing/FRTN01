@@ -105,6 +105,8 @@ public class Regul extends Thread {
 					if (ref > maxRef) ref = maxRef;
 					if (ref < -maxRef) ref = -maxRef;
 					pidPos.updateState(ref);
+				} else {
+					posReader.reset();
 				}
 			}
 
