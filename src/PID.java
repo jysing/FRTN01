@@ -22,7 +22,7 @@ public class PID {
 			p.K = 32; 
 			p.Ti = 0.05; 
 			p.Tr = 10;
-			p.Td = 0.25;
+			p.Td = 0.00125;
 			p.N = 5;
 
 			setParameters(p);
@@ -32,7 +32,7 @@ public class PID {
 			p.K = -10;
 			p.Ti = 0.05;
 			p.Tr = 0.05;
-			p.Td = 0.25;
+			p.Td = 0.00125;
 			p.N = 5;
 
 			setParameters(p);
