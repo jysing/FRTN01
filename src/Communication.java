@@ -30,18 +30,24 @@ public class Communication extends Thread {
 			String message;
 			if (this.isConnected()) {
 				message = "Fel";
-				switch(i) {
-				case 0: message = "U" + String.valueOf(regul.getU());
+				switch (i) {
+				case 0:
+					message = "U" + String.valueOf(regul.getU());
 					break;
-				case 1: message = "E" + String.valueOf(regul.getE());
+				case 1:
+					message = "E" + String.valueOf(regul.getE());
 					break;
-				case 2: message = "A" + String.valueOf(regul.getA());
+				case 2:
+					message = "A" + String.valueOf(regul.getA());
 					break;
-				case 3: message = "V" + String.valueOf(regul.getV());
+				case 3:
+					message = "V" + String.valueOf(regul.getV());
 					break;
-				case 4: message = "P" + String.valueOf(regul.getP());
+				case 4:
+					message = "P" + String.valueOf(regul.getP());
 					break;
-				case 5: message = "B" + String.valueOf(regul.getB());
+				case 5:
+					message = "B" + String.valueOf(regul.getB());
 					break;
 				}
 				i++;
@@ -53,33 +59,41 @@ public class Communication extends Thread {
 				} catch (IOException e1) {
 					message = "Fel";
 				}
-				if(!message.equals("Fel")) {
-					switch(message.charAt(0)) {
-					case 'N': p = newParam(message);
-					regul.setPIDAngParameters(p);
-					regul.calculateOffset();
-					break;
-					case 'M': p = newParam(message);
-					regul.setPIDPosParameters(p);
-					regul.calculateOffset();
+				if (!message.equals("Fel")) {
+					switch (message.charAt(0)) {
+					case 'N':
+						p = newParam(message);
+						regul.setPIDAngParameters(p);
+						regul.calculateOffset();
 						break;
-					case 'S': regul.setManualFalse();
-					break;
-					case 'C': regul.calculateOffset();
-					break;
-					case 'F': regul.manualControl(1, 1, 5);
-					break;
-					case 'B': regul.manualControl(1, 1, -5);
-					break;
-					case 'L': regul.manualControl(-0.5, 0.5, 0);
-					break;
-					case 'R': regul.manualControl(0.5, -0.5, 0);
-					break;
+					case 'M':
+						p = newParam(message);
+						regul.setPIDPosParameters(p);
+						regul.calculateOffset();
+						break;
+					case 'S':
+						regul.setManualFalse();
+						break;
+					case 'C':
+						regul.calculateOffset();
+						break;
+					case 'F':
+						regul.manualControl(1, 1, 5);
+						break;
+					case 'B':
+						regul.manualControl(1, 1, -5);
+						break;
+					case 'L':
+						regul.manualControl(-0.5, 0.5, 0);
+						break;
+					case 'R':
+						regul.manualControl(0.5, -0.5, 0);
+						break;
 					}
 				}
 			} else {
 				LCD.drawString("It is not connected", 0, 3);
-				try{	
+				try {
 					this.connect();
 				} catch (IOException e) {
 					LCD.drawString("Could not reconnect", 0, 3);
@@ -95,9 +109,9 @@ public class Communication extends Thread {
 			}
 		}
 	}
-	
-	private PIDParameters newParam(String message){
-		String[] newParam = message.substring(1).split("\n"); //starts at 1
+
+	private PIDParameters newParam(String message) {
+		String[] newParam = message.substring(1).split("\n"); // starts at 1
 		PIDParameters p = new PIDParameters();
 		p.Beta = Double.valueOf(newParam[1].split(":")[1]);
 		p.K = Double.valueOf(newParam[2].split(":")[1]);
@@ -152,7 +166,8 @@ public class Communication extends Thread {
 	public String receive() throws IOException {
 		String response = "Fel";
 		try {
-			if(in.available() >= 8) response = in.readUTF();
+			if (in.available() >= 8)
+				response = in.readUTF();
 		} catch (IOException e) {
 			response = "Fel";
 		}
@@ -162,7 +177,7 @@ public class Communication extends Thread {
 	public void sendPIDAngValues() {
 		send(regul.sendPIDAngValues());
 	}
-	
+
 	public void sendPIDPosValues() {
 		send(regul.sendPIDPosValues());
 	}

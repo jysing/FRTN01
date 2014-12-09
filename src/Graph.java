@@ -32,7 +32,6 @@ public class Graph implements ActionListener, KeyListener {
 	private double K_inner = 0, Ti_inner = 0, Td_inner = 0, Tr_inner = 0,
 			N_inner = 0, beta_inner = 0;
 	private String paraString;
-	private int key;
 
 	public Graph(SocketClient sc) {
 		this.sc = sc;
@@ -150,21 +149,7 @@ public class Graph implements ActionListener, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		key = e.getKeyCode();
-		switch (key) {
-		case 65:
-			sc.send("L");
-			break;
-		case 68:
-			sc.send("R");
-			break;
-		case 87:
-			sc.send("F");
-			break;
-		case 83:
-			sc.send("B");
-			break;
-		}
+		gen.key = e.getKeyCode();
 	}
 
 	@Override
@@ -174,21 +159,7 @@ public class Graph implements ActionListener, KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		key = e.getKeyCode();
-		switch (key) {
-		case 65:
-			sc.send("L");
-			break;
-		case 68:
-			sc.send("R");
-			break;
-		case 87:
-			sc.send("F");
-			break;
-		case 83:
-			sc.send("B");
-			break;
-		}
+		gen.key = e.getKeyCode();
 	}
 
 	static class gen extends Thread {
@@ -261,7 +232,6 @@ public class Graph implements ActionListener, KeyListener {
 					}
 				}
 
-				/*
 				switch (key) {
 				case 0:
 					sc.send("S");
@@ -279,7 +249,6 @@ public class Graph implements ActionListener, KeyListener {
 					sc.send("B");
 					break;
 				}
-				*/
 
 				try {
 					Thread.sleep(period);
