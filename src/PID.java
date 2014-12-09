@@ -61,7 +61,7 @@ public class PID {
 
 	public synchronized void updateState(double u) {
 		if (p.integratorOn) {
-			I = I + ((p.K * interval / p.Ti) * e + (interval / p.Tr) * (u - v));
+			if(interval != 0) I = I + ((p.K * interval / p.Ti) * e + (interval / p.Tr) * (u - v));
 		} else {
 			I = 0.0;
 		}
