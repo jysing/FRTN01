@@ -8,7 +8,7 @@ import lejos.hardware.lcd.LCD;
 
 public class Communication extends Thread {
 
-	private static final long period = 50;
+	private static final long period = 100;
 	private final ServerSocket serverSocket;
 	private Socket server;
 	private DataOutputStream out;
