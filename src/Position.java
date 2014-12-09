@@ -42,7 +42,7 @@ public class Position {
 	public synchronized double getPosition() {
 		if (reset) {
 			double temp = motorA.getTachoCount();
-			preReset += temp;
+			preReset = temp;
 			reset = false;
 			return temp;
 		}
