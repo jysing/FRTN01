@@ -108,6 +108,7 @@ public class Regul extends Thread {
 					ref = pidPos.calculateOutput(e, 0);
 					if (ref > maxRef) ref = maxRef;
 					if (ref < -maxRef) ref = -maxRef;
+					pidPos.updateState(ref);
 				}
 			}
 
@@ -117,6 +118,7 @@ public class Regul extends Thread {
 				e = normalizedWeightAngVel * angVel + normalizedWeightAng * ang;
 				u = pidAng.calculateOutput(e, ref);
 				setMotor(u * manualSpeedLeft, u * manualSpeedRight);
+				pidAng.updateState(u);
 			}
 
 			try {

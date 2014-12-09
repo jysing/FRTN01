@@ -19,10 +19,10 @@ public class PID {
 		if (type.equals("Ang")) {
 			p.Beta = 1.0;
 			p.integratorOn = true;
-			p.K = 32; 
-			p.Ti = 0.05; 
-			p.Tr = 10;
-			p.Td = 0.00125;
+			p.K = 35; 
+			p.Ti = 0; 
+			p.Tr = 0;
+			p.Td = 10000;
 			p.N = 5;
 
 			setParameters(p);
@@ -30,9 +30,9 @@ public class PID {
 			p.Beta = 1.0;
 			p.integratorOn = true;
 			p.K = -10;
-			p.Ti = 0.05;
+			p.Ti = 0.5;
 			p.Tr = 0.05;
-			p.Td = 0.00125;
+			p.Td = 0.05;
 			p.N = 5;
 
 			setParameters(p);
@@ -61,7 +61,7 @@ public class PID {
 
 	public synchronized void updateState(double u) {
 		if (p.integratorOn) {
-			I = I + ((p.K * interval / p.Ti) * e + (interval / p.Tr) * (u - v));
+			if(interval != 0) I = I + ((p.K * interval / p.Ti) * e + (interval / p.Tr) * (u - v));
 		} else {
 			I = 0.0;
 		}
