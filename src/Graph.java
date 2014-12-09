@@ -143,7 +143,7 @@ public class Graph implements ActionListener, KeyListener {
 		if(e.getSource() == updateButton){
 			String newParam = textArea2.getText();
 			sc.send("N" + newParam);
-			//String newParam2 = textArea2.getText();
+			//String newParam2 = textArea3.getText();
 			//sc.send("N" + newParam2); // byta send string "N"?
 		}
 	}
@@ -199,9 +199,6 @@ public class Graph implements ActionListener, KeyListener {
 								Double.valueOf(param[4]),
 								Double.valueOf(param[5]));
 						break;
-						///
-						/// New case for updating inner paramters????
-						///
 					case 'U': updateGraph(0, 120);
 						break;
 					case 'E': updateGraph(1, 200);
