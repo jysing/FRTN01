@@ -1,10 +1,10 @@
 import lejos.robotics.EncoderMotor;
-import lejos.robotics.filter.LowPassFilter;
 
 public class Position {
 	private long time, difference;
 	private EncoderMotor motorA;
-	private double oldValue, value, tempValue, filterValue, oldFilterValue, filterConstant;
+	private double oldValue, value, tempValue, filterValue, oldFilterValue,
+			filterConstant;
 	private double meterPerDegree;
 	private boolean reset;
 
@@ -18,38 +18,44 @@ public class Position {
 		reset = false;
 		filterValue = 0;
 		oldFilterValue = 0;
-		filterConstant = 0.01;
+		filterConstant = 0.1;
 	}
 
 	public synchronized double getPosVelocity() {
 		difference = System.currentTimeMillis() - time;
 		time += difference;
-		if(difference != 0)	{
+		if (difference != 0) {
 			tempValue = getPosition();
 			value = ((tempValue - oldValue) / difference);
 			oldValue = tempValue;
-			filterValue = value - filterConstant*oldFilterValue;
-					/*(-(difference-2)/(difference+2))*oldFilterValue+
-					((difference/(difference+2))*value)+((difference/(difference+2))*oldValue);*/
+			filterValue = value - filterConstant * oldFilterValue;
+			/*
+			 * (-(difference-2)/(difference+2))*oldFilterValue+
+			 * ((difference/(difference
+			 * +2))*value)+((difference/(difference+2))*oldValue);
+			 */
 			oldFilterValue = filterValue;
 		}
 		return filterValue;
 	}
 
 	public synchronized double getPosition() {
-		if(reset){
+		if (reset) {
 			motorA.resetTachoCount();
 			reset = false;
 			return 0;
-		} else {			
-			return motorA.getTachoCount()*meterPerDegree;
+		} else {
+			return motorA.getTachoCount() * meterPerDegree;
 		}
 	}
-	
+
 	public synchronized void reset() {
+		motorA.resetTachoCount();
 		reset = true;
 		tempValue = 0;
 		oldValue = 0;
 		value = 0;
+		filterValue = 0;
+		oldFilterValue = 0;
 	}
 }
