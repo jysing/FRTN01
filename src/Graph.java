@@ -150,6 +150,16 @@ public class Graph implements ActionListener, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		sc.send("S");
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
 		key = e.getKeyCode();
 		System.out.println("                    " + key);
 		switch (key) {
@@ -169,16 +179,6 @@ public class Graph implements ActionListener, KeyListener {
 			sc.send("B");
 			break;
 		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		sc.send("S");
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		//gen.key = e.getKeyCode();
 	}
 
 	static class gen extends Thread {
