@@ -59,17 +59,14 @@ public class Regul extends Thread {
 		return pidPos.getParameters();
 	}
 
-	public synchronized void manualControl(double speedLeft, double speedRight,
-			double angRef) {
+	public synchronized void manualControl(double speedLeft, double speedRight, double angRef) {
 		manualSpeedLeft = speedLeft;
 		manualSpeedRight = speedRight;
 		ref = angRef;
 		manual = true;
 	}
 
-	public void setMotor(double speedLeft, double speedRight) {
-		//speedLeft = limitSpeed(speedLeft);
-		//speedRight = limitSpeed(speedRight);
+	private void setMotor(double speedLeft, double speedRight) {
 		if (speedLeft < 0) {
 			motorB.backward();
 		} else {
