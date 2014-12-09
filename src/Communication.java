@@ -84,10 +84,10 @@ public class Communication extends Thread {
 						regul.manualControl(1, 1, -1);
 						break;
 					case 'L':
-						regul.manualControl(-1, 1, 0);
+						regul.manualControl(0.5, 1, 0);
 						break;
 					case 'R':
-						regul.manualControl(1, -1, 0);
+						regul.manualControl(1, 0.5, 0);
 						break;
 					}
 				}
