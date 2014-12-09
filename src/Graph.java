@@ -153,9 +153,6 @@ public class Graph implements ActionListener, KeyListener {
 		key = e.getKeyCode();
 		System.out.println("                    " + key + " from keyPressed");
 		switch (key) {
-		//case 0:
-			//sc.send("S");
-			//break;
 		case 65:
 			sc.send("L");
 			break;
@@ -185,7 +182,6 @@ public class Graph implements ActionListener, KeyListener {
 		private String message;
 		private SocketClient sc;
 		private ArrayList<TimeSeries> TimeSeriesList;
-		//public static int key;
 		private Graph graph;
 		private static final long period = 100;
 
@@ -250,26 +246,6 @@ public class Graph implements ActionListener, KeyListener {
 						break;
 					}
 				}
-				/*
-				System.out.println("                    " + key);
-				switch (key) {
-				//case 0:
-					//sc.send("S");
-					//break;
-				case 65:
-					sc.send("L");
-					break;
-				case 68:
-					sc.send("R");
-					break;
-				case 87:
-					sc.send("F");
-					break;
-				case 83:
-					sc.send("B");
-					break;
-				}
-				*/
 
 				try {
 					Thread.sleep(period);
