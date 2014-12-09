@@ -149,7 +149,7 @@ public class Graph implements ActionListener, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		key = e.getKeyCode();
+		int key = e.getKeyCode();
 		System.out.println("                    " + key + " from keyPressed");
 		switch (key) {
 		case 65:
