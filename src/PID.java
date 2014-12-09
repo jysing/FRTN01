@@ -49,14 +49,14 @@ public class PID {
 		interval = System.currentTimeMillis() - time;
 		time = time + interval;
 		this.y = y;
-		this.e = yref - y;
+		e = yref - y;
 		ad = 0;
 		if (p.Td != 0) ad = p.Td / (p.Td + p.N * interval);
 		bd = p.K * ad * p.N;
-		this.D = ad * D - bd * (y - yOld);
-		this.v = p.K * (p.Beta * yref - y) + I + D; // I is 0.0 if integratorOn
+		D = ad * D - bd * (y - yOld);
+		v = p.K * (p.Beta * yref - y) + I + D; // I is 0.0 if integratorOn
 													// is false
-		return this.v;
+		return v;
 	}
 
 	public synchronized void updateState(double u) {
