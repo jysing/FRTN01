@@ -1,3 +1,4 @@
+package Lego;
 import lejos.robotics.EncoderMotor;
 
 public class Position {
