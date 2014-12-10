@@ -118,10 +118,10 @@ public class Regul extends Thread {
 				e = normalizedWeightAngVel * angVel + normalizedWeightAng * ang;
 				u = pidAng.calculateOutput(e, ref);
 				u = limitSpeed(u);
+				speedLeft = manualSpeedLeft;
+				speedRight = manualSpeedRight;
 				if(manualSpeedLeft != manualSpeedRight) {
-					if(u >= 0) {
-						speedLeft = manualSpeedLeft;
-						speedRight = manualSpeedRight;
+					if(u < 0) {
 					} else {
 						speedLeft = -manualSpeedLeft;
 						speedRight = -manualSpeedRight;
