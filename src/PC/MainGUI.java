@@ -1,3 +1,5 @@
+package PC;
+
 import java.io.IOException;
 
 public class MainGUI {
