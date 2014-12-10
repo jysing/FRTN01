@@ -22,7 +22,7 @@ public class Regul extends Thread {
 	private double position, positionVel; // Position and position velocity
 	private static final double weightAng = 1, weightAngVel = 0.1;
 	private static final double weightPos = 4, weightPosVel = 0;
-	private static final double maxRef = 10; // 0.5, 1
+	private static final double maxRef = 3; // 0.5, 1
 	private static final double normalizedWeightAng = weightAng
 			/ (weightAng + weightAngVel);
 	private static final double normalizedWeightAngVel = weightAngVel
