@@ -14,7 +14,7 @@ public class Regul extends Thread {
 	EncoderMotor motorB;
 
 	private boolean manual;
-	private double manualPos;
+	private double manualPos, manualPosDiff;
 	private double manualSpeedLeft, manualSpeedRight;
 	private static final long period = 5;
 	private double u, e, ref; // Control signal to/from PID
@@ -62,10 +62,10 @@ public class Regul extends Thread {
 		return pidPos.getParameters();
 	}
 
-	public synchronized void manualControl(double speedLeft, double speedRight, double manualPos) {
+	public synchronized void manualControl(double speedLeft, double speedRight, double manualPosDiff) {
 		manualSpeedLeft = speedLeft;
 		manualSpeedRight = speedRight;
-		this.manualPos = manualPos;
+		this.manualPosDiff = manualPosDiff;
 		manual = true;
 	}
 
@@ -101,7 +101,7 @@ public class Regul extends Thread {
 		manualPos = 0;
 		while (true) {
 			synchronized (pidPos) {
-				if (manual)	manualPos += manualPos;
+				if (manual)	manualPos += manualPosDiff;
 				position = posReader.getPosition() + manualPos;
 				positionVel = (posReader.getPosVelocity() * 1000);
 				e = position * normalizedWeightPos + positionVel * normalizedWeightPosVel;
@@ -206,5 +206,6 @@ public class Regul extends Thread {
 		manualSpeedLeft = 1;
 		manualSpeedRight = 1;
 		manual = false;
+		manualPosDiff = 0;
 	}
 }
