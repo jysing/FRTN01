@@ -21,7 +21,7 @@ public class Gyro {
 
 	public double offset = 0;
 	private double angle;
-	public double EMAOFFSET = 0.00005;
+	public double EMAOFFSET = 0.00005; //EMAOFFSET 0.00005;
 
 	private long time, difference;
 
