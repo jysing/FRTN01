@@ -96,7 +96,6 @@ public class Regul extends Thread {
 		setMotor(0, 0);
 		calculateOffset();
 		manual = false;
-		double speedLeft, speedRight;
 		while (true) {
 			synchronized (pidPos) {
 				if (!manual) {
@@ -118,16 +117,7 @@ public class Regul extends Thread {
 				e = normalizedWeightAngVel * angVel + normalizedWeightAng * ang;
 				u = pidAng.calculateOutput(e, ref);
 				u = limitSpeed(u);
-				speedLeft = manualSpeedLeft;
-				speedRight = manualSpeedRight;
-				if(manualSpeedLeft != manualSpeedRight) {
-					if(u < 0) {
-					} else {
-						speedLeft = -manualSpeedLeft;
-						speedRight = -manualSpeedRight;
-					}					
-				}
-				setMotor(u * speedLeft, u * speedRight);
+				setMotor(u * manualSpeedLeft, u * manualSpeedRight);
 				pidAng.updateState(u);					
 			}
 
