@@ -69,7 +69,7 @@ public class Graph implements ActionListener, KeyListener {
 		this.Td_outer = Td;
 		this.N_outer = N;
 
-		paraString = "PID (Outer):" + "\nBeta:" + beta + "\nK:" + K + "\nTi:"
+		paraString = "PD (Outer):" + "\nBeta:" + beta + "\nK:" + K + "\nTi:"
 				+ Ti + "\nTr:" + Tr + "\nTd:" + Td + "\nN:" + N;
 		textArea2.setText(paraString);
 	}
