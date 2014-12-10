@@ -30,11 +30,6 @@ public class Position {
 			value = ((tempValue - oldValue) / difference);
 			oldValue = tempValue;
 			filterValue = value - filterConstant * oldFilterValue;
-			/*
-			 * (-(difference-2)/(difference+2))*oldFilterValue+
-			 * ((difference/(difference
-			 * +2))*value)+((difference/(difference+2))*oldValue);
-			 */
 			oldFilterValue = filterValue;
 		}
 		return filterValue;
@@ -42,6 +37,7 @@ public class Position {
 
 	public synchronized double getPosition() {
 		if (reset) {
+			motorA.resetTachoCount();
 			preReset = motorA.getTachoCount();
 			reset = false;
 		}
@@ -49,7 +45,6 @@ public class Position {
 	}
 
 	public synchronized void reset() {
-		//motorA.resetTachoCount();
 		reset = true;
 		tempValue = 0;
 		oldValue = 0;
