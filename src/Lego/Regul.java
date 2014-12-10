@@ -69,7 +69,7 @@ public class Regul extends Thread {
 		manual = true;
 	}
 
-	private void setMotor(double speedLeft, double speedRight) {
+	private synchronized void setMotor(double speedLeft, double speedRight) {
 		if (speedLeft < 0) {
 			motorB.backward();
 		} else {
