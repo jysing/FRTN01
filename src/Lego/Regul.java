@@ -206,6 +206,5 @@ public class Regul extends Thread {
 		manualSpeedLeft = 1;
 		manualSpeedRight = 1;
 		manual = false;
-		manualPos = 0;
 	}
 }
