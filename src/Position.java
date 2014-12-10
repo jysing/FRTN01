@@ -52,7 +52,7 @@ public class Position {
 
 	public synchronized void reset() {
 		//motorA.resetTachoCount();
-		preReset += motorA.getTachoCount();
+		preReset = motorA.getTachoCount();
 		//reset = true;
 		tempValue = 0;
 		oldValue = 0;
