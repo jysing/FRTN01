@@ -4,12 +4,14 @@ import lejos.robotics.EncoderMotor;
 public class Position {
 	private long time, difference;
 	private EncoderMotor motorA;
+	private EncoderMotor motorB;
 	private double oldValue, value, tempValue, filterValue, oldFilterValue, preReset,
 			filterConstant;
 	private double meterPerDegree;
 	private boolean reset;
 
-	public Position(EncoderMotor motorA) {
+	public Position(EncoderMotor motorA, EncoderMotor motorB) {
+		this.motorB = motorB;
 		this.motorA = motorA;
 		time = System.currentTimeMillis();
 		oldValue = 0;
@@ -36,12 +38,12 @@ public class Position {
 	}
 
 	public synchronized double getPosition() {
+		double temp = (motorA.getTachoCount() + motorB.getTachoCount())/2;
 		if (reset) {
-			//motorA.resetTachoCount();
-			preReset = motorA.getTachoCount();
+			preReset = temp;
 			reset = false;
 		}
-			return (motorA.getTachoCount()-preReset )* meterPerDegree;
+			return (temp-preReset )* meterPerDegree;
 	}
 
 	public synchronized void reset() {
