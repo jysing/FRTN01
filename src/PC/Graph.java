@@ -1,3 +1,4 @@
+package PC;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -69,7 +70,7 @@ public class Graph implements ActionListener, KeyListener {
 		this.Td_outer = Td;
 		this.N_outer = N;
 
-		paraString = "PD (Outer):" + "\nBeta:" + beta + "\nK:" + K + "\nTi:"
+		paraString = "PID (Outer):" + "\nBeta:" + beta + "\nK:" + K + "\nTi:"
 				+ Ti + "\nTr:" + Tr + "\nTd:" + Td + "\nN:" + N;
 		textArea2.setText(paraString);
 	}

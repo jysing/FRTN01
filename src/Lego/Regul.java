@@ -1,3 +1,5 @@
+package Lego;
+
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.NXTMotor;
 import lejos.hardware.port.*;
@@ -12,6 +14,7 @@ public class Regul extends Thread {
 	EncoderMotor motorB;
 
 	private boolean manual;
+	private double manualPos, manualPosDiff;
 	private double manualSpeedLeft, manualSpeedRight;
 	private static final long period = 5;
 	private double u, e, ref; // Control signal to/from PID
@@ -19,8 +22,8 @@ public class Regul extends Thread {
 	private double position, positionVel; // Position and position velocity
 	private static final double weightAng = 1, weightAngVel = 0.1;
 	private static final double weightPos = 4, weightPosVel = 0;
-	private static final double maxRef = 5; //0.5, 1
- 	private static final double normalizedWeightAng = weightAng
+	private static final double maxRef = 3; // 0.5, 1
+	private static final double normalizedWeightAng = weightAng
 			/ (weightAng + weightAngVel);
 	private static final double normalizedWeightAngVel = weightAngVel
 			/ (weightAng + weightAngVel);
@@ -59,14 +62,14 @@ public class Regul extends Thread {
 		return pidPos.getParameters();
 	}
 
-	public synchronized void manualControl(double speedLeft, double speedRight, double angRef) {
+	public synchronized void manualControl(double speedLeft, double speedRight, double manualPosDiff) {
 		manualSpeedLeft = speedLeft;
 		manualSpeedRight = speedRight;
-		ref = angRef;
+		this.manualPosDiff = manualPosDiff;
 		manual = true;
 	}
 
-	private void setMotor(double speedLeft, double speedRight) {
+	private synchronized void setMotor(double speedLeft, double speedRight) {
 		if (speedLeft < 0) {
 			motorB.backward();
 		} else {
@@ -95,19 +98,17 @@ public class Regul extends Thread {
 		setMotor(0, 0);
 		calculateOffset();
 		manual = false;
+		manualPos = 0;
 		while (true) {
 			synchronized (pidPos) {
-				if (!manual) {
-					position = posReader.getPosition();
-					positionVel = (posReader.getPosVelocity() * 1000);
-					e = position * normalizedWeightPos + positionVel * normalizedWeightPosVel;
-					ref = pidPos.calculateOutput(e, 0);
-					if (ref > maxRef) ref = maxRef;
-					if (ref < -maxRef) ref = -maxRef;
-					pidPos.updateState(ref);
-				} else {
-					posReader.reset();
-				}
+				if (manual)	manualPos += manualPosDiff;
+				position = posReader.getPosition() + manualPos;
+				positionVel = (posReader.getPosVelocity() * 1000);
+				e = position * normalizedWeightPos + positionVel * normalizedWeightPosVel;
+				ref = pidPos.calculateOutput(e, 0);
+				if (ref > maxRef) ref = maxRef;
+				if (ref < -maxRef) ref = -maxRef;
+				pidPos.updateState(ref);
 			}
 
 			synchronized (pidAng) {
@@ -117,7 +118,7 @@ public class Regul extends Thread {
 				u = pidAng.calculateOutput(e, ref);
 				u = limitSpeed(u);
 				setMotor(u * manualSpeedLeft, u * manualSpeedRight);
-				pidAng.updateState(u);					
+				pidAng.updateState(u);
 			}
 
 			try {
@@ -205,5 +206,6 @@ public class Regul extends Thread {
 		manualSpeedLeft = 1;
 		manualSpeedRight = 1;
 		manual = false;
+		manualPosDiff = 0;
 	}
 }

@@ -1,14 +1,17 @@
+package Lego;
 import lejos.robotics.EncoderMotor;
 
 public class Position {
 	private long time, difference;
 	private EncoderMotor motorA;
+	private EncoderMotor motorB;
 	private double oldValue, value, tempValue, filterValue, oldFilterValue, preReset,
 			filterConstant;
 	private double meterPerDegree;
 	private boolean reset;
 
-	public Position(EncoderMotor motorA) {
+	public Position(EncoderMotor motorA, EncoderMotor motorB) {
+		this.motorB = motorB;
 		this.motorA = motorA;
 		time = System.currentTimeMillis();
 		oldValue = 0;
@@ -29,26 +32,21 @@ public class Position {
 			value = ((tempValue - oldValue) / difference);
 			oldValue = tempValue;
 			filterValue = value - filterConstant * oldFilterValue;
-			/*
-			 * (-(difference-2)/(difference+2))*oldFilterValue+
-			 * ((difference/(difference
-			 * +2))*value)+((difference/(difference+2))*oldValue);
-			 */
 			oldFilterValue = filterValue;
 		}
 		return filterValue;
 	}
 
 	public synchronized double getPosition() {
+		double temp = (motorA.getTachoCount() + motorB.getTachoCount())/2;
 		if (reset) {
-			preReset = motorA.getTachoCount();
+			preReset = temp;
 			reset = false;
 		}
-			return (motorA.getTachoCount()-preReset )* meterPerDegree;
+			return (temp-preReset )* meterPerDegree;
 	}
 
 	public synchronized void reset() {
-		//motorA.resetTachoCount();
 		reset = true;
 		tempValue = 0;
 		oldValue = 0;

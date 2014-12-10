@@ -1,3 +1,4 @@
+package Lego;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -78,16 +79,16 @@ public class Communication extends Thread {
 						regul.calculateOffset();
 						break;
 					case 'F':
-						regul.manualControl(1, 1, 0.5);
+						regul.manualControl(1, 1, 0.00000001);
 						break;
 					case 'B':
-						regul.manualControl(1, 1, -0.5);
+						regul.manualControl(1, 1, -0.00000001);
 						break;
 					case 'L':
-						regul.manualControl(0.5, 1, 0);
+						regul.manualControl(0.5, 1, 0.00000001);
 						break;
 					case 'R':
-						regul.manualControl(1, 0.5, 0);
+						regul.manualControl(1, 0.5, 0.00000001);
 						break;
 					}
 				}

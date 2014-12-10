@@ -1,4 +1,5 @@
-	import java.io.IOException;
+package Lego;
+import java.io.IOException;
 import lejos.hardware.lcd.LCD;
 
 public class Main {
