@@ -21,7 +21,7 @@ public class PID {
 			p.Beta = 1.0;
 			p.integratorOn = true;
 			p.K = 20; 
-			p.Ti = 160; 
+			p.Ti = 140;  //160
 			p.Tr = 0;
 			p.Td = 0.3;
 			p.N = 5;
