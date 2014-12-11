@@ -52,11 +52,11 @@ public class Communication extends Thread {
 					message = "B" + String.valueOf(regul.getB());
 					break;
 				case 6:
-					message = "E" + String.valueOf(regul.getE_inner());
+					message = "W" + String.valueOf(regul.getE_inner());
 					break;
 				}
 				i++;
-				i = i % 6;
+				i = i % 7;
 				send(message);
 				message = "Fel";
 				try {
