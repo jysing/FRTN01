@@ -83,6 +83,7 @@ public class Communication extends Thread {
 						regul.calculateOffset();
 						break;
 					case 'F':
+						LCD.drawString("moving forward", 0, 4);
 						regul.manualControl(1, 1, 0.0001);
 						break;
 					case 'B':
