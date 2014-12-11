@@ -100,7 +100,7 @@ public class Regul extends Thread {
 		while (true) {
 			synchronized (pidPos) {
 				manualPos += manualPosDiff;
-				position = posReader.getPosition() + manualPos;
+				position = (posReader.getPosition() + manualPos);
 				positionVel = (posReader.getPosVelocity() * 1000);
 				e_outer = position * normalizedWeightPos + positionVel * normalizedWeightPosVel;
 				ref = pidPos.calculateOutput(e_outer, 0);
