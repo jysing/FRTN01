@@ -37,7 +37,7 @@ public class Communication extends Thread {
 					message = "U" + String.valueOf(regul.getU());
 					break;
 				case 1:
-					message = "E" + String.valueOf(regul.getE());
+					message = "E" + String.valueOf(regul.getE_inner());
 					break;
 				case 2:
 					message = "A" + String.valueOf(regul.getA());
@@ -51,9 +51,12 @@ public class Communication extends Thread {
 				case 5:
 					message = "B" + String.valueOf(regul.getB());
 					break;
+				case 6:
+					message = "W" + String.valueOf(regul.getE_outer());
+					break;
 				}
 				i++;
-				i = i % 6;
+				i = i % 7;
 				send(message);
 				message = "Fel";
 				try {
