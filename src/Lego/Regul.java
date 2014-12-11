@@ -16,7 +16,7 @@ public class Regul extends Thread {
 	private double manualPos, manualPosDiff;
 	private double manualSpeedLeft, manualSpeedRight;
 	private static final long period = 5;
-	private double u, e, ref; // Control signal to/from PID
+	private double u, e_inner, e_outer, ref; // Control signal to/from PID
 	private double angVel, ang; // angluarVelocity and current angle
 	private double position, positionVel; // Position and position velocity
 	private static final double weightAng = 1, weightAngVel = 0.1;
@@ -101,8 +101,8 @@ public class Regul extends Thread {
 				manualPos += manualPosDiff;
 				position = (posReader.getPosition() + manualPos);
 				positionVel = (posReader.getPosVelocity() * 1000);
-				e = position * normalizedWeightPos + positionVel * normalizedWeightPosVel;
-				ref = pidPos.calculateOutput(e, 0);
+				e_outer = position * normalizedWeightPos + positionVel * normalizedWeightPosVel;
+				ref = pidPos.calculateOutput(e_outer, 0);
 				if (ref > maxRef) ref = maxRef;
 				if (ref < -maxRef) ref = -maxRef;
 				pidPos.updateState(ref);
@@ -150,15 +150,20 @@ public class Regul extends Thread {
 		position = 0;
 		positionVel = 0;
 		u = 0;
-		e = 0;
+		e_inner = 0;
+		e_outer = 0;
 	}
 
 	public double getU() {
 		return u;
 	}
 
-	public double getE() {
-		return e;
+	public double getE_inner() {
+		return e_inner;
+	}
+	
+	public double getE_outer() {
+		return e_outer;
 	}
 
 	public double getA() {
