@@ -17,12 +17,13 @@ public class Regul extends Thread {
 	private double manualPos, manualPosDiff;
 	private double manualSpeedLeft, manualSpeedRight;
 	private static final long period = 5;
+	private static final int highPrio = 1, lowPrio = 3;
 	private double u, e, ref; // Control signal to/from PID
 	private double angVel, ang; // angluarVelocity and current angle
 	private double position, positionVel; // Position and position velocity
 	private static final double weightAng = 1, weightAngVel = 0.1;
 	private static final double weightPos = 4, weightPosVel = 0;
-	private static final double maxRef = 3; // 0.5, 1
+	private static final double maxRef = 10; // 0.5, 1
 	private static final double normalizedWeightAng = weightAng
 			/ (weightAng + weightAngVel);
 	private static final double normalizedWeightAngVel = weightAngVel
@@ -43,7 +44,7 @@ public class Regul extends Thread {
 		motorA.flt();
 		motorB = new NXTMotor(MotorPort.D);
 		motorB.flt();
-		posReader = new Position(motorA);
+		posReader = new Position(motorA, motorB);
 	}
 
 	public void setPIDAngParameters(PIDParameters p) {
@@ -110,10 +111,17 @@ public class Regul extends Thread {
 				if (ref < -maxRef) ref = -maxRef;
 				pidPos.updateState(ref);
 			}
-
+			
 			synchronized (pidAng) {
 				angVel = gyro.getAngleVelocity();
 				ang = (gyro.getAngle() / 1000);
+				
+				if(Math.abs(ang) > 3 || Math.abs(angVel) > 5) {
+					setPriority(highPrio);
+				} else {
+					setPriority(lowPrio);
+				}
+				
 				e = normalizedWeightAngVel * angVel + normalizedWeightAng * ang;
 				u = pidAng.calculateOutput(e, ref);
 				u = limitSpeed(u);
