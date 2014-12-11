@@ -13,7 +13,6 @@ public class Regul extends Thread {
 	EncoderMotor motorA;
 	EncoderMotor motorB;
 
-	private boolean manual;
 	private double manualPos, manualPosDiff;
 	private double manualSpeedLeft, manualSpeedRight;
 	private static final long period = 5;
@@ -66,7 +65,6 @@ public class Regul extends Thread {
 		manualSpeedLeft = speedLeft;
 		manualSpeedRight = speedRight;
 		this.manualPosDiff = manualPosDiff;
-		manual = true;
 	}
 
 	private synchronized void setMotor(double speedLeft, double speedRight) {
@@ -97,13 +95,17 @@ public class Regul extends Thread {
 		setMotor(30, 30);
 		setMotor(0, 0);
 		calculateOffset();
-		manual = false;
 		manualPos = 0;
 		while (true) {
 			synchronized (pidPos) {
+<<<<<<< HEAD
 				//if (manual)
 				manualPos += manualPosDiff;
 				position = posReader.getPosition() + manualPos;
+=======
+				manualPos += manualPosDiff;
+				position = (posReader.getPosition() + manualPos);
+>>>>>>> 32205ff0e8468e0a7e4ee16ae8d61f5a3cd9b86f
 				positionVel = (posReader.getPosVelocity() * 1000);
 				e = position * normalizedWeightPos + positionVel * normalizedWeightPosVel;
 				ref = pidPos.calculateOutput(e, 0);
@@ -114,9 +116,15 @@ public class Regul extends Thread {
 
 			synchronized (pidAng) {
 				angVel = gyro.getAngleVelocity();
+<<<<<<< HEAD
 				ang = (gyro.getAngle() / 1000);
 				e = normalizedWeightAngVel * angVel + normalizedWeightAng * ang;
 				u = pidAng.calculateOutput(e, ref);
+=======
+				ang = (gyro.getAngle() / 1000);				
+				e_inner = normalizedWeightAngVel * angVel + normalizedWeightAng * ang;
+				u = pidAng.calculateOutput(e_inner, ref);
+>>>>>>> 32205ff0e8468e0a7e4ee16ae8d61f5a3cd9b86f
 				u = limitSpeed(u);
 				setMotor(u * manualSpeedLeft, u * manualSpeedRight);
 				pidAng.updateState(u);
@@ -206,7 +214,6 @@ public class Regul extends Thread {
 	public synchronized void setManualFalse() {
 		manualSpeedLeft = 1;
 		manualSpeedRight = 1;
-		manual = false;
 		manualPosDiff = 0;
 	}
 }
