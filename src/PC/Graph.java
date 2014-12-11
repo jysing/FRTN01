@@ -184,7 +184,7 @@ public class Graph implements ActionListener, KeyListener {
 		private SocketClient sc;
 		private ArrayList<TimeSeries> TimeSeriesList;
 		private Graph graph;
-		private static final long period = 100;
+		private static final long period = 50; 
 
 		public gen(SocketClient sc, ArrayList<TimeSeries> TimeSeriesList,
 				Graph graph) {

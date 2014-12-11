@@ -100,10 +100,10 @@ public class Regul extends Thread {
 			synchronized (pidPos) {
 				manualPos += manualPosDiff;
 				LCD.drawString("manualPos = " + manualPos, 0, 5);
-				position = posReader.getPosition();
+				position = posReader.getPosition()+manualPos;
 				positionVel = (posReader.getPosVelocity() * 1000);
 				e_outer = position * normalizedWeightPos + positionVel * normalizedWeightPosVel;
-				ref = pidPos.calculateOutput(e_outer, manualPos);
+				ref = pidPos.calculateOutput(e_outer, 0);
 				if (ref > maxRef) ref = maxRef;
 				if (ref < -maxRef) ref = -maxRef;
 				pidPos.updateState(ref);
