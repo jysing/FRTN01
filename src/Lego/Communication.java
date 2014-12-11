@@ -51,6 +51,7 @@ public class Communication extends Thread {
 				case 5:
 					message = "B" + String.valueOf(regul.getB());
 					break;
+					
 				}
 				i++;
 				i = i % 6;
