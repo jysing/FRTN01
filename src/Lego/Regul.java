@@ -116,24 +116,6 @@ public class Regul extends Thread {
 				e_inner = normalizedWeightAngVel * angVel + normalizedWeightAng * ang;
 				u = pidAng.calculateOutput(e_inner, ref);
 				u = limitSpeed(u);
-				
-				if(manualSpeedLeft != manualSpeedRight) {
-					double temp;
-					if(u < 0 && leftright) {
-						temp = manualSpeedLeft;
-						manualSpeedLeft = manualSpeedRight;
-						manualSpeedRight = temp;
-						leftright = false;
-					}
-					
-					if(u > 0 && !leftright) {
-						temp = manualSpeedLeft;
-						manualSpeedLeft = manualSpeedRight;
-						manualSpeedRight = temp;
-						leftright = true;
-					}
-				}
-				
 				setMotor(u * manualSpeedLeft, u * manualSpeedRight);
 				pidAng.updateState(u);
 			}
