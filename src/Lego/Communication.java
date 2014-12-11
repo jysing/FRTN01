@@ -30,7 +30,7 @@ public class Communication extends Thread {
 		PIDParameters p;
 		while (true) {
 			String message;
-			if (this.isConnected()) {
+			if (this.isConnected()) {//hehehejej
 				message = "Fel";
 				switch (i) {
 				case 0:
