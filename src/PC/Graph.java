@@ -246,6 +246,7 @@ public class Graph implements ActionListener, KeyListener {
 						updateGraph(5, 100);
 						break;
 					case 'W':
+						System.out.println("We got a W... wohooo");
 						updateGraph(6, 20);
 						break;
 					}
