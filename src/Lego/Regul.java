@@ -116,11 +116,13 @@ public class Regul extends Thread {
 				angVel = gyro.getAngleVelocity();
 				ang = (gyro.getAngle() / 1000);
 				
+				/*
 				if(Math.abs(ang) > 3 || Math.abs(angVel) > 5) {
 					setPriority(highPrio);
 				} else {
 					setPriority(lowPrio);
 				}
+				*/
 				
 				e_inner = normalizedWeightAngVel * angVel + normalizedWeightAng * ang;
 				u = pidAng.calculateOutput(e_inner, ref);
