@@ -18,7 +18,7 @@ public class Regul extends Thread {
 	private double manualSpeedLeft, manualSpeedRight;
 	private static final long period = 5;
 	private static final int highPrio = 1, lowPrio = 3;
-	private double u, e, ref; // Control signal to/from PID
+	private double u, e_inner, e_outer, ref; // Control signal to/from PID
 	private double angVel, ang; // angluarVelocity and current angle
 	private double position, positionVel; // Position and position velocity
 	private static final double weightAng = 1, weightAngVel = 0.1;
@@ -105,8 +105,8 @@ public class Regul extends Thread {
 				if (manual)	manualPos += manualPosDiff;
 				position = posReader.getPosition() + manualPos;
 				positionVel = (posReader.getPosVelocity() * 1000);
-				e = position * normalizedWeightPos + positionVel * normalizedWeightPosVel;
-				ref = pidPos.calculateOutput(e, 0);
+				e_outer = position * normalizedWeightPos + positionVel * normalizedWeightPosVel;
+				ref = pidPos.calculateOutput(e_outer, 0);
 				if (ref > maxRef) ref = maxRef;
 				if (ref < -maxRef) ref = -maxRef;
 				pidPos.updateState(ref);
@@ -116,15 +116,16 @@ public class Regul extends Thread {
 				angVel = gyro.getAngleVelocity();
 				ang = (gyro.getAngle() / 1000);
 				
-				/*if(Math.abs(ang) > 3 || Math.abs(angVel) > 5) {
+				/*
+				if(Math.abs(ang) > 3 || Math.abs(angVel) > 5) {
 					setPriority(highPrio);
 				} else {
 					setPriority(lowPrio);
 				}
 				*/
 				
-				e = normalizedWeightAngVel * angVel + normalizedWeightAng * ang;
-				u = pidAng.calculateOutput(e, ref);
+				e_inner = normalizedWeightAngVel * angVel + normalizedWeightAng * ang;
+				u = pidAng.calculateOutput(e_inner, ref);
 				u = limitSpeed(u);
 				setMotor(u * manualSpeedLeft, u * manualSpeedRight);
 				pidAng.updateState(u);
@@ -162,15 +163,20 @@ public class Regul extends Thread {
 		position = 0;
 		positionVel = 0;
 		u = 0;
-		e = 0;
+		e_inner = 0;
+		e_outer = 0;
 	}
 
 	public double getU() {
 		return u;
 	}
 
-	public double getE() {
-		return e;
+	public double getE_inner() {
+		return e_inner;
+	}
+	
+	public double getE_outer() {
+		return e_outer;
 	}
 
 	public double getA() {

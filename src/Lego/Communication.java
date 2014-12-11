@@ -10,7 +10,7 @@ import lejos.hardware.lcd.LCD;
 public class Communication extends Thread {
 
 	private static final long period = 100;
-	private static final double posDiff = 0.000000010;
+	private static final double posDiff = 0.00000001;
 	private final ServerSocket serverSocket;
 	private Socket server;
 	private DataOutputStream out;
@@ -37,7 +37,7 @@ public class Communication extends Thread {
 					message = "U" + String.valueOf(regul.getU());
 					break;
 				case 1:
-					message = "E" + String.valueOf(regul.getE());
+					message = "E" + String.valueOf(regul.getE_inner());
 					break;
 				case 2:
 					message = "A" + String.valueOf(regul.getA());
@@ -51,9 +51,12 @@ public class Communication extends Thread {
 				case 5:
 					message = "B" + String.valueOf(regul.getB());
 					break;
+				case 6:
+					message = "W" + String.valueOf(regul.getE_outer());
+					break;
 				}
 				i++;
-				i = i % 6;
+				i = i % 7;
 				send(message);
 				message = "Fel";
 				try {
@@ -83,7 +86,7 @@ public class Communication extends Thread {
 						regul.manualControl(1, 1, posDiff);
 						break;
 					case 'B':
-						regul.manualControl(1, 1, posDiff);
+						regul.manualControl(1, 1, -posDiff);
 						break;
 					case 'L':
 						regul.manualControl(0.5, 1, posDiff);
