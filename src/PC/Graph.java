@@ -246,7 +246,7 @@ public class Graph implements ActionListener, KeyListener {
 						updateGraph(5, 100);
 						break;
 					case 'W':
-						updateGraph(6, 200);
+						updateGraph(6, 20);
 						break;
 					}
 				}

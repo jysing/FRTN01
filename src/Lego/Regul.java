@@ -13,17 +13,15 @@ public class Regul extends Thread {
 	EncoderMotor motorA;
 	EncoderMotor motorB;
 
-	private boolean manual;
 	private double manualPos, manualPosDiff;
 	private double manualSpeedLeft, manualSpeedRight;
 	private static final long period = 5;
-	private static final int highPrio = 1, lowPrio = 3;
 	private double u, e_inner, e_outer, ref; // Control signal to/from PID
 	private double angVel, ang; // angluarVelocity and current angle
 	private double position, positionVel; // Position and position velocity
 	private static final double weightAng = 1, weightAngVel = 0.1;
 	private static final double weightPos = 4, weightPosVel = 0;
-	private static final double maxRef = 10; // 0.5, 1
+	private static final double maxRef = 3; // 0.5, 1
 	private static final double normalizedWeightAng = weightAng
 			/ (weightAng + weightAngVel);
 	private static final double normalizedWeightAngVel = weightAngVel
@@ -67,7 +65,6 @@ public class Regul extends Thread {
 		manualSpeedLeft = speedLeft;
 		manualSpeedRight = speedRight;
 		this.manualPosDiff = manualPosDiff;
-		manual = true;
 	}
 
 	private synchronized void setMotor(double speedLeft, double speedRight) {
@@ -98,12 +95,11 @@ public class Regul extends Thread {
 		setMotor(30, 30);
 		setMotor(0, 0);
 		calculateOffset();
-		manual = false;
 		manualPos = 0;
 		while (true) {
 			synchronized (pidPos) {
-				if (manual)	manualPos += manualPosDiff;
-				position = posReader.getPosition() + manualPos;
+				manualPos += manualPosDiff;
+				position = (posReader.getPosition() + manualPos);
 				positionVel = (posReader.getPosVelocity() * 1000);
 				e_outer = position * normalizedWeightPos + positionVel * normalizedWeightPosVel;
 				ref = pidPos.calculateOutput(e_outer, 0);
@@ -111,17 +107,10 @@ public class Regul extends Thread {
 				if (ref < -maxRef) ref = -maxRef;
 				pidPos.updateState(ref);
 			}
-			
+
 			synchronized (pidAng) {
 				angVel = gyro.getAngleVelocity();
-				ang = (gyro.getAngle() / 1000);
-				
-				if(Math.abs(ang) > 3 || Math.abs(angVel) > 5) {
-					setPriority(highPrio);
-				} else {
-					setPriority(lowPrio);
-				}
-				
+				ang = (gyro.getAngle() / 1000);				
 				e_inner = normalizedWeightAngVel * angVel + normalizedWeightAng * ang;
 				u = pidAng.calculateOutput(e_inner, ref);
 				u = limitSpeed(u);
@@ -218,7 +207,6 @@ public class Regul extends Thread {
 	public synchronized void setManualFalse() {
 		manualSpeedLeft = 1;
 		manualSpeedRight = 1;
-		manual = false;
 		manualPosDiff = 0;
 	}
 }

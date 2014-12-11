@@ -4,7 +4,7 @@ import lejos.hardware.lcd.LCD;
 
 public class Main {
 	private static final int port = 6666, timeout = 3000000;
-	private static final int regulPrio = 2, graphPrio = 1;
+	private static final int regulPrio = 3, graphPrio = 2;
 
 	public static void main(String[] args) {
 		Gyro gyro = new Gyro();
